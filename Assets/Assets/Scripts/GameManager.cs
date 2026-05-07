@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
         else
         {
             int random = Random.Range(0, sceneCount);
-            GlobalVariables.timer = Mathf.Max((float)(GlobalVariables.timer - 0.1), (float)1.0);
+            GlobalVariables.timer = Mathf.Max((float)(GlobalVariables.timer - 0.1), (float)3.0);
             SceneManager.LoadScene(random);
         }
     }

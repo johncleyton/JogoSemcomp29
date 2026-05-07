@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class GlobalVariables : MonoBehaviour
 {
-    public static float timer = 3;
+    public static float timer = 7;
 }
