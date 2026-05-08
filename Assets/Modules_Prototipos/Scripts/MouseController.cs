@@ -15,7 +15,7 @@ public class MouseController : MonoBehaviour
     void Update()
     {
         Vector2 mousePos = Input.mousePosition;
-        Debug.Log(mousePos);
+        //Debug.Log(mousePos);
 
     }
 }
