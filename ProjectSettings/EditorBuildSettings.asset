@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assets/Scenes/Cena 4.unity
     guid: df7383e236a828243baca970af7aedbe
+  - enabled: 1
+    path: Assets/Assets/Scenes/MinigameApagao.unity
+    guid: d2d2c51296f7b9e4395db653b49a5a3f
   m_configObjects: {}
