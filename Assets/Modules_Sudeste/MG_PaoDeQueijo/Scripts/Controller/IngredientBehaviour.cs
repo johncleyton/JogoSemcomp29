@@ -5,6 +5,11 @@ using UnityEngine;
 public class IngredientBehaviour : MonoBehaviour
 {
 
+    // LANÇADO??? 
+
+    public bool gotCaught;
+
+    public IngredientData ingredientData;
 
     public Vector3 targetPos;
 
@@ -17,6 +22,7 @@ public class IngredientBehaviour : MonoBehaviour
 
     void Start()
     {
+        gotCaught = false;
 
         startPos = transform.position;
         
@@ -60,6 +66,8 @@ public class IngredientBehaviour : MonoBehaviour
 
     void Arrived()
     {
+        // DMAGAE?
+
         Destroy(gameObject);
     }
 }

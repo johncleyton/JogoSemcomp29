@@ -10,7 +10,6 @@ public class IngredientSpawnerScript : MonoBehaviour
     {
         // usado para calcular uma linha justa 
         // para tacar coisas no player
-
         CalculateSpawn();
     }
 
