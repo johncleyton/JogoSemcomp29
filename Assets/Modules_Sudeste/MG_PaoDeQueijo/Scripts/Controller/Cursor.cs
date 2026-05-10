@@ -32,23 +32,30 @@ public class Cursor : MonoBehaviour
 
     public void ClickedAction()
     {
-        Ray ray = Camera.main.ScreenPointToRay(cursorRect.position);
-
-        RaycastHit hit;
-
-        if(Physics.Raycast(ray, out hit))
+        Vector2 worldPos = Camera.main.ScreenToWorldPoint(cursorRect.position);
+        
+        RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+        
+        if(hit.collider != null)
         {
 
-
-            IngredientBehaviour ingredientScript = hit.collider.GetComponent<IngredientBehaviour>();
-
             // ingredientScript != null
-            if (hit.collider.CompareTag("Ingredient"))
+            if (hit.collider.CompareTag("Ingredientes"))
             {
                 
                 Debug.Log("pegou objecto!");
+                // coleta
+                // Destroy(hit.collider.gameObject);
+
+                IngredientBehaviour ingredientScript = hit.collider.GetComponent<IngredientBehaviour>();
+
+
+                CollectIngredients.instance.AddIngredient(ingredientScript.ingredientData);
 
                 Destroy(hit.collider.gameObject);
+
+
+                CollectIngredients.instance.VerifyRevenue();
             }
         }
     }

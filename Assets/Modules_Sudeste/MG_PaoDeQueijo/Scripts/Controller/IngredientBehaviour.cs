@@ -5,7 +5,11 @@ using UnityEngine;
 public class IngredientBehaviour : MonoBehaviour
 {
 
-    // LANÇADO??? 
+
+    [Tooltip("Quantos segundos demora a chegar na mesa")]
+    public float flightDuration = 3.0f;
+
+    private float timeElapsed = 0f;
 
     public bool gotCaught;
 
@@ -39,28 +43,28 @@ public class IngredientBehaviour : MonoBehaviour
 
     void Update()
     {
+        timeElapsed += Time.deltaTime;
 
-        // Making a arcing projectile!
+        float percentagePath = timeElapsed / flightDuration;
 
-        float x0 = startPos.x;
+        percentagePath = Mathf.Clamp01(percentagePath);
+        
 
-        float x1 = targetPos.x;
+        Vector3 basePos = Vector3.Lerp(startPos, targetPos, percentagePath);
 
 
-        float dist = x1 - x0;
+        float arc = arcHeight * 4.0f * (percentagePath * (1 - percentagePath));
 
-        float nextX = Mathf.MoveTowards(transform.position.x, x1, speed * Time.deltaTime);
-        float baseY = Mathf.Lerp(startPos.y, targetPos.y, (nextX - x0) / dist);
-
-        float arc = arcHeight * (nextX - x0) * (nextX - x1)/ (-0.25f * dist * dist);
-
-        Vector3 nextPos = new(nextX, baseY + arc, transform.position.z);
+        Vector3 nextPos = new Vector3(basePos.x, basePos.y + arc, basePos.z);
 
         transform.rotation = LookAt2D(nextPos - transform.position);
 
         transform.position = nextPos;
 
-        if(nextPos == targetPos) Arrived();
+        if(percentagePath >= 1f)
+        {
+            Arrived();
+        }
     }
 
 

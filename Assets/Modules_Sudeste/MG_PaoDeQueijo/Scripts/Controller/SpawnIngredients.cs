@@ -2,15 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IngredientSpawnerScript : MonoBehaviour
+public class SpawnIngredients : MonoBehaviour
 {
 
+    [Tooltip("Drag here Pao and Queijo prefabs")]
+    public GameObject[] ingredientPrefabs;
+
+    public Transform targetPoint; 
     // Start is called before the first frame update
     void Start()
     {
         // usado para calcular uma linha justa 
         // para tacar coisas no player
-        CalculateSpawn();
+        // CalculateSpawn();
+
+        // wait 2 sec, launch every 0.3 s 
+        InvokeRepeating(nameof(LaunchProjectile), 2.0f, 2.0f);
+    }
+
+
+    public void LaunchProjectile()
+    {
+        int randomIndex = Random.Range(0, ingredientPrefabs.Length);
+
+        GameObject prefabSorted = ingredientPrefabs[randomIndex];
+
+
+        Vector2 spawnPos = CalculateSpawn();
+
+        GameObject newIngredient = Instantiate(prefabSorted, spawnPos, Quaternion.identity);
+
+
+        IngredientBehaviour ingredientBehaviour = newIngredient.GetComponent<IngredientBehaviour>();
+
+        if (ingredientBehaviour)
+        {
+            ingredientBehaviour.targetPos = targetPoint.position;
+        } 
     }
 
 
