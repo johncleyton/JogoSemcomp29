@@ -1,0 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MoverPostes : MonoBehaviour
+{
+
+    public float velocidade = 3.4f;
+    public float limiteEsquerdo = -10f;
+    
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position += Vector3.left * velocidade * Time.deltaTime;
+
+        if (transform.position.x < limiteEsquerdo)
+        {
+            Destroy(gameObject);
+        }
+    }
+}

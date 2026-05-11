@@ -25,6 +25,6 @@ public class PipaMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        
     }
 }
