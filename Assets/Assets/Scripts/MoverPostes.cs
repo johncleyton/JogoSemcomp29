@@ -17,5 +17,6 @@ public class MoverPostes : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 }

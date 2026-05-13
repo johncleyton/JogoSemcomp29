@@ -414,7 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PostePrefab: {fileID: 2347268523203721753, guid: 2c88a515ffa8e5cecaf294b70d8c1285, type: 3}
   tempoMaximo: 1.5
-  alturaVariavel: 1.5
+  alturaVariavel: 4
 --- !u!4 &1723980410
 Transform:
   m_ObjectHideFlags: 0
