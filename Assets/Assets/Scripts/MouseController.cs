@@ -12,7 +12,7 @@ public class MouseController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         Vector2 mousePos = Input.mousePosition;
         //Debug.Log(mousePos);
