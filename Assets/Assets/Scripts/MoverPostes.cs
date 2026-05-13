@@ -6,7 +6,7 @@ public class MoverPostes : MonoBehaviour
 {
 
     public float velocidade = 3.4f;
-    public float limiteEsquerdo = -10f;
+    public float limiteEsquerdo = -30f;
     
     // Update is called once per frame
     void Update()

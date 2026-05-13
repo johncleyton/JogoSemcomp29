@@ -3,7 +3,7 @@ using UnityEngine;
 public class GeradorPostes : MonoBehaviour
 {
     public GameObject PostePrefab;
-    public float tempoMaximo = 1.5f;
+    public float tempoMaximo = 3f;
     private float cronometro = 0f;
     public float alturaVariavel = 3f;
 

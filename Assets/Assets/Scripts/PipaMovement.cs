@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 
 public class PipaMovement : MonoBehaviour
@@ -9,7 +10,7 @@ public class PipaMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("PipaMovement script has started.");
+        //Debug.Log("PipaMovement script has started.");
         rb.gravityScale = 1;
     }
 
@@ -18,13 +19,13 @@ public class PipaMovement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Clicou");
+            //Debug.Log("Clicou");
             rb.velocity = Vector2.up * velocity * Time.deltaTime;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
