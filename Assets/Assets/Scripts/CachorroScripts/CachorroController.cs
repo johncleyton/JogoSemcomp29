@@ -33,7 +33,7 @@ public class CachorroController : SpawnableObjects
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        this.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+        this.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f);       // MUDAR ANGULO PARA O CORRETO DE ACORDO COM A SPRITE DO CACHORRO, SE NECESSÁRIO
     }
 
     private void SetDirectionToComida()
