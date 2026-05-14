@@ -10,8 +10,21 @@ public class CachorroController : SpawnableObjects
 
     void Start()
     {
+        if (_comida == null)
+            _comida = GameObject.FindWithTag("Player");
+        SetSpawnPosition();
         SetSpriteFacingComida();
         SetDirectionToComida();
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
+    }
+
+    public void SetComida(GameObject comida)
+    {
+        _comida = comida;
     }
 
     private void SetSpriteFacingComida()
@@ -36,7 +49,6 @@ public class CachorroController : SpawnableObjects
             collision.gameObject.GetComponent<ComidaController>().IsEaten = true;
 
             Debug.Log("Cachorro comeu a comida!");
-            // Aqui você pode adicionar lógica para o que acontece quando o cachorro come a comida.
         }
     }
 }

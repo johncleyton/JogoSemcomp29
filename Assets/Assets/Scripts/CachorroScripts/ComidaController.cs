@@ -17,11 +17,12 @@ public class ComidaController : SpawnableObjects
     [HideInInspector] public bool IsEaten = false;
     private bool _isTimeOut = false;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         _cam = Camera.main;
         _rb = GetComponent<Rigidbody2D>();
+
+        SetSpawnPosition();
     }
 
     private float _timeLeft = 5f;

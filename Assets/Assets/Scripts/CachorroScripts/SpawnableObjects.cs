@@ -12,15 +12,26 @@ public class SpawnableObjects : MonoBehaviour
 
     [SerializeField] protected Collider2D _collider;
 
-    protected virtual void Awake()
+
+    public void SetLimits(GameObject objectWithLimits)
     {
-        SetSpawnPosition();
+        _upperLimit = objectWithLimits.transform.Find("CachorroUpperLimit");
+        _lowerLimit = objectWithLimits.transform.Find("CachorroLowerLimit");
+        _leftLimit = objectWithLimits.transform.Find("CachorroLeftLimit");
+        _rightLimit = objectWithLimits.transform.Find("CachorroRightLimit");    
     }
 
-    private void SetSpawnPosition()
+    public void SetSpawnPosition()
     {
-        float x = Random.Range(_leftLimit.position.x, _rightLimit.position.x);
-        float y = Random.Range(_lowerLimit.position.y, _upperLimit.position.y);
-        transform.position = new Vector3(x, y, 0f);
+        if (_upperLimit != null && _lowerLimit != null && _leftLimit != null && _rightLimit != null)
+        {
+            float x = Random.Range(_leftLimit.position.x, _rightLimit.position.x);
+            float y = Random.Range(_lowerLimit.position.y, _upperLimit.position.y);
+            transform.position = new Vector3(x, y, 0f);
+        }
+        else
+        {
+            Debug.LogError("Limits not set for " + gameObject.name);
+        }
     }
 }
