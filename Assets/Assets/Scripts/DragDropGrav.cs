@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Brigadeiro : MonoBehaviour
+public class DragDropGrav : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
     private bool isClicked = false;
@@ -13,6 +12,7 @@ public class Brigadeiro : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
+
     void Update()
     {
         if (isClicked)
@@ -35,6 +35,7 @@ public class Brigadeiro : MonoBehaviour
     {
         isClicked = false;
         rb.gravityScale = 1f;
+        rb.velocity = Vector3.zero;
     }
 
 
@@ -45,5 +46,4 @@ public class Brigadeiro : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }
