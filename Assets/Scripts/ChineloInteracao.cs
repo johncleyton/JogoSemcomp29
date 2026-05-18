@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +17,8 @@ public class ChineloInteracao : MonoBehaviour
     private Button meuBotao;
 
     private UIShake efeitoTremor;
+
+    private bool stunado;
 
     void Start()
     {
@@ -32,6 +37,8 @@ public class ChineloInteracao : MonoBehaviour
 
     private void AoClicarNoChinelo()
     {
+        if (stunado) return;
+
         if (estaVirado)
         {
             estaVirado = false;
@@ -45,7 +52,15 @@ public class ChineloInteracao : MonoBehaviour
             if (efeitoTremor != null)
             {
                 StartCoroutine(efeitoTremor.Shake(0.2f, 20f));
+                StartCoroutine(StunDoErro(2f));
             }
         }
+    }
+
+    private IEnumerator StunDoErro(float tempo)
+    {
+        stunado = true;
+        yield return new WaitForSecondsRealtime(tempo);
+        stunado = false;
     }
 }
