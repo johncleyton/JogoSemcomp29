@@ -190,7 +190,7 @@ Canvas:
   m_GameObject: {fileID: 134141205}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 153001686}
   - component: {fileID: 153001685}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -573,6 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1472528633}
   - component: {fileID: 1472528634}
+  - component: {fileID: 1472528635}
   m_Layer: 5
   m_Name: Chinelos
   m_TagString: Untagged
@@ -614,6 +615,18 @@ MonoBehaviour:
   viradoPrefab: {fileID: 5910200448708019093, guid: 90d6c93bbb60123418522276e4a08a36, type: 3}
   normalPrefab: {fileID: 6315885098979211878, guid: 74db1f2b646ca3d4c8b44e627da46adc, type: 3}
   proporcaoOcupacao: 0.6
+--- !u!114 &1472528635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472528632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85b1e97ab6e02e4eae1c7fba1458888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2040962291
 GameObject:
   m_ObjectHideFlags: 0
