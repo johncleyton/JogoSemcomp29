@@ -20,12 +20,14 @@ public class ChineloInteracao : MonoBehaviour
 
     private bool stunado;
 
+    private ChineloController chineloController;
+
     void Start()
     {
         minhaImagem = GetComponent<Image>();
         meuBotao = GetComponent<Button>();
         meuBotao.onClick.AddListener(AoClicarNoChinelo);
-
+        chineloController= Object.FindFirstObjectByType<ChineloController>();
 
         efeitoTremor = Object.FindFirstObjectByType<UIShake>();
 
@@ -43,6 +45,11 @@ public class ChineloInteracao : MonoBehaviour
         {
             estaVirado = false;
             minhaImagem.sprite = spriteNormal;
+
+            if (chineloController != null)
+            {
+                chineloController.AvisarChineloDesvirado();
+            }
         }
         else
         {

@@ -574,6 +574,7 @@ GameObject:
   - component: {fileID: 1472528633}
   - component: {fileID: 1472528634}
   - component: {fileID: 1472528635}
+  - component: {fileID: 1472528636}
   m_Layer: 5
   m_Name: Chinelos
   m_TagString: Untagged
@@ -625,6 +626,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b85b1e97ab6e02e4eae1c7fba1458888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1472528636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472528632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9951b46bf331c4eb10a1d2df1e947f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2040962291

@@ -10,11 +10,13 @@ public class ChineloUISpawner : MonoBehaviour
 
     [Header("Configurações de Visual")]
     [Range(0.1f, 0.9f)]
-    public float proporcaoOcupacao = 0.6f; 
+    public float proporcaoOcupacao = 0.6f;
 
     private RectTransform areaDoJogo;
     private List<GameObject> chinelosParaSpawnar;
     private List<Vector2> posicoesDoGrid;
+
+    private List<GameObject> chinelosEmJogo = new List<GameObject>();
 
     void Awake()
     {
@@ -75,7 +77,6 @@ public class ChineloUISpawner : MonoBehaviour
         float larguraCelula = areaDoJogo.rect.width / 3f;
         float alturaCelula = areaDoJogo.rect.height / 3f;
 
-     
         float tamanhoBase = Mathf.Min(larguraCelula, alturaCelula) * proporcaoOcupacao;
 
         float limiteDesvioX = (larguraCelula - tamanhoBase) / 2f;
@@ -90,6 +91,9 @@ public class ChineloUISpawner : MonoBehaviour
 
             Vector2 posicaoFinal = new Vector2(centroDaCelula.x + desvioX, centroDaCelula.y + desvioY);
             GameObject chineloInstanciado = Instantiate(chinelosParaSpawnar[i], areaDoJogo, false);
+
+            // 2. AQUI: Salvamos o clone instanciado na nossa nova lista!
+            chinelosEmJogo.Add(chineloInstanciado);
 
             RectTransform rectChinelo = chineloInstanciado.GetComponent<RectTransform>();
 
@@ -113,5 +117,23 @@ public class ChineloUISpawner : MonoBehaviour
             lista[i] = lista[j];
             lista[j] = aux;
         }
+    }
+
+    public bool VerificarFimDoJogo()
+    {
+        bool resultado = true;
+
+        foreach (GameObject chinelo in chinelosEmJogo)
+        {
+            if (chinelo != null)
+            {
+                if (chinelo.GetComponent<ChineloInteracao>().estaVirado)
+                {
+                    resultado = false;
+                }
+            }
+        }
+
+        return resultado;
     }
 }
