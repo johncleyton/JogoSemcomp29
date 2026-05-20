@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
+  - enabled: 1
+    path: Assets/Assets/Scenes/TesteGiro.unity
+    guid: bf361a23cf4f5cd4f9f8b0f52a333fcb
+  - enabled: 1
+    path: Assets/Assets/Scenes/TesteMic.unity
+    guid: 1a2f738764999834ab34c1984157e732
   m_configObjects: {}
