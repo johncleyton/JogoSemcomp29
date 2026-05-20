@@ -250,6 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 300
   rb: {fileID: 665915110}
+  sprite: {fileID: 665915108}
+  corDeColisao: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!60 &665915112
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -377,8 +379,8 @@ Transform:
   m_GameObject: {fileID: 1233077791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0895, y: 0.0716, z: 0}
-  m_LocalScale: {x: 21.06341, y: 10.509874, z: 5.857088}
+  m_LocalPosition: {x: -0.1089, y: 0.0716, z: 0}
+  m_LocalScale: {x: 21.882145, y: 10.509874, z: 5.857088}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
