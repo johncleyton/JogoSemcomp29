@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DragDropGrav : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
     private bool isClicked = false;
     Rigidbody2D rb;
 
@@ -17,9 +16,9 @@ public class DragDropGrav : MonoBehaviour
     {
         if (isClicked)
         {
-            Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = -4.92f;
-            Debug.Log(mouseWorldPos);
+            //Debug.Log(mouseWorldPos);
             transform.position = mouseWorldPos;
 
         }
