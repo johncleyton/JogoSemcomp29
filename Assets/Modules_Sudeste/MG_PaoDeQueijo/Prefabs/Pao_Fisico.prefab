@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -119,8 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934622149edd03ea9bc57c5dc2b165e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flightDuration: 3
   gotCaught: 0
-  ingredientData: {fileID: 0}
+  ingredientData: {fileID: 11400000, guid: bdd3608c350e95424a012133f3e3c709, type: 2}
   targetPos: {x: 0, y: 0, z: 0}
   speed: 10
   arcHeight: 1
