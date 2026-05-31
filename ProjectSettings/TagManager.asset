@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cursor
   - Enemy
+  - Pontuacao
   layers:
   - Default
   - TransparentFX
