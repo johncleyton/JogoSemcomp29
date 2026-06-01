@@ -10,13 +10,17 @@ public class GameManager : MonoBehaviour
 {
     public float timer = 0;
     int sceneCount = 0;
+    public static int qtdBrigadeiro = 4;
     // Start is called before the first frame update
     void Start()
     {
         sceneCount = SceneManager.sceneCountInBuildSettings;
-        Debug.Log(sceneCount);
+        //Debug.Log(sceneCount);
         timer = GlobalVariables.timer;
-        Debug.Log(timer);
+        //Debug.Log(timer);
+
+        qtdBrigadeiro = Random.Range(Mathf.RoundToInt(10 - timer), Mathf.RoundToInt(12 - timer));
+        //Debug.Log(qtdBrigadeiro);
     }
 
     // Update is called once per frame
