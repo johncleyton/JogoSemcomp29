@@ -672,7 +672,7 @@ MonoBehaviour:
   - {fileID: 928368660}
   - {fileID: 231490323}
   - {fileID: 107029255}
-  qtde: 5
+  qtde: 6
 --- !u!1 &1074073214
 GameObject:
   m_ObjectHideFlags: 0
