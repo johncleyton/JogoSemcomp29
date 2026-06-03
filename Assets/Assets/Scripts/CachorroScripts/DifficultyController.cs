@@ -26,6 +26,10 @@ public class DifficultyController : MonoBehaviour
     void Awake()
     {
         // _difficulty = GetDifficulty(); COLOCAR AQUI O GETTER PARA PEGAR A DIFICULDADE DO JOGO
+    }
+
+    void Start()
+    {
         SetCachorroParameters();
     }
 
