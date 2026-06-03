@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1547455128215011029}
   - component: {fileID: 2233642809669240640}
   - component: {fileID: 806910656134892974}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Brigadeiro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,4 +161,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823238f6955a2e14d80c2e2ef16ea579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  Mouth: {fileID: 6517241883359013077, guid: f6432870a19a559478d73d6157b8d3af, type: 3}

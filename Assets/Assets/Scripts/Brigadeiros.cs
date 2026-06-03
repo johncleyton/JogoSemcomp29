@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Brigadeiros : MonoBehaviour
 {
@@ -44,6 +45,9 @@ public class Brigadeiros : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameManager.qtdBrigadeiro == 0)
+        {
+            SceneManager.LoadScene(4);
+        }
     }
 }

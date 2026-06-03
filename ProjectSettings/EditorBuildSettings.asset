@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assets/Scenes/Cena 4.unity
     guid: df7383e236a828243baca970af7aedbe
+  - enabled: 1
+    path: Assets/Assets/Scenes/Boiaserra.unity
+    guid: a43d6772339b6b2488ed8e860deec5d3
+  - enabled: 1
+    path: Assets/Assets/Scenes/Brigadeiro.unity
+    guid: 4a0ed0641815c964d8047185611291c7
   m_configObjects: {}
