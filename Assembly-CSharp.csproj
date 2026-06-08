@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{073AABA0-B86D-180D-DFBE-C9709BE421A1}</ProjectGuid>
+    <ProjectGuid>{6A44F781-DA57-4927-AF00-66FD7EBF4568}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -60,12 +60,11 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Cartas.cs" />
+    <Compile Include="Assets\Assets\Scripts\Truco.cs" />
     <Compile Include="Assets\Assets\Scripts\GlobalVariables.cs" />
-    <Compile Include="Assets\Scripts\Zap.cs" />
     <Compile Include="Assets\Assets\Scripts\MouseController.cs" />
+    <Compile Include="Assets\ValorCarta.cs" />
     <Compile Include="Assets\Assets\Scripts\TargetController.cs" />
-    <Compile Include="Assets\Scripts\Tempo.cs" />
     <Compile Include="Assets\Assets\Scripts\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
