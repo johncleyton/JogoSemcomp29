@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class DragDropGrav : MonoBehaviour
 {
+    private GameManager gameManager;
     private bool isClicked = false;
     Rigidbody2D rb;
     List<Vector3> ponto_momento = new List<Vector3>();
 
     private void Awake()
     {
+        gameManager = Object.FindFirstObjectByType<GameManager>();
         ponto_momento.Add(Vector3.zero);
         ponto_momento.Add(Vector3.zero);
         rb = GetComponent<Rigidbody2D>();
@@ -48,9 +50,8 @@ public class DragDropGrav : MonoBehaviour
 
     private void OnMouseUp()
     {
-        //rb.gravityScale = 1f;
-
         isClicked = false;
+        rb.gravityScale = 1f;
 
         //Tira o momento
         rb.velocity = Vector3.zero;
@@ -69,7 +70,8 @@ public class DragDropGrav : MonoBehaviour
         if (collision.gameObject.layer == 4)
         {
             Destroy(gameObject);
-            GameManager.qtdBrigadeiro -= 1;
+            gameManager.qtdBrigadeiro -= 1;
+            //Debug.Log(GameManager.qtdBrigadeiro);
         }
     }
 }

@@ -4,5 +4,29 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Cena 1.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/MinigameApagao.unity
+    guid: d2d2c51296f7b9e4395db653b49a5a3f
+  - enabled: 1
+    path: Assets/Scenes/TesteMic.unity
+    guid: 1a2f738764999834ab34c1984157e732
+  - enabled: 1
+    path: Assets/Scenes/Brigadeiro.unity
+    guid: 4a0ed0641815c964d8047185611291c7
+  - enabled: 1
+    path: Assets/Scenes/CachorroGame.unity
+    guid: 888530e680f266042b8a16e26d48a32e
+  - enabled: 1
+    path: Assets/Scenes/Flappipa.unity
+    guid: 41ec691beefe244f4a77eee58e51d099
+  - enabled: 1
+    path: Assets/Scenes/MinigameChinelo.unity
+    guid: 7af2d86586b193a4f8f079afee011195
+  - enabled: 1
+    path: Assets/Scenes/MinigameVirarCarne.unity
+    guid: 3d4fcbd8478b6c7499b709d66267648d
   m_configObjects: {}

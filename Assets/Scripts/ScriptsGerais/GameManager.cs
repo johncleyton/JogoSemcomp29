@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public float timer = 0;
     int sceneCount = 0;
-    public static int qtdBrigadeiro = 4;
+    public int qtdBrigadeiro = 4;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         {
             int random = Random.Range(0, sceneCount);
             GlobalVariables.timer = Mathf.Max((float)(GlobalVariables.timer - 0.1), (float)3.0);
-            SceneManager.LoadScene(random);
+            //SceneManager.LoadScene(random);
         }
     }
 }

@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Boiaserra : MonoBehaviour
 {
+    private GameManager gameManager;
     private float bpm = 150f;
     [SerializeField] GameObject boiaserra1;
     [SerializeField] GameObject boiaserra2;
     [SerializeField] GameObject boiaserra3;
     [SerializeField] GameObject boiaserra_player;
-
 
     private float beatinterval;
     private float beatCount = 0;
@@ -26,6 +26,8 @@ public class Boiaserra : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = Object.FindFirstObjectByType<GameManager>();
+
         beatinterval = 60 / bpm;
 
         //O int que representa cada nota eh quantos beatinterval precisa para chegar na nota
@@ -57,9 +59,10 @@ public class Boiaserra : MonoBehaviour
                 }
                 //remove a ultima nota para diminuir o count e o for de cima continuar dando certo
                 notes.RemoveAt(notes.Count - 1);
+
                 //Caso o jogador nao tenha clicado na janela em que a nota estava disponivel, ele erra
                 //e perde
-                //Caso o jogador tenha acertado, miss = false, e entao aqui ele volta a ser true
+                //Caso o jogador tenha acertado, miss se torna false, e entao aqui ele volta a ser true
                 if (miss)
                 {
                     print("FALHOU");
@@ -113,9 +116,9 @@ public class Boiaserra : MonoBehaviour
             }
         }
 
-        //Janela em que a nota esta disponivel: Quando faltar 2 beatinterval, clicar em 
-        //espaco fora da dos +-80ms de erro, faz o jogador errar
-        //Antes disso, ele pode clicar a vontade que nao vai fazer nenhuma diferenca
+        //Janela em que a nota esta disponivel: Quando faltar 2 beatinterval.
+        //Clicar em espaco fora dos +-80ms de margem de erro e dentro dos 2 beatinterval, faz o jogador errar
+        //Antes dos 2 beatinterval, ele pode clicar a vontade que nao vai fazer nenhuma diferenca
         if (notes[0] <= 2 && Input.GetKeyDown(KeyCode.Space))
         {
             //verifica para o erro de -80ms ate 0ms
@@ -136,5 +139,10 @@ public class Boiaserra : MonoBehaviour
                 SceneManager.LoadScene(5);
             }
         }
+        if (gameManager.timer <= 0)
+        {
+            Debug.Log("GANHOU");
+        }
     }
 }
+
