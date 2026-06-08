@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         {
             int random = Random.Range(0, sceneCount);
             GlobalVariables.timer = Mathf.Max((float)(GlobalVariables.timer - 0.1), (float)3.0);
-            //SceneManager.LoadScene(random);
+            SceneManager.LoadScene(random);
         }
     }
 }

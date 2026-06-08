@@ -5,20 +5,6 @@ using UnityEngine;
 
 public class MouseController : MonoBehaviour
 {
-<<<<<<< HEAD
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    public void Update()
-    {
-        Vector2 mousePos = Input.mousePosition;
-        //Debug.Log(mousePos);
-
-=======
     public Texture2D texturaCursor;
     public GameObject cursor, objetoCursor;
     // Start is called before the first frame update
@@ -41,6 +27,5 @@ public class MouseController : MonoBehaviour
             objetoCursor.transform.position = mousePos;
             //Debug.Log("Movimentando cursor para: " + objetoCursor.transform.position);
         }
->>>>>>> MergePt2
     }
 }
