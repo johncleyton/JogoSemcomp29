@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class PlayerFollowCursor : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerFollowCursorPhysics : MonoBehaviour
 {
     [Header("Configurações de Movimento Vertical (Y)")]
     public float smoothTime = 0.15f;
@@ -19,22 +20,32 @@ public class PlayerFollowCursor : MonoBehaviour
     public float maxX = 8f;
 
     private Camera mainCamera;
-    private Vector3 velocityY = Vector3.zero;
+    private Rigidbody2D rb;
+    private float velocityY = 0f; 
 
     private float currentForwardSpeed = 0f;
     private float lastTargetY = 0f;
     private bool movingUp = false;
 
+    private bool hasInput = false;
+    private Vector2 targetWorldPos;
+
     void Start()
     {
         mainCamera = Camera.main;
+        rb = GetComponent<Rigidbody2D>();
+
+        rb.gravityScale = 0f;
+        rb.freezeRotation = true;
+
         lastTargetY = transform.position.y;
+        targetWorldPos = transform.position;
     }
 
     void Update()
     {
         Vector3 inputPosition = Vector3.zero;
-        bool hasInput = false;
+        hasInput = false;
 
         if (Input.touchCount > 0)
         {
@@ -51,9 +62,11 @@ public class PlayerFollowCursor : MonoBehaviour
         if (hasInput)
         {
             inputPosition.z = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
-            Vector3 targetWorldPos = mainCamera.ScreenToWorldPoint(inputPosition);
+            Vector3 worldPos = mainCamera.ScreenToWorldPoint(inputPosition);
 
-            float currentTargetY = targetWorldPos.y;
+            targetWorldPos = worldPos; 
+
+            float currentTargetY = worldPos.y;
             float deltaY = currentTargetY - lastTargetY;
 
             if (Mathf.Abs(deltaY) > oscillationThreshold)
@@ -68,21 +81,25 @@ public class PlayerFollowCursor : MonoBehaviour
                 }
             }
             lastTargetY = currentTargetY;
-
-            Vector3 targetPosition = new Vector3(transform.position.x, targetWorldPos.y, transform.position.z);
-            targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
-
-            float newY = Vector3.SmoothDamp(transform.position, targetPosition, ref velocityY, smoothTime).y;
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
         }
+    }
 
-        currentForwardSpeed = Mathf.MoveTowards(currentForwardSpeed, 0f, forwardDecay * Time.deltaTime);
+    void FixedUpdate()
+    {
+        currentForwardSpeed = Mathf.MoveTowards(currentForwardSpeed, 0f, forwardDecay * Time.fixedDeltaTime);
+        float movementX = (currentForwardSpeed - backwardPushSpeed) * Time.fixedDeltaTime;
 
-        float movementX = (currentForwardSpeed - backwardPushSpeed) * Time.deltaTime;
-
-        float newX = transform.position.x + movementX;
+        float newX = rb.position.x + movementX;
         newX = Mathf.Clamp(newX, minX, maxX);
 
-        transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+        float newY = rb.position.y;
+
+        if (hasInput)
+        {
+            float targetYClamped = Mathf.Clamp(targetWorldPos.y, minY, maxY);
+            newY = Mathf.SmoothDamp(rb.position.y, targetYClamped, ref velocityY, smoothTime);
+        }
+
+        rb.MovePosition(new Vector2(newX, newY));
     }
 }
