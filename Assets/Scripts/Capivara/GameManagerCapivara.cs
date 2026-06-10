@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; 
 
 public class GameManagerCapivara : MonoBehaviour
 {
@@ -12,11 +12,11 @@ public class GameManagerCapivara : MonoBehaviour
 
     public GameObject painelVitoria;
     public GameObject painelDerrota;
-    // Start is called before the first frame update
+    public GameObject telaVermelha; 
 
     void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -27,7 +27,7 @@ public class GameManagerCapivara : MonoBehaviour
         capivarasEncontradas++;
         Debug.Log("Capivara encontrada! Total: " + capivarasEncontradas + "/" + totalCapivaras);
 
-        if(capivarasEncontradas >= totalCapivaras)
+        if (capivarasEncontradas >= totalCapivaras)
         {
             FaseConcluida();
         }
@@ -35,14 +35,23 @@ public class GameManagerCapivara : MonoBehaviour
 
     public void GameOver()
     {
-        // verificar se foi por tempo ou por ter clicado no errado
-        painelDerrota.SetActive(true);
+        // CORRIGIDO: Agora está chamando "telaVermelha" exatamente como foi declarado em cima
+        if (telaVermelha != null) 
+        {
+            telaVermelha.SetActive(true);
+        }
+
+        // Ativa o painel de derrota original (com botões de reiniciar, etc)
+        if (painelDerrota != null)
+        {
+            painelDerrota.SetActive(true);
+        }
     }
 
     private void FaseConcluida()
     {
         Debug.Log("Venceu a fase!");
-        painelVitoria.SetActive(true);
+        if (painelVitoria != null) painelVitoria.SetActive(true);
     }
 
     public void ReiniciarFase()
