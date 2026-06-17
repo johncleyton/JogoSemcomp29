@@ -8,10 +8,31 @@ public class SpawnIngredients : MonoBehaviour
     [Tooltip("Drag here Pao and Queijo prefabs")]
     public GameObject[] ingredientPrefabs;
 
-    public Transform targetPoint; 
+    public Transform targetPoint;
+
+    private Camera cam;
+
+    void Awake()
+    {
+        // CORRIGIDO: evita chamar Camera.main repetidamente em CalculateSpawn
+        cam = Camera.main;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        // CORRIGIDO: avisa claramente no Console se faltar configuração no
+        // Inspector, em vez de deixar o InvokeRepeating lançar erro a cada 2s
+        if (targetPoint == null)
+        {
+            Debug.LogError("SpawnIngredients: 'targetPoint' não foi definido no Inspector. Os ingredientes não terão para onde voar.");
+        }
+
+        if (ingredientPrefabs == null || ingredientPrefabs.Length == 0)
+        {
+            Debug.LogError("SpawnIngredients: nenhum prefab foi colocado em 'ingredientPrefabs'.");
+        }
+
         // usado para calcular uma linha justa 
         // para tacar coisas no player
         // CalculateSpawn();
@@ -23,6 +44,13 @@ public class SpawnIngredients : MonoBehaviour
 
     public void LaunchProjectile()
     {
+        // CORRIGIDO: aborta com segurança em vez de quebrar com exceção
+        // se a configuração no Inspector estiver incompleta
+        if (targetPoint == null || ingredientPrefabs == null || ingredientPrefabs.Length == 0)
+        {
+            return;
+        }
+
         int randomIndex = Random.Range(0, ingredientPrefabs.Length);
 
         GameObject prefabSorted = ingredientPrefabs[randomIndex];
@@ -48,9 +76,6 @@ public class SpawnIngredients : MonoBehaviour
         // A ideia é, de algum canto, acima da mesa e do personagem, 
         // vai ser TACADO no personagem um ingrediente, 
 
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        
         // esq = 0, topo = 1, dir = 2
         int ladoSorteado = Random.Range(0, 3);
         
@@ -75,9 +100,9 @@ public class SpawnIngredients : MonoBehaviour
 
         // viewport: z distancia da camera para o background
 
-        viewportPoint.z = Mathf.Abs(Camera.main.transform.position.z);
+        viewportPoint.z = Mathf.Abs(cam.transform.position.z);
 
-        Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewportPoint);
+        Vector3 worldPos = cam.ViewportToWorldPoint(viewportPoint);
 
         return new Vector2(worldPos.x, worldPos.y);
     }

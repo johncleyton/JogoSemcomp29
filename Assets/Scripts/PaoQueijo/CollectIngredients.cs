@@ -36,16 +36,23 @@ public class CollectIngredients : MonoBehaviour
     public void AddIngredient(IngredientData data)
     {
         ingredients.Add(data);
+        currentQuantity = ingredients.Count; // CORRIGIDO: antes ficava parado desde o Start()
 
         GameObject novoIcon = null;
 
         if (data.nameIngredient == "Pao") novoIcon = iconPaoPrefab;
-        else if (data.nameIngredient == "Pao") novoIcon = iconQueijoPrefab;
+        else if (data.nameIngredient == "Queijo") novoIcon = iconQueijoPrefab;
 
         if (novoIcon != null && mesaTransform != null)
         {
             Instantiate(novoIcon, mesaTransform);
         }
+
+        // CORRIGIDO: antes era preciso lembrar de chamar VerifyRevenue() manualmente
+        // de fora (em CursorCustomPao) toda vez depois de AddIngredient(). Agora a
+        // própria classe garante que a verificação acontece assim que a mesa enche,
+        // não importa de onde AddIngredient() seja chamado.
+        VerifyRevenue();
     }
 
 
@@ -71,11 +78,16 @@ public class CollectIngredients : MonoBehaviour
             }
 
             ingredients.Clear(); // Limpa a mesa para a próxima rodada
+            currentQuantity = ingredients.Count; // CORRIGIDO: sincroniza depois de limpar
 
-
-            foreach (Transform child in mesaTransform)
+            // CORRIGIDO: evita NullReferenceException se mesaTransform não tiver
+            // sido arrastado no Inspector
+            if (mesaTransform != null)
             {
-                Destroy(child.gameObject);
+                foreach (Transform child in mesaTransform)
+                {
+                    Destroy(child.gameObject);
+                }
             }
         }
     }

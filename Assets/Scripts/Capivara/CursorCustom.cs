@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorCustom : MonoBehaviour
@@ -9,15 +7,18 @@ public class CursorCustom : MonoBehaviour
 
     // (0,0)
     public Vector2 hotSpot = Vector2.zero;
-    // Start is called before the first frame update
+
     void Start()
     {
-        Cursor.SetCursor(cursorMao, hotSpot, CursorMode.Auto);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        // CORRIGIDO: evita sobrescrever o cursor com "nada" caso a textura
+        // não tenha sido arrastada no Inspector; agora avisa no Console.
+        if (cursorMao != null)
+        {
+            Cursor.SetCursor(cursorMao, hotSpot, CursorMode.Auto);
+        }
+        else
+        {
+            Debug.LogWarning("CursorCustom: nenhuma textura foi atribuída em 'cursorMao'.");
+        }
     }
 }

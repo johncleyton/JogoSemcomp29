@@ -1,62 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorCustomPao : MonoBehaviour
 {
+    private Camera cam;
 
-    public float speed = 500f;
-
-    public RectTransform cursorRect;
-
-
-    // joystick mobile gameobject
-    //public Joystick joystick;
+    void Awake()
+    {
+        // CORRIGIDO: evita chamar Camera.main (busca por tag) a cada clique
+        cam = Camera.main;
+    }
 
     void Update()
     {
-        //Vector2 direction = new Vector2(joystick.Horizontal, joystick.Vertical);
-
-        //cursorRect.anchoredPosition += direction * speed * Time.deltaTime;
-
-        // limitar bordas da tela
-        //Vector2 fixedPos = cursorRect.anchoredPosition;
-
-        //fixedPos.x = Mathf.Clamp(fixedPos.x, -Screen.width / 2, Screen.width / 2);
-        //fixedPos.y = Mathf.Clamp(fixedPos.y, -Screen.height / 2, Screen.height / 2);
-
-        //cursorRect.anchoredPosition = fixedPos;
-
+        // Detecta o clique do mouse no PC ou o toque na tela do celular
+        if (Input.GetMouseButtonDown(0))
+        {
+            ClickedAction();
+        }
     }
 
+    private void ClickedAction()
+    {
+        if (cam == null) return;
 
-//     public void ClickedAction()
-//     {
-//         Vector2 worldPos = Camera.main.ScreenToWorldPoint(cursorRect.position);
+        // Pega a posição exata de onde o dedo tocou na tela
+        Vector2 worldPos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-//         RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+        // Lança um raio mágico nesse exato ponto para ver se acertou algo
+        RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
 
-//         if (hit.collider != null)
-//         {
+        if (hit.collider != null)
+        {
+            // Verifica se o objeto tocado é um ingrediente
+            if (hit.collider.CompareTag("Ingredientes"))
+            {
+                IngredientBehaviour ingredientScript = hit.collider.GetComponent<IngredientBehaviour>();
 
-//             // ingredientScript != null
-//             if (hit.collider.CompareTag("Ingredientes"))
-//             {
+                // CORRIGIDO: o campo "gotCaught" existia mas nunca era usado.
+                // Agora ele realmente impede que o mesmo ingrediente seja
+                // processado mais de uma vez antes de ser destruído.
+                if (ingredientScript != null && !ingredientScript.gotCaught)
+                {
+                    ingredientScript.gotCaught = true;
 
-//                 Debug.Log("pegou objecto!");
-//                 // coleta
-//                 // Destroy(hit.collider.gameObject);
+                    Debug.Log("Pegou o ingrediente no ar!");
 
-//                 IngredientBehaviour ingredientScript = hit.collider.GetComponent<IngredientBehaviour>();
+                    // CORRIGIDO: protege contra erro caso CollectIngredients
+                    // ainda não exista na cena (ordem de inicialização)
+                    if (CollectIngredients.instance != null)
+                    {
+                        CollectIngredients.instance.AddIngredient(ingredientScript.ingredientData);
+                    }
 
+                    Destroy(hit.collider.gameObject);
 
-//                 CollectIngredients.instance.AddIngredient(ingredientScript.ingredientData);
-
-//                 Destroy(hit.collider.gameObject);
-
-
-//                 CollectIngredients.instance.VerifyRevenue();
-//             }
-//         }
-//     }
+                    // CORRIGIDO: a verificação da receita agora acontece
+                    // automaticamente dentro de AddIngredient(), então não
+                    // é mais preciso chamá-la de novo aqui.
+                }
+            }
+        }
+    }
 }

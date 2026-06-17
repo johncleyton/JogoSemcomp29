@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7574066955603419998}
   - component: {fileID: 606954097171833145}
   - component: {fileID: 1593585133854360178}
-  - component: {fileID: 329134621155936115}
+  - component: {fileID: 5149631028953903265}
   m_Layer: 0
   m_Name: Queijo_Fisico
   m_TagString: Ingredientes
@@ -118,10 +118,10 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0.01, y: 0.03}
   serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &329134621155936115
+  m_Radius: 0.47
+--- !u!114 &5149631028953903265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,12 +130,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2566591003353632965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 934622149edd03ea9bc57c5dc2b165e6, type: 3}
+  m_Script: {fileID: 11500000, guid: c34afefe4050c3c89b7ff3a31a8ae06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   flightDuration: 3
   gotCaught: 0
-  ingredientData: {fileID: 11400000, guid: e60fecd62d84b8b5fa0bea244c141f48, type: 2}
+  ingredientData: {fileID: 11400000, guid: de54f6bf3464a9cc6acc87f5e5b0944b, type: 2}
   targetPos: {x: 0, y: 0, z: 0}
   speed: 10
   arcHeight: 1

@@ -17,6 +17,11 @@ public class IngredientBehaviour : MonoBehaviour
 
     public Vector3 targetPos;
 
+    // OBSERVAÇÃO: este campo não entra em nenhum cálculo hoje — o voo é
+    // controlado inteiramente por "flightDuration" (tempo fixo até a mesa,
+    // independente da distância). Mantido sem alteração para não perder
+    // valores já configurados em prefabs; me avise se quiser que o voo passe
+    // a depender da velocidade em vez do tempo fixo.
     public float speed = 10;
 
     [Tooltip("How high the arc should be in units")]
@@ -70,8 +75,9 @@ public class IngredientBehaviour : MonoBehaviour
 
     void Arrived()
     {
-        // DMAGAE?
-
+        // TODO: hoje o ingrediente simplesmente desaparece se não for pego a
+        // tempo, sem nenhuma penalidade (vida, pontos, som de erro, etc).
+        // Esse é o lugar certo para adicionar essa reação no futuro.
         Destroy(gameObject);
     }
 }

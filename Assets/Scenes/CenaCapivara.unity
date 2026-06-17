@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 348149082}
   - component: {fileID: 348149081}
   - component: {fileID: 348149079}
+  - component: {fileID: 348149083}
   m_Layer: 0
   m_Name: Animais (2)
   m_TagString: Untagged
@@ -287,6 +288,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &348149083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348149078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 0
 --- !u!1 &434444666
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +312,7 @@ GameObject:
   - component: {fileID: 434444670}
   - component: {fileID: 434444669}
   - component: {fileID: 434444667}
+  - component: {fileID: 434444671}
   m_Layer: 0
   m_Name: Animais (5)
   m_TagString: Untagged
@@ -420,6 +435,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &434444671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434444666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 0
 --- !u!1 &531938250
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,6 +644,7 @@ GameObject:
   - component: {fileID: 627024001}
   - component: {fileID: 627024000}
   - component: {fileID: 627023998}
+  - component: {fileID: 627024002}
   m_Layer: 0
   m_Name: Animais (1)
   m_TagString: Untagged
@@ -738,6 +767,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &627024002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627023997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 0
 --- !u!1 &853648557
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,6 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e6534047fb5f95181a4fbad050107c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  limitesDoMapa: {fileID: 1548277852}
 --- !u!114 &853648560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,6 +942,7 @@ GameObject:
   - component: {fileID: 1124290178}
   - component: {fileID: 1124290177}
   - component: {fileID: 1124290175}
+  - component: {fileID: 1124290179}
   m_Layer: 0
   m_Name: Animais (6)
   m_TagString: Untagged
@@ -1021,6 +1065,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1124290179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124290174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 0
 --- !u!1 &1249179755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,6 +1164,7 @@ GameObject:
   - component: {fileID: 1298764351}
   - component: {fileID: 1298764350}
   - component: {fileID: 1298764348}
+  - component: {fileID: 1298764352}
   m_Layer: 0
   m_Name: Animais (3)
   m_TagString: Untagged
@@ -1229,6 +1287,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1298764352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298764347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 0
 --- !u!1 &1387271635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,6 +1311,7 @@ GameObject:
   - component: {fileID: 1387271639}
   - component: {fileID: 1387271638}
   - component: {fileID: 1387271636}
+  - component: {fileID: 1387271640}
   m_Layer: 0
   m_Name: Animais (4)
   m_TagString: Untagged
@@ -1362,6 +1434,96 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1387271640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387271635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 0
+--- !u!1 &1548277851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1548277853}
+  - component: {fileID: 1548277852}
+  m_Layer: 0
+  m_Name: telaParaCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &1548277852
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548277851}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!4 &1548277853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548277851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.71, y: -0.26, z: 11.151244}
+  m_LocalScale: {x: 30, y: 10.89, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1612057205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,6 +1535,7 @@ GameObject:
   - component: {fileID: 1612057209}
   - component: {fileID: 1612057208}
   - component: {fileID: 1612057207}
+  - component: {fileID: 1612057210}
   m_Layer: 0
   m_Name: Capivara
   m_TagString: Untagged
@@ -1492,6 +1655,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1612057210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612057205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 1
 --- !u!1 &1646247276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,6 +1822,7 @@ GameObject:
   - component: {fileID: 1995082527}
   - component: {fileID: 1995082526}
   - component: {fileID: 1995082525}
+  - component: {fileID: 1995082528}
   m_Layer: 0
   m_Name: Capivara (1)
   m_TagString: Untagged
@@ -1765,6 +1942,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1995082528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995082523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 1
 --- !u!1 &1997748104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,6 +1966,7 @@ GameObject:
   - component: {fileID: 1997748108}
   - component: {fileID: 1997748107}
   - component: {fileID: 1997748105}
+  - component: {fileID: 1997748109}
   m_Layer: 0
   m_Name: Animais
   m_TagString: Untagged
@@ -1898,6 +2089,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1997748109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997748104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499e86108831c9baac5e2979c930d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCapivara: 0
 --- !u!1 &2069424293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,3 +2253,4 @@ SceneRoots:
   - {fileID: 1124290178}
   - {fileID: 1646247279}
   - {fileID: 531938254}
+  - {fileID: 1548277853}
