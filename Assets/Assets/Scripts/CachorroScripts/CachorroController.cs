@@ -8,6 +8,9 @@ public class CachorroController : SpawnableObjects
     [Range(1f, 10f)]
     [SerializeField] private float _speed;
 
+    private const float X_CACHORRO_AIM_ERROR_THRESHOLD = 4f;
+    private const float Y_CACHORRO_AIM_ERROR_THRESHOLD = 2f;
+
     void Start()
     {
         if (_comida == null)
@@ -30,7 +33,6 @@ public class CachorroController : SpawnableObjects
     private void SetSpriteFacingComida()
     {
         Vector2 direction = _comida.transform.position - transform.position;
-
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         this.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f);       // MUDAR ANGULO PARA O CORRETO DE ACORDO COM A SPRITE DO CACHORRO, SE NECESSÁRIO
@@ -39,6 +41,15 @@ public class CachorroController : SpawnableObjects
     private void SetDirectionToComida()
     {
         Vector3 direction = (_comida.transform.position - transform.position).normalized;
+
+        int numOfCachorros = DifficultyController.Instance.GetNumberOfCachorros();
+        if (numOfCachorros > 1)
+        {
+            float x = Random.Range(-X_CACHORRO_AIM_ERROR_THRESHOLD, X_CACHORRO_AIM_ERROR_THRESHOLD);
+            float y = Random.Range(-Y_CACHORRO_AIM_ERROR_THRESHOLD, Y_CACHORRO_AIM_ERROR_THRESHOLD);
+            direction = new Vector3(direction.x + x, direction.y + y, direction.z);
+        }
+
         _collider.gameObject.GetComponent<Rigidbody2D>().velocity = direction * _speed;
     }
 
