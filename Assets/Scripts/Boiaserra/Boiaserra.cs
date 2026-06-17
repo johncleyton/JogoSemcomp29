@@ -8,10 +8,9 @@ public class Boiaserra : MonoBehaviour
 {
     private GameManager gameManager;
     private float bpm = 150f;
-    [SerializeField] GameObject boiaserra1;
-    [SerializeField] GameObject boiaserra2;
-    [SerializeField] GameObject boiaserra3;
-    [SerializeField] GameObject boiaserra_player;
+    public GameObject[] boiaserra;
+    public Animator[] animator;
+    private int boiCount = 0;
 
     private float beatinterval;
     private float beatCount = 0;
@@ -19,7 +18,7 @@ public class Boiaserra : MonoBehaviour
     private float beatTimer = 0f;
     private bool miss = true;
 
-    List<int> notes = new List<int>();
+    List<Vector3Int> notes = new List<Vector3Int>();
 
 
 
@@ -33,11 +32,11 @@ public class Boiaserra : MonoBehaviour
         //O int que representa cada nota eh quantos beatinterval precisa para chegar na nota
         //Como o boi da esquerda eh o player, e o boi da direita eh quem comeca a leva de movimento
         //sempre precisamos que o int seja um multiplo de 4
-        notes.Add(12);
-        notes.Add(20);
-        notes.Add(28);
-        notes.Add(36);
-        notes.Add(44);
+        notes.Add(new Vector3Int(4, 1, 2));
+        notes.Add(new Vector3Int(10, 2, 1));
+        notes.Add(new Vector3Int(28, 1, 2));
+        notes.Add(new Vector3Int(36, 1, 1));
+        notes.Add(new Vector3Int(44, 1, 1));
     }
 
     // Update is called once per frame
@@ -49,9 +48,20 @@ public class Boiaserra : MonoBehaviour
         {
             beatTimer = 0f;
 
+            //fica circulando entre 1 a 4
+            if (beatCount == 4)
+            {
+                beatCount = 1;
+                compassCount += 1;
+            }
+            else
+            {
+                beatCount += 1;
+            }
+
             //Quando nao sobrar nenhum beatinterval na nota com index 0, a nota eh 
             //substituida pela de index 1, e a de index 1 pela de index 2, e assim por diante...
-            if (notes[0] == 0)
+            if (notes[0][0] == 0)
             {
                 for (int i = 0; i < (notes.Count - 1); i++)
                 {
@@ -74,61 +84,58 @@ public class Boiaserra : MonoBehaviour
                 }
             }
 
-            //Diminui 1 beatinterval de cada nota
+            if (beatCount % 2 == 0)
+            {
+                boiaserra[boiCount].gameObject.transform.position -= new Vector3(0f, 0.5f, 0f);
+                if (boiCount == 0)
+                {
+                    boiCount = 4;
+                }
+                boiaserra[boiCount - 1].gameObject.transform.position += new Vector3(0f, 0.5f, 0f);
+                if (boiCount != 0)
+                {
+                    boiCount--;
+                }
+            }
+
             for (int i = 0; i < notes.Count; i++)
             {
-                notes[i] -= 1;
-                Debug.Log(notes[i]);
+                if (notes[i][1] == 1 && beatCount % 2 == 0)
+                {
+                    notes[i] = notes[i] - new Vector3Int(1, 0, 0);
+                    Debug.Log(notes[i]);
+                }
+                else if (notes[i][1] == 2)
+                {
+                    notes[i] = notes[i] - new Vector3Int(1, 0, 0);
+                    Debug.Log(notes[i]);
+                }
             }
             print("===============================");
 
-            //fica circulando entre 1 a 4
-            if (beatCount == 4)
+            if (notes[0][0] <= 3)
             {
-                beatCount = 1;
-                compassCount += 1;
+                animator[notes[0][0]].SetTrigger("Empinou");
             }
-            else
+            if (notes[1][0] <= 3)
             {
-                beatCount += 1;
-            }
-
-            //movimentacao dos bois
-            if (beatCount == 1)
-            {
-                boiaserra_player.gameObject.transform.position -= new Vector3(0f, 0.5f, 0f);
-                boiaserra1.gameObject.transform.position += new Vector3(0f, 0.5f, 0f);
-            }
-            else if (beatCount == 2)
-            {
-                boiaserra1.gameObject.transform.position -= new Vector3(0f, 0.5f, 0f);
-                boiaserra2.gameObject.transform.position += new Vector3(0f, 0.5f, 0f);
-            }
-            else if (beatCount == 3)
-            {
-                boiaserra2.gameObject.transform.position -= new Vector3(0f, 0.5f, 0f);
-                boiaserra3.gameObject.transform.position += new Vector3(0f, 0.5f, 0f);
-            }
-            else if (beatCount == 4)
-            {
-                boiaserra3.gameObject.transform.position -= new Vector3(0f, 0.5f, 0f);
-                boiaserra_player.gameObject.transform.position += new Vector3(0f, 0.5f, 0f);
+                animator[notes[1][0]].SetTrigger("Empinou");
             }
         }
 
         //Janela em que a nota esta disponivel: Quando faltar 2 beatinterval.
-        //Clicar em espaco fora dos +-80ms de margem de erro e dentro dos 2 beatinterval, faz o jogador errar
+        //Clicar em espaco fora dos +-100ms de margem de erro e dentro dos 2 beatinterval, faz o jogador errar
         //Antes dos 2 beatinterval, ele pode clicar a vontade que nao vai fazer nenhuma diferenca
-        if (notes[0] <= 2 && Input.GetKeyDown(KeyCode.Space))
+        if (notes[0][0] <= 2 && Input.GetKeyDown(KeyCode.Space))
         {
-            //verifica para o erro de -80ms ate 0ms
-            if ((beatinterval - beatTimer) < 0.1 && notes[0] == 1)
+            //verifica para o erro de -100ms ate 0ms
+            if ((beatinterval - beatTimer) < 0.1 && notes[0][0] == 1)
             {
                 print("deu certo");
                 miss = false;
             }
-            //verifica para o erro de 0ms ate 80ms
-            if (beatTimer < 0.1 && notes[0] == 0)
+            //verifica para o erro de 0ms ate 100ms
+            if (beatTimer < 0.1 && notes[0][0] == 0)
             {
                 print("deu certo");
                 miss = false;

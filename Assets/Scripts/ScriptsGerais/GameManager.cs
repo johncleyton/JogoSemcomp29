@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         if (timer > 0)
         {
-            timer -= Time.deltaTime;
+            //timer -= Time.deltaTime;
             //Debug.Log(timer);
         }
         else
