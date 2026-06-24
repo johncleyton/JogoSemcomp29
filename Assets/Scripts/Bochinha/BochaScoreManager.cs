@@ -1,51 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class BochaScoreManager : MonoBehaviour
+public class BochinhaScoreManager : MonoBehaviour
 {
-
-    private Transform bolimTrans;
+    public static BochinhaScoreManager Instance;
 
     public struct BochaData
     {
         public GameObject bochaObject;
         public string team;
-        public float distanceBolim;
+        public float distanceToBolim;
     }
 
-    public void EvaluateRound()
+    void Awake()
     {
-        // lembrar de colocar tag
-        GameObject[] activeBochas = GameObject.FindGameObjectsWithTag("Bocha");
+        if (Instance == null) Instance = this;
+    }
 
-        // data para repr bocha
-        List<BochaData> bochas = new List<BochaData>();
+    public void EvaluateRound(List<GameObject> activeBochas, Transform bolimTransform)
+    {
+        List<BochaData> listData = new List<BochaData>();
+        Vector2 bolimPos = bolimTransform.position;
 
         foreach (var obj in activeBochas)
         {
-            Rigidbody rb = obj.GetComponent<Rigidbody>();
-            if(rb != null && rb.maxLinearVelocity > 0.05f)
-            {
-                Debug.Log("Aguardando todas bochas pararem.");
-                return;
-            }
-
-            float dist = Vector3.Distance(obj.transform.position, bolimTrans.position);
-
-            // aplicar script de identificação da equipe!
-            string assignedTeam = "Time_A";
-            bochas.Add(new BochaData{ bochaObject= obj, team = assignedTeam, distanceBolim = dist});
+            Vector2 objPos = obj.transform.position;
+            float dist = Vector2.Distance(objPos, bolimPos);
+            
+            string assignedTeam = obj.name.Contains("TimeA") ? "Time A" : "Time B";
+            listData.Add(new BochaData { bochaObject = obj, team = assignedTeam, distanceToBolim = dist });
         }
 
-        // ordena por distancia, menor primeiro
-        bochas.Sort((x,y) => x.distanceBolim.CompareTo(y.distanceBolim));
+        listData.Sort((x, y) => x.distanceToBolim.CompareTo(y.distanceToBolim));
 
-        if(bochas.Count > 0)
+        if(listData.Count > 0)
         {
-            Debug.Log($"A Bocha mais próxima pertence ao: {bochas[0].team} a uma distância de {bochas[0].distanceBolim}m");
-        
-            // implementarpontos sequenciais bocha!!!
+            string equipeVencedora = listData[0].team;
+            float menorDistancia = listData[0].distanceToBolim;
+            
+            // Destaca a bola (no 2D, trocamos a cor do SpriteRenderer)
+            listData[0].bochaObject.GetComponent<SpriteRenderer>().color = Color.yellow; 
+
+            Debug.Log($"Vencedor da Rodada: {equipeVencedora}! Distância: {menorDistancia:F2}m");
+            BochinhaGameManager.Instance.scoreText.text = $"Vencedor: {equipeVencedora}!";
         }
     }
 }

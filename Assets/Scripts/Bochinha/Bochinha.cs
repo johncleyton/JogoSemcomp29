@@ -1,76 +1,96 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bochinha : MonoBehaviour
+public class BochinhaLauncher : MonoBehaviour
 {
+    public static BochinhaLauncher Instance;
 
-    private GameObject bochaPrefab;
-    private Transform launchPoint;
+    [Header("Configurações de Força")]
+    public Transform launchPoint;
+    public float maxForce = 15f; // Valores 2D costumam precisar de ajustes diferentes
+    public float forceMultiplier = 3f;
 
-    private float maxForce = 25;
-    private float forceMultiplier = 2f;
-
-    private Vector3 dragStartPos;
+    private GameObject prefabAtualParaLancar;
+    private bool podeLancar = false;
+    private Vector2 dragStartPos;
     private bool isDragging = false;
     private LineRenderer aimLine;
-    // Start is called before the first frame update
+
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
+
     void Start()
     {
         aimLine = GetComponent<LineRenderer>();
         if(aimLine) aimLine.positionCount = 0;
     }
 
-    // Update is called once per frame
+    public void SetupTurn(GameObject prefabParaLancar, bool isBolim)
+    {
+        prefabAtualParaLancar = prefabParaLancar;
+        podeLancar = true;
+    }
+
     void Update()
     {
+        if (!podeLancar) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             isDragging = true;
-            dragStartPos = Input.mousePosition;
-
+            dragStartPos = GetMouseWorldPosition();
             if(aimLine) aimLine.positionCount = 2;
         }
 
         if (isDragging)
         {
-            Vector3 currentMousePos = Input.mousePosition;
-
-            // inversa para estilingue
-            Vector3 dragVector = dragStartPos - currentMousePos;
-
+            Vector2 currentMousePos = GetMouseWorldPosition();
+            Vector2 dragVector = dragStartPos - currentMousePos;
+            
             if (aimLine)
             {
                 aimLine.SetPosition(0, launchPoint.position);
-                Vector3 targetDir = new Vector3(dragVector.x, 0, dragVector.y);
-
-                float forceMag = Mathf.Min(dragVector.magnitude * 0.05f, maxForce);
-
-                // literal A + AB, ponto inicial + vector ate final do ponto inicial * força
-                aimLine.SetPosition(1, launchPoint.position + targetDir*(forceMag*0.3f));
+                Vector2 targetDir = dragVector.normalized;
+                float forceMagnitude = Mathf.Min(dragVector.magnitude * 0.5f, maxForce);
+                
+                // Desenha a linha de acordo com a força
+                aimLine.SetPosition(1, (Vector2)launchPoint.position + (targetDir * forceMagnitude));
             }
-
         }
+
         if (Input.GetMouseButtonUp(0) && isDragging)
         {
             isDragging = false;
             if(aimLine) aimLine.positionCount = 0;
 
-            Vector3 dragVector = dragStartPos - Input.mousePosition;
-            Vector3 launchDirection = new Vector3(dragVector.x, 0, dragVector.y).normalized;
+            Vector2 dragVector = dragStartPos - GetMouseWorldPosition();
+            Vector2 launchDirection = dragVector.normalized;
             float launchForce = Mathf.Min(dragVector.magnitude * forceMultiplier, maxForce);
 
-            LaunchBocha(launchDirection, launchForce);
+            Launch(launchDirection, launchForce);
         }
     }
 
-    private void LaunchBocha(Vector3 direction, float force)
+    private Vector2 GetMouseWorldPosition()
     {
-        GameObject newBocha = Instantiate(bochaPrefab, launchPoint.position, Quaternion.identity);
-        Rigidbody rb = newBocha.GetComponent<Rigidbody>();
-        if (rb != null)
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return new Vector2(worldPos.x, worldPos.y);
+    }
+
+    private void Launch(Vector2 direction, float force)
+    {
+        podeLancar = false;
+
+        GameObject novaBola = Instantiate(prefabAtualParaLancar, launchPoint.position, Quaternion.identity);
+        Rigidbody2D rb2d = novaBola.GetComponent<Rigidbody2D>();
+        
+        if (rb2d != null)
         {
-            rb.AddForce(direction * force, ForceMode.Impulse);
+            // Aplica impulso no ambiente 2D
+            rb2d.AddForce(direction * force, ForceMode2D.Impulse);
         }
+
+        BochinhaGameManager.Instance.BolaLancada(novaBola);
     }
 }
