@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 2d3a8da96f70a6147ab853d0a3e07131
+=======
 guid: 2bdc3879ebaaef644983d6efa1e377e3
+>>>>>>> MergePt2
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
