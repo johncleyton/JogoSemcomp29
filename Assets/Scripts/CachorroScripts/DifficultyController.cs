@@ -22,11 +22,27 @@ public class DifficultyController : MonoBehaviour
     [SerializeField] private float _maxCachorroSpeed = 9.5f;
     [SerializeField] private float _speedVariation = 0.5f;
     [SerializeField] private AnimationCurve _speedCurve;
+    private int _numberOfCachorros = -1;
+
+    public static DifficultyController Instance;
 
     void Awake()
     {
+        if (Instance != null)
+            GameObject.Destroy(this);
+        Instance = this;
+
         // _difficulty = GetDifficulty(); COLOCAR AQUI O GETTER PARA PEGAR A DIFICULDADE DO JOGO
+    }
+
+    void Start()
+    {
         SetCachorroParameters();
+    }
+
+    public int GetNumberOfCachorros()
+    {
+        return _numberOfCachorros;
     }
 
     private LevelDifficulty GetDifficulty()
