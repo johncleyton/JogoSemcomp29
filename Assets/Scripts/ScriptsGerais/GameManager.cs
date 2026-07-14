@@ -28,14 +28,14 @@ public class GameManager : MonoBehaviour
     {
         if (timer > 0)
         {
-            //timer -= Time.deltaTime;
+            timer -= Time.deltaTime;
             //Debug.Log(timer);
         }
         else
         {
             int random = Random.Range(0, sceneCount);
             GlobalVariables.timer = Mathf.Max((float)(GlobalVariables.timer - 0.1), (float)3.0);
-            //SceneManager.LoadScene(random);
+            SceneManager.LoadScene(random);
         }
     }
 }
