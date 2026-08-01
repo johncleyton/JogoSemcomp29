@@ -71,7 +71,7 @@ public class MicInput : MonoBehaviour
 
 
 
-    void onDisable()
+    void OnDisable()
     {
         if(deviceName != null && Microphone.IsRecording(deviceName))
         {
