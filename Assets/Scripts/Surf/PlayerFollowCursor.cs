@@ -8,13 +8,13 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
     public float minY = -4.5f;
     public float maxY = 4.5f;
 
-    [Header("Mecanica de Avan�o (X) por Oscila��o")]
+    [Header("Mecanica de Avan�o (X) por Oscilacao")]
     public float impulseForce = 0.5f;
     public float maxForwardSpeed = 5f;
     public float forwardDecay = 2f;
     public float oscillationThreshold = 0.05f;
 
-    [Header("Mecanica de Recuo (Puxar para tr�s)")]
+    [Header("Mecanica de Recuo (Puxar para tras)")]
     public float backwardPushSpeed = 1.5f;
     public float minX = -8f;
     public float maxX = 8f;
@@ -31,6 +31,11 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
     private Vector2 targetWorldPos;
 
     private bool isDead = false;
+
+    [Header("Knockback")]
+    public float knockbackDecay = 8f;
+
+    private float knockbackVelocity = 0f;
 
     void Start()
     {
@@ -91,13 +96,14 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
         if (isDead) return;
 
         currentForwardSpeed = Mathf.MoveTowards(currentForwardSpeed, 0f, forwardDecay * Time.fixedDeltaTime);
-        float movementX = (currentForwardSpeed - backwardPushSpeed) * Time.fixedDeltaTime;
 
+        knockbackVelocity = Mathf.MoveTowards(knockbackVelocity, 0f, knockbackDecay * Time.fixedDeltaTime);
+
+        float movementX = (currentForwardSpeed - backwardPushSpeed + knockbackVelocity) * Time.fixedDeltaTime;
         float newX = rb.position.x + movementX;
         newX = Mathf.Clamp(newX, minX, maxX);
 
         float newY = rb.position.y;
-
         if (hasInput)
         {
             float targetYClamped = Mathf.Clamp(targetWorldPos.y, minY, maxY);
@@ -110,6 +116,11 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void ApplyKnockback(float amount)
+    {
+        knockbackVelocity -= Mathf.Abs(amount);
     }
 
     private void Die()
