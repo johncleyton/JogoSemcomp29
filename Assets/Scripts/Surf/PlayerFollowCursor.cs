@@ -1,27 +1,27 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerFollowCursorPhysics : MonoBehaviour
 {
-    [Header("Configurações de Movimento Vertical (Y)")]
+    [Header("Configuracoes de Movimento Vertical (Y)")]
     public float smoothTime = 0.15f;
     public float minY = -4.5f;
     public float maxY = 4.5f;
 
-    [Header("Mecânica de Avanço (X) por Oscilação")]
+    [Header("Mecanica de Avanï¿½o (X) por Oscilaï¿½ï¿½o")]
     public float impulseForce = 0.5f;
     public float maxForwardSpeed = 5f;
     public float forwardDecay = 2f;
     public float oscillationThreshold = 0.05f;
 
-    [Header("Mecânica de Recuo (Puxar para trás)")]
+    [Header("Mecanica de Recuo (Puxar para trï¿½s)")]
     public float backwardPushSpeed = 1.5f;
     public float minX = -8f;
     public float maxX = 8f;
 
     private Camera mainCamera;
     private Rigidbody2D rb;
-    private float velocityY = 0f; 
+    private float velocityY = 0f;
 
     private float currentForwardSpeed = 0f;
     private float lastTargetY = 0f;
@@ -29,6 +29,8 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
 
     private bool hasInput = false;
     private Vector2 targetWorldPos;
+
+    private bool isDead = false;
 
     void Start()
     {
@@ -64,7 +66,7 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
             inputPosition.z = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
             Vector3 worldPos = mainCamera.ScreenToWorldPoint(inputPosition);
 
-            targetWorldPos = worldPos; 
+            targetWorldPos = worldPos;
 
             float currentTargetY = worldPos.y;
             float deltaY = currentTargetY - lastTargetY;
@@ -86,6 +88,8 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isDead) return;
+
         currentForwardSpeed = Mathf.MoveTowards(currentForwardSpeed, 0f, forwardDecay * Time.fixedDeltaTime);
         float movementX = (currentForwardSpeed - backwardPushSpeed) * Time.fixedDeltaTime;
 
@@ -101,5 +105,16 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
         }
 
         rb.MovePosition(new Vector2(newX, newY));
+
+        if (newX <= minX)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        Debug.Log("Player morreu: chegou no X minimo do surf.");
     }
 }

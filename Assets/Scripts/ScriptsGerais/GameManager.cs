@@ -11,12 +11,14 @@ public class GameManager : MonoBehaviour
     public float timer = 0;
     int sceneCount = 0;
     public int qtdBrigadeiro = 4;
+    public float timeMultiplier = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
         sceneCount = SceneManager.sceneCountInBuildSettings;
         //Debug.Log(sceneCount);
-        timer = GlobalVariables.timer;
+        timer = GlobalVariables.timer * timeMultiplier;
         //Debug.Log(timer);
 
         qtdBrigadeiro = Random.Range(Mathf.RoundToInt(10 - timer), Mathf.RoundToInt(12 - timer));
