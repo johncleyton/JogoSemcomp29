@@ -1,4 +1,4 @@
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,4 +20,3 @@ public class AudioScale : MonoBehaviour
         transform.localScale = Vector3.Lerp(minScale, maxScale, loudness);
     }
 }
-*/

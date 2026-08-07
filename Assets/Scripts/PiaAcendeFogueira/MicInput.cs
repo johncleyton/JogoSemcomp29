@@ -1,53 +1,53 @@
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
-using UnityEngine.iOS;
+using System.Runtime.InteropServices;
 
 public class MicInput : MonoBehaviour
 {
     public float sensitivity = 100f;
     public int sampleWindow = 64; //quantidade amostras para calc volume audio
 
-
     public float loudness = 0f;
 
     private AudioClip micClip;
-
     private string deviceName;
 
-    // Start is called before the first frame update
+    #if UNITY_WEBGL && !UNITY_EDITOR
+        [DllImport("__Internal")]
+        private static extern void InitWebGLMic();
+
+        [DllImport("__Internal")]
+        private static extern float GetWebGLLoudness();
+    #endif
+
     void Start()
     {
-
-        // algum microfone conectado
-        if(Microphone.devices.Length > 0)
-        {   
-            //primeiro conectar - padrao
-            deviceName = Microphone.devices[0];
-
-            // name, loopado, 20 seg, freq superior
-            micClip = Microphone.Start(deviceName, true, 20, 44100);
-
-        }
-        else
-        {
-            Debug.LogWarning("Nenhum microfone conectado. O jogo não funcionará como esperado.");
-        }
-
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            InitWebGLMic();
+        #else
+            if(Microphone.devices.Length > 0)
+            {   
+                deviceName = Microphone.devices[0];
+                micClip = Microphone.Start(deviceName, true, 20, 44100);
+            }
+            else
+            {
+                Debug.LogWarning("Nenhum microfone conectado. O jogo não funcionará como esperado.");
+            }
+        #endif
     }
 
-
+    #if !UNITY_WEBGL || UNITY_EDITOR
     private float getLoudnessMicrophone()
     {
+        if (deviceName == null) return 0f;
+
         int clipPos = Microphone.GetPosition(deviceName) - sampleWindow;
 
         if(clipPos < 0 ) return 0f;
 
-        // n sampleWindow posicoes
         float [] waveData = new float[sampleWindow];
-
-
         micClip.GetData(waveData, clipPos);
 
         float totalSqr = 0f;
@@ -58,27 +58,26 @@ public class MicInput : MonoBehaviour
         }
 
         return Mathf.Sqrt(totalSqr / sampleWindow);
-     }
+    }
+    #endif
 
-    // Update is called once per frame
     void Update()
     {
-        if(micClip != null && Microphone.IsRecording(deviceName))
-        {
-            loudness = getLoudnessMicrophone() * sensitivity;
-        }
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            loudness = GetWebGLLoudness() * sensitivity;
+        #else
+            if(micClip != null && Microphone.IsRecording(deviceName))
+            {
+                loudness = getLoudnessMicrophone() * sensitivity;
+            }
+        #endif
     }
 
-
-
-    void onDisable()
+    void OnDisable()
     {
+        #if !UNITY_WEBGL || UNITY_EDITOR
         if(deviceName != null && Microphone.IsRecording(deviceName))
-        {
-            // libera
             Microphone.End(deviceName);
-        }
+        #endif
     }
-
 }
-*/

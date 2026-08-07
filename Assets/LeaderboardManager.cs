@@ -2,24 +2,12 @@ using UnityEngine;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Models; // Biblioteca necessária para ler a estrutura de resultados
 using System.Threading.Tasks;
+using UnityEngine.UI;
+using TMPro;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    [SerializeField] private string leaderboardId = "top_jogadores"; 
-
-    public async void EnviarPontuacao(int novaPontuacao)
-    {
-        Debug.Log($"Enviando pontuação: {novaPontuacao} para o Leaderboard...");
-        try
-        {
-            var resposta = await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardId, novaPontuacao);
-            Debug.Log($"Sucesso! Pontuação atualizada no servidor. Recorde salvo: {resposta.Score}");
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError("Falha ao enviar pontuação: " + ex.Message);
-        }
-    }
+    [SerializeField] private string leaderboardId = "top_jogadores";
 
     public async void MostrarTop3()
     {
