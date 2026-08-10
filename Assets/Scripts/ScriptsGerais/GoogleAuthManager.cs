@@ -34,7 +34,9 @@ public class GoogleAuthManager : MonoBehaviour
     public GameObject painelCriarNick;
     public GameObject painelMenuPrincipal;
     public TMP_InputField campoInputNick;
-
+    [Header("A Chave Mestra (Google Cloud Web Client)")]
+    public string clientID_Web = "";
+    private string clientSecret_Web = "";
 
     /*private string logNaTela = "=== DEBUG INICIADO ===\n";
     private Vector2 scrollPosition;
