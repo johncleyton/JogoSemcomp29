@@ -9,7 +9,7 @@ public class SpawnCards : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        qtasCartas = Mathf.Min(Mathf.RoundToInt(GlobalVariables.timerInicial - GlobalVariables.timer) + 5, 7);
+        qtasCartas = 7;
         int qualCarta = Random.Range(0, qtasCartas);
         for (int i = 0; i < qtasCartas; i++)
         {
