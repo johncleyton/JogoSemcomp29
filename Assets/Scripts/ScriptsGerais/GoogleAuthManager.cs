@@ -34,7 +34,6 @@ public class GoogleAuthManager : MonoBehaviour
     public GameObject painelCriarNick;
     public GameObject painelMenuPrincipal;
     public TMP_InputField campoInputNick;
-
     /*private string logNaTela = "=== DEBUG INICIADO ===\n";
     private Vector2 scrollPosition;
 

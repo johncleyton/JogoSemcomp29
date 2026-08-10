@@ -17,10 +17,6 @@ public class CavaloManager : MonoBehaviour
         transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
 
-    private void OnBecameInvisible()
-    {
-        Debug.Log("Perdeu Otario");
-        Destroy(gameObject);
-    }
+    
 
 }
