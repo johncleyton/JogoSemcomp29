@@ -57,9 +57,9 @@ public class CachorroController : SpawnableObjects
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<ComidaController>().IsEaten = true;
-
+            collision.gameObject.GetComponent<ComidaController>().IsEaten = true;            
             Debug.Log("Cachorro comeu a comida!");
+            Object.FindFirstObjectByType<CachorroGameManager>().Perder();
         }
     }
 }

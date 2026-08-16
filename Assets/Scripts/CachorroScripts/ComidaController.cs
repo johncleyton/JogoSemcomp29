@@ -62,7 +62,8 @@ public class ComidaController : SpawnableObjects
     {
         if (!IsEaten && _isTimeOut)
         {
-            Debug.Log("Você ganhou!");
+            Debug.Log("Jogo do Cachorro: Você ganhou!");
+            Object.FindFirstObjectByType<CachorroGameManager>().Vencer();
             // Aqui você pode adicionar lógica para o que acon
         }
     }
