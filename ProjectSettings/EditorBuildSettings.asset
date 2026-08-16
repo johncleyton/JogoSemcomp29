@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MinigameVirarCarne.unity
     guid: 3d4fcbd8478b6c7499b709d66267648d
+  - enabled: 1
+    path: Assets/Scenes/MinigameBerrante.unity
+    guid: d363f7f44e1d5db44ba6b3d7b26968d0
   m_configObjects: {}

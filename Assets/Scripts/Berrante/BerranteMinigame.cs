@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BerranteMinigame : MonoBehaviour
+public class BerranteMinigame : MinigameBase
 {
     [Header("Referências")]
     public DetectorAudio detector;
@@ -28,14 +28,11 @@ public class BerranteMinigame : MonoBehaviour
     public float fallbackFillPerPress = 0.08f;
 
     private float currentFill = 0f;
-    private float timer;
-    private bool finished = false;
     private Vector3 cameraOriginalPos;
     private bool usandoFallback = false;
 
     void Start()
     {
-        timer = timeLimit;
         if (fillBar != null)
             fillBar.fillAmount = 0f;
 
@@ -43,19 +40,20 @@ public class BerranteMinigame : MonoBehaviour
             cameraOriginalPos = cameraTransform.localPosition;
 
         usandoFallback = forcarFallback || detector == null || Microphone.devices.Length == 0;
-
         if (usandoFallback)
             Debug.Log("Nenhum microfone encontrado");
     }
 
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        return timeLimit > 0 ? timeLimit : tempoGlobalSugerido;
+    }
+
     void Update()
     {
-        if (finished) return;
-
-        timer -= Time.deltaTime;
+        if (jogoFinalizado) return;
 
         bool soprando;
-
         if (usandoFallback)
         {
             if (Input.GetKeyDown(fallbackKey))
@@ -72,7 +70,6 @@ public class BerranteMinigame : MonoBehaviour
         {
             float loudness = detector.getLoudnessMic() * audioSens;
             soprando = loudness >= threshold;
-
             if (soprando)
                 currentFill += fillSpeed * Time.deltaTime;
             else
@@ -102,24 +99,10 @@ public class BerranteMinigame : MonoBehaviour
         }
 
         if (currentFill >= requiredFill)
-            Win();
-        else if (timer <= 0)
-            Lose();
-    }
-
-    void Win()
-    {
-        finished = true;
-        Debug.Log("Venceu — berrante soprado a tempo!");
-        if (cameraTransform != null)
-            cameraTransform.localPosition = cameraOriginalPos;
-    }
-
-    void Lose()
-    {
-        finished = true;
-        Debug.Log("Perdeu — não encheu a barra a tempo!");
-        if (cameraTransform != null)
-            cameraTransform.localPosition = cameraOriginalPos;
+        {
+            if (cameraTransform != null)
+                cameraTransform.localPosition = cameraOriginalPos;
+            Vencer();
+        }
     }
 }
