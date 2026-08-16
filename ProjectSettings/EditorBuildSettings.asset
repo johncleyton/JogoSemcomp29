@@ -11,15 +11,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TelaIntervalo.unity
     guid: ca141d4951ad7094bab0ced651ac5d40
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Croche.unity
     guid: 7b9bb1e3df08e884dbdd311e86609a90
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Cavalhada.unity
     guid: 600f2ea90d9807143abcc86c294e104e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MinigameTruco.unity
     guid: c319439a4a249b6499cff89ecf9da56b
+  - enabled: 1
+    path: Assets/Scenes/MinigameVirarCarne.unity
+    guid: 3d4fcbd8478b6c7499b709d66267648d
   - enabled: 0
     path: Assets/Scenes/TesteMic.unity
     guid: 1a2f738764999834ab34c1984157e732
@@ -41,7 +44,4 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MinigameChinelo.unity
     guid: 7af2d86586b193a4f8f079afee011195
-  - enabled: 0
-    path: Assets/Scenes/MinigameVirarCarne.unity
-    guid: 3d4fcbd8478b6c7499b709d66267648d
   m_configObjects: {}
