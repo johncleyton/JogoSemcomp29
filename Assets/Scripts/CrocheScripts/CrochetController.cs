@@ -5,7 +5,7 @@ using System.IO;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
-public class CrochetController : MonoBehaviour
+public class CrochetController : MinigameBase
 {
     public LineRenderer lineRenderer;
     private List<Vector2> pointsList = new List<Vector2>();
@@ -14,6 +14,8 @@ public class CrochetController : MonoBehaviour
     public float dist;
 
     private Gesture[] trainingSet;
+
+    public int nosAtuais = 0, nosMax = 3;
 
     private void Start()
     {
@@ -81,7 +83,7 @@ public class CrochetController : MonoBehaviour
             if (result.GestureClass == "croche")
                 desenharHinge();
             else
-                Debug.Log($"Forma reconhecida: {result.GestureClass} com pontuação de similaridade: {result.Score}");
+                Debug.Log($"Forma reconhecida: {result.GestureClass} com pontuaï¿½ï¿½o de similaridade: {result.Score}");
         }
         else
             Debug.LogWarning("Nenhum template de gesto carregado no trainingSet para comparar!");
@@ -92,6 +94,9 @@ public class CrochetController : MonoBehaviour
         Debug.Log("Croche detectado, instanciando nova hinge");
         GameObject novoHinge = Instantiate(no, transform.position + (transform.up * dist), transform.rotation, transform);
         dist += novoHinge.GetComponent<SpriteRenderer>().size.y;
+        nosAtuais++;
+        if (nosAtuais >= nosMax)
+            Vencer();
     }
 
 
