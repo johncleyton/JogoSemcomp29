@@ -4,7 +4,7 @@ using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Boiaserra2 : MonoBehaviour
+public class Boiaserra2 : MinigameBase
 {
     private GameManager gameManager;
     //O bpm real eh dividido por 2, ou seja, 75 bpm
@@ -21,7 +21,20 @@ public class Boiaserra2 : MonoBehaviour
 
     List<Vector3Int> notes = new List<Vector3Int>();
 
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        float tempoFixo = 10f;
 
+        return tempoFixo;
+    }
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado)
+        {
+            return;
+        }
+        Vencer();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +90,7 @@ public class Boiaserra2 : MonoBehaviour
                 if (miss)
                 {
                     print("FALHOU");
-                    SceneManager.LoadScene(5);
+                    Perder();
                 }
                 else
                 {
@@ -194,12 +207,8 @@ public class Boiaserra2 : MonoBehaviour
             else if (miss == true)
             {
                 print("FALHOUU");
-                SceneManager.LoadScene(5);
+                Perder();
             }
-        }
-        if (gameManager.timer <= 0)
-        {
-            Debug.Log("GANHOU");
         }
     }
 }

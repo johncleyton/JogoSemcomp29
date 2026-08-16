@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Brigadeiros : MonoBehaviour
+public class Brigadeiros : MinigameBase
 {
     private GameManager gameManager;
     [SerializeField] GameObject brigadeiro;
@@ -52,12 +52,12 @@ public class Brigadeiros : MonoBehaviour
         if (gameManager.qtdBrigadeiro == 0)
         {
             Debug.Log("GANHOU");
-            SceneManager.LoadScene(4);
+            Vencer();
         }
         else if (gameManager.timer <= 0)
         {
             Debug.Log("PERDEU");
-
+            Perder();
         }
     }
 }

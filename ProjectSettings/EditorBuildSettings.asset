@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MinigameVirarCarne.unity
     guid: 3d4fcbd8478b6c7499b709d66267648d
+  - enabled: 1
+    path: Assets/Scenes/Boiaserra.unity
+    guid: a43d6772339b6b2488ed8e860deec5d3
   m_configObjects: {}
