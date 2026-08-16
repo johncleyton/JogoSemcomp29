@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScriptCarta : MonoBehaviour
+public class ScriptCarta : MinigameBase
 {
     public string valor = "";
     public int naipe = 0;
@@ -41,6 +41,8 @@ public class ScriptCarta : MonoBehaviour
                     break;
             }
             naipe = Random.Range(0, sprites.Length);
+            if (random == 3 && naipe == 0)
+                naipe = 1;
             switch (naipe)
             {
                 case 0:
@@ -66,8 +68,8 @@ public class ScriptCarta : MonoBehaviour
     public void cliqueCarta()
     {
         if (ehZap)
-            Debug.Log("Vitória ao clicar na carta: " + valor + " de " + nomeNaipe);
+            Vencer();
         else
-            Debug.Log("Derrota ao clicar na carta: " + valor + " de " + nomeNaipe);
+            Perder();
     }
 }
