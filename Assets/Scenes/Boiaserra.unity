@@ -445,12 +445,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 499422407}
-  - component: {fileID: 499422406}
   - component: {fileID: 499422405}
-  - component: {fileID: 499422408}
   - component: {fileID: 499422409}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: BoiaserraManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,20 +469,6 @@ MonoBehaviour:
   texturaCursor: {fileID: 0}
   cursor: {fileID: 0}
   objetoCursor: {fileID: 0}
---- !u!114 &499422406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499422404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82bb9b7b6b0d90f4f860051779456b2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: 3
-  qtdBrigadeiro: 4
 --- !u!4 &499422407
 Transform:
   m_ObjectHideFlags: 0
@@ -500,18 +484,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &499422408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499422404}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36b25797a93ff7840894627a0bb8524d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &499422409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,7 +576,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869824183}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &869824186
 Camera:
   m_ObjectHideFlags: 0
@@ -911,7 +883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1731117797
 MonoBehaviour:
   m_ObjectHideFlags: 0

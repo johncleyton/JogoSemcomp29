@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Boiaserra2 : MinigameBase
 {
-    private GameManager gameManager;
     //O bpm real eh dividido por 2, ou seja, 75 bpm
-    private float bpm = 300f;
+    private float bpm = 170f;
     public GameObject[] boiaserra;
     public Animator[] animator;
     private int boiCount = 0;
@@ -30,17 +29,13 @@ public class Boiaserra2 : MinigameBase
     public override void TempoEsgotado()
     {
         if (jogoFinalizado)
-        {
             return;
-        }
         Vencer();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = Object.FindFirstObjectByType<GameManager>();
-
         beatinterval = 60 / bpm;
 
         //O int que representa cada nota eh quantos beatinterval precisa para chegar na nota
@@ -113,6 +108,7 @@ public class Boiaserra2 : MinigameBase
             }
             //print("===============================");
 
+            //O que faz o boi empinar (animacao em que vc tem que clicar)
             if (notes[0][0] <= 3)
             {
                 if (notes[0][1] == 1) 
@@ -170,6 +166,7 @@ public class Boiaserra2 : MinigameBase
                 }
             }
 
+            //O que faz a animacao do boi agachando e levantando
             if (beatCount % 2 == 0)
             {
                 animator[0].SetBool("Levantou", false);
@@ -190,7 +187,7 @@ public class Boiaserra2 : MinigameBase
         //Janela em que a nota esta disponivel: Quando faltar 2 beatinterval.
         //Clicar em espaco fora dos +-100ms de margem de erro e dentro dos 2 beatinterval, faz o jogador errar
         //Antes dos 2 beatinterval, ele pode clicar a vontade que nao vai fazer nenhuma diferenca
-        if (notes[0][0] <= 2 && Input.GetKeyDown(KeyCode.Space))
+        if (notes[0][0] <= 2 && Input.GetMouseButtonDown(0))
         {
             //verifica para o erro de -100ms ate 0ms
             if ((beatinterval - beatTimer) < 0.1 && notes[0][0] == 1)

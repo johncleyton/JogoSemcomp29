@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TelaIntervalo.unity
     guid: ca141d4951ad7094bab0ced651ac5d40
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Croche.unity
     guid: 7b9bb1e3df08e884dbdd311e86609a90
   - enabled: 1
@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Brigadeiro.unity
     guid: 4a0ed0641815c964d8047185611291c7
   - enabled: 0
