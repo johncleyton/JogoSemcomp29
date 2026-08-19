@@ -47,4 +47,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MinigameSurf.unity
     guid: 20ba39128969c2944aeddf1daa54fcbe
+    path: Assets/Scenes/MinigameBerrante.unity
+    guid: d363f7f44e1d5db44ba6b3d7b26968d0
   m_configObjects: {}
