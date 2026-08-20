@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MinigameTruco.unity
     guid: c319439a4a249b6499cff89ecf9da56b
   - enabled: 0
+    path: Assets/Scenes/MinigameVirarCarne.unity
+    guid: 3d4fcbd8478b6c7499b709d66267648d
+  - enabled: 0
     path: Assets/Scenes/TesteMic.unity
     guid: 1a2f738764999834ab34c1984157e732
   - enabled: 0
@@ -51,4 +54,7 @@ EditorBuildSettings:
     guid: d363f7f44e1d5db44ba6b3d7b26968d0
     path: Assets/Scenes/Boiaserra.unity
     guid: a43d6772339b6b2488ed8e860deec5d3
+  - enabled: 1
+    path: Assets/Scenes/MinigameQuadrilha.unity
+    guid: 31ecfd878a8055e46801628118151104
   m_configObjects: {}
