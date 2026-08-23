@@ -9,7 +9,7 @@ public class GeradorPostes : MonoBehaviour
 
     void Start()
     {
-        GameObject novoPoste = Instantiate(PostePrefab);
+        GameObject novoPoste = Instantiate(PostePrefab, gameObject.transform);
         novoPoste.transform.position = transform.position;
     }
 
@@ -19,9 +19,8 @@ public class GeradorPostes : MonoBehaviour
 
         if (cronometro > tempoMaximo)
         {
-            
             // Instancia o poste em uma altura aleatória
-            GameObject novoPoste = Instantiate(PostePrefab, gameObject);
+            GameObject novoPoste = Instantiate(PostePrefab, gameObject.transform);
             novoPoste.transform.position = transform.position + new Vector3(0, Random.Range(-alturaVariavel, alturaVariavel), 0);
             
             cronometro = 0;

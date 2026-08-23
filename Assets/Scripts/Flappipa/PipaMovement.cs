@@ -44,7 +44,7 @@ public class PipaMovement : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        float tempoFixo = 3f;
+        float tempoFixo = 7f;
         return tempoFixo;
     }
 
