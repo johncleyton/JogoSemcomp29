@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PipaMovement : MonoBehaviour
+public class PipaMovement : MinigameBase
 {
 
     public float velocity = 300f;
@@ -39,6 +39,19 @@ public class PipaMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         sprite.color = corDeColisao;
-        Time.timeScale = 0f;
+        Perder();
     }
+
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        float tempoFixo = 3f;
+        return tempoFixo;
+    }
+
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado)
+            return;
+        Vencer();
+    } 
 }

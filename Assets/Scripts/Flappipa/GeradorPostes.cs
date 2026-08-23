@@ -10,6 +10,7 @@ public class GeradorPostes : MonoBehaviour
     void Start()
     {
         GameObject novoPoste = Instantiate(PostePrefab);
+        novoPoste.transform.position = transform.position;
     }
 
     void Update()
@@ -23,7 +24,7 @@ public class GeradorPostes : MonoBehaviour
             novoPoste.transform.position = transform.position + new Vector3(0, Random.Range(-alturaVariavel, alturaVariavel), 0);
             
             cronometro = 0;
-            tempoMaximo -=0.02f;
+            tempoMaximo -=0.05f;
         }
 
         
