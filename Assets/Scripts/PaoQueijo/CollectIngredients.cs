@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectIngredients : MonoBehaviour
+public class CollectIngredients : MinigameBase
 {
-
     [Tooltip("Put the ingrediens here")]
     public List<IngredientData> ingredients;
 
@@ -17,26 +16,30 @@ public class CollectIngredients : MonoBehaviour
     public GameObject iconPaoPrefab;
     public GameObject iconQueijoPrefab;
 
+    [Header("Controle de Vitória")]
+    public int metaPaesDeQueijo = 3;
+    private int paesFeitos = 0;
+
     void Start()
     {
         instance = this;
-
         currentQuantity = ingredients.Count;
     }
 
-    void Update()
+    // --- INTEGRAÇÃO COM O NOVO CORE ---
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        // mostrar o "inventario" na mesa;
-
-        // fazer tuplas de objetos, PAO + QUEIJO
-
+        // Aumenta a quantidade de pães de queijo necessários conforme a fase avança
+        metaPaesDeQueijo = 2 + (faseAtual / 4);
+        return tempoGlobalSugerido;
     }
-
 
     public void AddIngredient(IngredientData data)
     {
+        if (jogoFinalizado) return; // Trava de segurança
+
         ingredients.Add(data);
-        currentQuantity = ingredients.Count; // CORRIGIDO: antes ficava parado desde o Start()
+        currentQuantity = ingredients.Count; 
 
         GameObject novoIcon = null;
 
@@ -48,16 +51,13 @@ public class CollectIngredients : MonoBehaviour
             Instantiate(novoIcon, mesaTransform);
         }
 
-        // CORRIGIDO: antes era preciso lembrar de chamar VerifyRevenue() manualmente
-        // de fora (em CursorCustomPao) toda vez depois de AddIngredient(). Agora a
-        // própria classe garante que a verificação acontece assim que a mesa enche,
-        // não importa de onde AddIngredient() seja chamado.
         VerifyRevenue();
     }
 
-
     public void VerifyRevenue()
     {
+        if (jogoFinalizado) return; 
+
         if (ingredients.Count == 2)
         {
             string i1 = ingredients[0].nameIngredient;
@@ -65,31 +65,46 @@ public class CollectIngredients : MonoBehaviour
 
             if ((i1 == "Pao" && i2 == "Queijo") || (i1 == "Queijo" && i2 == "Pao"))
             {
-                Debug.Log("Pão de Queijo Perfeito!");
-                // Adiciona pontos
+                paesFeitos++;
+                Debug.Log($"Pão de Queijo Perfeito! ({paesFeitos}/{metaPaesDeQueijo})");
+                
+                if (paesFeitos >= metaPaesDeQueijo)
+                {
+                    LimparMesa();
+                    Vencer(); // Notifica o GameManagerRework que o jogador bateu a meta
+                    return;
+                }
             }
             else if (i1 == "Pao" && i2 == "Pao")
             {
-                Debug.Log("PÃO DE PÃO! Muito duro!"); // Reação de muito duro
+                Debug.Log("PÃO DE PÃO! Muito duro!"); 
             }
             else if (i1 == "Queijo" && i2 == "Queijo")
             {
-                Debug.Log("Muito Mole! Derretido!"); // Reação de muito mole
+                Debug.Log("Muito Mole! Derretido!"); 
             }
 
-            ingredients.Clear(); // Limpa a mesa para a próxima rodada
-            currentQuantity = ingredients.Count; // CORRIGIDO: sincroniza depois de limpar
+            LimparMesa(); 
+        }
+    }
 
-            // CORRIGIDO: evita NullReferenceException se mesaTransform não tiver
-            // sido arrastado no Inspector
-            if (mesaTransform != null)
+    private void LimparMesa()
+    {
+        ingredients.Clear(); 
+        currentQuantity = ingredients.Count; 
+
+        if (mesaTransform != null)
+        {
+            foreach (Transform child in mesaTransform)
             {
-                foreach (Transform child in mesaTransform)
-                {
-                    Destroy(child.gameObject);
-                }
+                Destroy(child.gameObject);
             }
         }
     }
 
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado) return;
+        base.TempoEsgotado();
+    }
 }

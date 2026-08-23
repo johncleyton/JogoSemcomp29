@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class BochinhaGameManager : MonoBehaviour
+public class BochinhaGameManager : MinigameBase
 {
     public static BochinhaGameManager Instance;
 
@@ -39,6 +39,13 @@ public class BochinhaGameManager : MonoBehaviour
         StartCoroutine(IniciarRodada());
     }
 
+    // --- INTEGRAÇÃO COM O NOVO CORE ---
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        // A Bocha exige cálculo físico de parada, necessitando de um tempo fixo maior (ex: 15s)
+        return 15f; 
+    }
+
     IEnumerator IniciarRodada()
     {
         turnText.text = "Lance o Bolim!";
@@ -49,6 +56,8 @@ public class BochinhaGameManager : MonoBehaviour
 
     public void BolaLancada(GameObject bolaGerada)
     {
+        if (jogoFinalizado) return; // Trava de segurança
+
         esperandoBolaParar = true;
         
         if (!isBolimEmJogo)
@@ -67,15 +76,13 @@ public class BochinhaGameManager : MonoBehaviour
 
     IEnumerator AguardarBolaParar(Rigidbody2D rb2d)
     {
-        yield return new WaitForSeconds(0.5f); // Dá um tempo pra física agir
+        yield return new WaitForSeconds(0.5f);
 
-        // Aguarda a velocidade da bola quase zerar
         while (rb2d.velocity.magnitude > 0.05f)
         {
             yield return new WaitForSeconds(0.2f);
         }
 
-        // Força a parada total para evitar deslizes infinitos
         rb2d.velocity = Vector2.zero;
         rb2d.angularVelocity = 0f;
         esperandoBolaParar = false;
@@ -85,6 +92,8 @@ public class BochinhaGameManager : MonoBehaviour
 
     void AvancarTurno()
     {
+        if (jogoFinalizado) return; // Trava de segurança
+
         if (!isBolimEmJogo)
         {
             isBolimEmJogo = true;
@@ -120,5 +129,27 @@ public class BochinhaGameManager : MonoBehaviour
     {
         turnText.text = "Fim da Rodada!";
         BochinhaScoreManager.Instance.EvaluateRound(todasBochas, currentBolim.transform);
+    }
+
+    // --- MÉTODOS DE RESOLUÇÃO DO MINIGAME ---
+    public void FinalizarPartida(string equipeVencedora)
+    {
+        if (jogoFinalizado) return;
+
+        // Assumindo que o jogador controla o Time A
+        if (equipeVencedora == "Time A")
+        {
+            Vencer();
+        }
+        else
+        {
+            Perder();
+        }
+    }
+
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado) return;
+        base.TempoEsgotado();
     }
 }

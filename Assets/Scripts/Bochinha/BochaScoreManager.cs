@@ -42,7 +42,13 @@ public class BochinhaScoreManager : MonoBehaviour
             listData[0].bochaObject.GetComponent<SpriteRenderer>().color = Color.yellow; 
 
             Debug.Log($"Vencedor da Rodada: {equipeVencedora}! Distância: {menorDistancia:F2}m");
-            BochinhaGameManager.Instance.scoreText.text = $"Vencedor: {equipeVencedora}!";
+            
+            if (BochinhaGameManager.Instance != null)
+            {
+                BochinhaGameManager.Instance.scoreText.text = $"Vencedor: {equipeVencedora}!";
+                // Chama a finalização no Manager principal
+                BochinhaGameManager.Instance.FinalizarPartida(equipeVencedora);
+            }
         }
     }
 }
