@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PersonMovement : MonoBehaviour
@@ -17,6 +18,9 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 3.5f;     // Altura Máxima
     [SerializeField] private float jumpDistance = 6f;     // Distância horizontal
 
+    [Header("Controller")]
+    [SerializeField] private PulaFogueiraController gameController;
+
     private float groundCoordinates;
     private bool isGrounded = true;
 
@@ -28,6 +32,8 @@ public class PersonMovement : MonoBehaviour
     {
         groundCoordinates = transform.position.y;
         RecalculateArcParameters();
+
+        transform.position = new Vector3(-runSpeed * (gameController.getMinigameDuration() - 2.5f), transform.position.y, 0);
     }
 
     void OnValidate()
@@ -78,5 +84,10 @@ public class PersonMovement : MonoBehaviour
             isGrounded = false;
             verticalSpeed = calculatedJumpSpeed;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        gameController.playerHit();
     }
 }

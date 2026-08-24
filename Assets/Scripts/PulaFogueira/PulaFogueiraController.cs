@@ -1,18 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Services.CloudSave.Models.Data.Player;
 using UnityEngine;
 
-public class PulaFogueiraController : MonoBehaviour
+public class PulaFogueiraController : MinigameBase
 {
-    // Start is called before the first frame update
-    void Start()
+    private float minigameDuration;
+
+    public void Start()
     {
-        
+        minigameDuration = Random.Range(3, 13);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void TempoEsgotado()
     {
-        
+        if(jogoFinalizado)
+        {
+            return;
+        }
+        Vencer();
+    }
+
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        return minigameDuration;
+    }
+
+    public void playerHit()
+    {
+        Debug.Log("Perdeu: bateu na fogueira");
+        Perder();
+    }
+
+    public float getMinigameDuration()
+    {
+        return minigameDuration;
     }
 }
