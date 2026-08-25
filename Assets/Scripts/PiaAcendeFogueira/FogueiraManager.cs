@@ -14,6 +14,7 @@ public class FogueiraManager : MinigameBase
     
     private float currentFire = 0f;
 
+    // --- INTEGRAÇÃO COM O NOVO CORE ---
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
         // Quanto mais avançada a fase, mais rápido a fogueira apaga sem sopro!
@@ -23,12 +24,16 @@ public class FogueiraManager : MinigameBase
 
     void Start()
     {
-        fogoSprite.localScale = Vector3.one * 0.1f;
+        if (fogoSprite != null)
+            fogoSprite.localScale = Vector3.one * 0.1f;
     }
 
     void Update()
     {
-        if (jogoFinalizado) return;
+        if (jogoFinalizado) return; // Trava de segurança
+
+        // Evita erros caso os objetos não tenham sido arrastados no Inspector
+        if (micInput == null || fogoSprite == null) return;
 
         if (micInput.loudness > blowThreshold)
             currentFire += fireGrowthRate * Time.deltaTime;
@@ -49,6 +54,8 @@ public class FogueiraManager : MinigameBase
 
     public override void TempoEsgotado()
     {
+        if (jogoFinalizado) return; // Trava de segurança
+        
         Debug.Log("Demorou demais, piá!");
         base.TempoEsgotado(); 
     }

@@ -53,4 +53,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MinigameQuadrilha.unity
     guid: 31ecfd878a8055e46801628118151104
+  - enabled: 1
+    path: Assets/Scenes/CenaCapivara.unity
+    guid: ce9d4aecd4bbae5d9ba914f409f24f6c
   m_configObjects: {}

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-
+using TMPro; // textmeshpro
 public class BochinhaGameManager : MinigameBase
 {
     public static BochinhaGameManager Instance;
@@ -15,8 +15,8 @@ public class BochinhaGameManager : MinigameBase
     public GameObject bochaTimeBPrefab;
 
     [Header("UI")]
-    public Text turnText;
-    public Text scoreText;
+    public TMP_Text turnText;
+    public TMP_Text scoreText;
 
     [HideInInspector] public GameObject currentBolim;
     
