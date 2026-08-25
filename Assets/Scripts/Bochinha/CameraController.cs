@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
     public Transform defaultView;
     public float smoothSpeed = 0.125f;
     // O Z negativo garante que a câmera enxergue o plano 2D
-    public Vector3 offset = new Vector3(0, 0, -10f); 
+    public Vector3 offset = new Vector3(0, 0, -10f);
 
     void Update()
     {
@@ -14,16 +14,18 @@ public class CameraController : MonoBehaviour
             GameObject[] bochas = GameObject.FindGameObjectsWithTag("Bocha");
             Transform target = null;
 
-            foreach(var b in bochas)
+            foreach (var b in bochas)
             {
-                if(b.GetComponent<Rigidbody2D>().velocity.magnitude > 0.5f)
+                if (b.TryGetComponent(out Rigidbody2D rbBocha) && rbBocha.velocity.magnitude > 0.5f)
                 {
                     target = b.transform;
                     break;
                 }
             }
 
-            if(target == null && BochinhaGameManager.Instance.currentBolim.GetComponent<Rigidbody2D>().velocity.magnitude > 0.5f)
+            if (target == null
+                && BochinhaGameManager.Instance.currentBolim.TryGetComponent(out Rigidbody2D rbBolim)
+                && rbBolim.velocity.magnitude > 0.5f)
             {
                 target = BochinhaGameManager.Instance.currentBolim.transform;
             }
