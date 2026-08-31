@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 public class JacareManager : MinigameBase
 {
     double cooldown = 1.5;
+    float timer_total = 0f;
 
     [Header("Configurações de Spawn")]
     public GameObject jacarePrefab;
@@ -32,17 +33,27 @@ public class JacareManager : MinigameBase
     void Start()
     {
         
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        timer_total += Time.deltaTime;
+ 
         timer += Time.deltaTime;
+
         if (timer >= (float)cooldown)
         {
             SpawnObject();
             timer = 0f;
         }
+
+        if (timer_total >= 10f)
+        {
+            TempoEsgotado();
+        }
+
     }
 
     void SpawnObject()
