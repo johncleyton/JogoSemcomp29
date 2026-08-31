@@ -11,6 +11,15 @@ public class GridManager : MonoBehaviour
     [Header("Tilemaps de referência")]
     public Tilemap wallsTilemap;
     public Tilemap targetsTilemap;
+    public Tilemap spawnsTilemap;
+
+    [Header("Tiles de marcação (spawn)")]
+    public TileBase playerSpawnTile;
+    public TileBase boxSpawnTile;
+
+    [Header("Prefabs")]
+    public GameObject playerPrefab;
+    public GameObject boxPrefab;
 
     private Dictionary<Vector2Int, CellType> grid = new();
 
@@ -20,18 +29,22 @@ public class GridManager : MonoBehaviour
         BuildFromTilemaps();
     }
 
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
     public void BuildFromTilemaps()
     {
         grid.Clear();
         BoundsInt bounds = wallsTilemap.cellBounds;
-
         for (int x = bounds.xMin; x < bounds.xMax; x++)
         {
             for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
                 Vector2Int gridPos = new Vector2Int(x, y);
-
                 if (wallsTilemap.HasTile(cellPos))
                 {
                     SetCell(gridPos, CellType.Wall);
@@ -46,13 +59,45 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
+
+        SpawnEntitiesFromTilemap();
+    }
+
+    private void SpawnEntitiesFromTilemap()
+    {
+        if (spawnsTilemap == null) return;
+
+        BoundsInt bounds = spawnsTilemap.cellBounds;
+        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        {
+            for (int y = bounds.yMin; y < bounds.yMax; y++)
+            {
+                Vector3Int cellPos = new Vector3Int(x, y, 0);
+                TileBase tile = spawnsTilemap.GetTile(cellPos);
+
+                if (tile == null) continue; // célula vazia, não tem marcação
+
+                Vector2Int gridPos = new Vector2Int(x, y);
+                Vector3 worldPos = GridToWorld(gridPos);
+
+                if (tile == playerSpawnTile)
+                {
+                    Instantiate(playerPrefab, worldPos, Quaternion.identity);
+                }
+                else if (tile == boxSpawnTile)
+                {
+                    Instantiate(boxPrefab, worldPos, Quaternion.identity);
+                    SetCell(gridPos, CellType.Box);
+                }
+            }
+        }
+        spawnsTilemap.gameObject.SetActive(false);
     }
 
     public CellType GetCell(Vector2Int pos)
     {
         if (grid.TryGetValue(pos, out CellType type))
             return type;
-
         return CellType.Wall;
     }
 
