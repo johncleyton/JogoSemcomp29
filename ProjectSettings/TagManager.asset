@@ -7,6 +7,7 @@ TagManager:
   - Cursor
   - Enemy
   - Pontuacao
+  - Buraco
   layers:
   - Default
   - TransparentFX
