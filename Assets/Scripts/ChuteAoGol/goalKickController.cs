@@ -16,6 +16,7 @@ public class goalKickController : MinigameBase
     private Collider2D ballCollider;
     private Collider2D defenseCollider;
     private BallController ballScript;
+    private goalKeeperController defenseScript;
 
     private bool timeEnded = false;
 
@@ -26,6 +27,7 @@ public class goalKickController : MinigameBase
         ballScript = ball.GetComponent<BallController>();
 
         defenseCollider = defense.GetComponent<Collider2D>();
+        defenseScript = defense.GetComponent<goalKeeperController>();
     }
 
     // Update is called once per frame
@@ -33,12 +35,14 @@ public class goalKickController : MinigameBase
     {
         if(ballScript.getIsThrown())
         {
+            defenseScript.moveGoalkeeper();
             StartCoroutine("waiter");
         }
 
         if(timeEnded)
         {
             ballScript.stopBall();
+            defenseScript.stopGoalKeeper();
             if(isGoal())
             {
                 Vencer();
