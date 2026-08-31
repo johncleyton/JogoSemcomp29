@@ -143,6 +143,6 @@ public class GridManager : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        return 30f; // tempo fixo maior, ao invés do tempo global genérico
+        return 30f;
     }
 }
