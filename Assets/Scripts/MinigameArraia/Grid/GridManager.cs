@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public enum CellType { Empty, Wall, Box, Target, BoxOnTarget }
 
-public class GridManager : MonoBehaviour
+public class GridManager : MinigameBase
 {
     public static GridManager Instance;
 
@@ -75,7 +75,7 @@ public class GridManager : MonoBehaviour
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
                 TileBase tile = spawnsTilemap.GetTile(cellPos);
 
-                if (tile == null) continue; // célula vazia, não tem marcação
+                if (tile == null) continue;
 
                 Vector2Int gridPos = new Vector2Int(x, y);
                 Vector3 worldPos = GridToWorld(gridPos);
@@ -105,6 +105,17 @@ public class GridManager : MonoBehaviour
     {
         grid[pos] = type;
     }
+    public void CheckWinCondition()
+    {
+        foreach (var kvp in grid)
+        {
+            if (kvp.Value == CellType.Box)
+            {
+                return;
+            }
+        }
+        Vencer();
+    }
 
     public bool IsWalkable(Vector2Int pos)
     {
@@ -128,5 +139,10 @@ public class GridManager : MonoBehaviour
     {
         Vector3Int cell = new Vector3Int(gridPos.x, gridPos.y, 0);
         return wallsTilemap.GetCellCenterWorld(cell);
+    }
+
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        return 30f; // tempo fixo maior, ao invés do tempo global genérico
     }
 }
