@@ -67,4 +67,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tapioca.unity
     guid: 9c7aa4ff74d3c774db0b0a1db9b3c737
+    path: Assets/Scenes/MinigameQuadrilha.unity
+    guid: 31ecfd878a8055e46801628118151104
+  - enabled: 1
+    path: Assets/Scenes/DesviarBuraco.unity
+    guid: e149d25b7f71bbd46ad8f3dc88aa21e4
   m_configObjects: {}
