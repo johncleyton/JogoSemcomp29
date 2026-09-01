@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeradorNotas : MinigameBase
+public class GeradorNotas : MonoBehaviour
 {
 
     public GameObject notaPrefab;
@@ -31,7 +31,7 @@ public class GeradorNotas : MinigameBase
                 frente.Acertar();
             } else
             {
-                Perder();
+                FindObjectOfType<MinigameBase>().Perder();
             }
 
         }

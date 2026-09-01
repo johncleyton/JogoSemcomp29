@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotaManager : MinigameBase
+public class NotaManager : MonoBehaviour
 {
     public float velocidade = 20f;
     public bool estaNaZonaDeAcerto = false;
@@ -18,7 +18,7 @@ public class NotaManager : MinigameBase
         if (other.CompareTag("sumidouro")) 
         {
             Debug.Log("Perdeu");
-            Perder();
+            FindObjectOfType<MinigameBase>().Perder();
         }
     }
 
