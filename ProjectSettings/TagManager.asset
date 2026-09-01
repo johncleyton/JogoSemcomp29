@@ -10,6 +10,8 @@ TagManager:
   - Bocha
   - La
   - Bolim
+  - marcador
+  - sumidouro
   layers:
   - Default
   - TransparentFX
