@@ -11,6 +11,8 @@ TagManager:
   - La
   - Bolim
   - Buraco
+  - marcador
+  - sumidouro
   layers:
   - Default
   - TransparentFX

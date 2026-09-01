@@ -88,4 +88,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MangaeLeite.unity
     guid: 4e6e3946591aa1f4aa973a6931290c0b
+    path: Assets/Scenes/CarretaFuracao.unity
+    guid: a7cb4ba5d2589089dba66a86f79d9a70
   m_configObjects: {}
