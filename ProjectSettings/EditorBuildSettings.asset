@@ -59,7 +59,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PulaFogueira.unity
     guid: 22b3ac1ac6644664d8df7aef67f0f8e0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/WhackaCroc.unity
     guid: 3bace07e48c4e504faf4a65dbaa670bf
+  - enabled: 1
+    path: Assets/Scenes/MangaeLeite.unity
+    guid: 4e6e3946591aa1f4aa973a6931290c0b
   m_configObjects: {}
