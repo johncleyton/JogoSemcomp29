@@ -62,4 +62,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Pesca.unity
     guid: 57661d1407da77c45aaa25c4f616e375
+    path: Assets/Scenes/Boiaserra.unity
+    guid: a43d6772339b6b2488ed8e860deec5d3
+  - enabled: 1
+    path: Assets/Scenes/Tapioca.unity
+    guid: 9c7aa4ff74d3c774db0b0a1db9b3c737
   m_configObjects: {}
