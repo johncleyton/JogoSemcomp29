@@ -80,4 +80,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Curupira.unity
     guid: 27b07b942ab402581baec791f1d2b115
+    path: Assets/Scenes/ChuteAoGol.unity
+    guid: dfb94333eced8b440b3133cc59ecb6d4
   m_configObjects: {}
