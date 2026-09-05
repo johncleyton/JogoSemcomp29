@@ -29,6 +29,7 @@ public class GameManagerRework : MonoBehaviour
     // Variáveis de controle de fluxo
     private bool estaJogando = false;
     private float timerInterno = 0f;
+    private bool isGameOver = false;
 
     public TMP_Text txtFase;
     public GameObject canvaIntervalo, eventos;
@@ -92,7 +93,7 @@ public class GameManagerRework : MonoBehaviour
             asyncLoad.allowSceneActivation = true; // Ativa a cena carregada
             cenaMinigameAtiva = randomScene;
             
-            //while (!asyncLoad.isDone)
+            while (!asyncLoad.isDone)
                 yield return null;
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(cenaMinigameAtiva));
@@ -125,6 +126,11 @@ public class GameManagerRework : MonoBehaviour
                     GameOver();
             }
 
+            if (isGameOver)
+            {
+                yield break; 
+            }
+
             // Acabou o tempo, avisa que o jogador nao pode mais jogar
             estaJogando = false;
             
@@ -145,6 +151,7 @@ public class GameManagerRework : MonoBehaviour
 
     public async void GameOver()
     {
+        isGameOver = true;
         StopAllCoroutines(); // Para o loop do jogo
         estaJogando = false;
 

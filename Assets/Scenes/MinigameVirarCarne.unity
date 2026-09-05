@@ -163,8 +163,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 298912644}
-  - component: {fileID: 298912643}
   - component: {fileID: 298912645}
+  - component: {fileID: 298912646}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -172,19 +172,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &298912643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298912642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82bb9b7b6b0d90f4f860051779456b2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: 3
 --- !u!4 &298912644
 Transform:
   m_ObjectHideFlags: 0
@@ -212,6 +199,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdd3a6449ce2b2498482d6c27330316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  texturaCursor: {fileID: 0}
+  cursor: {fileID: 0}
+  objetoCursor: {fileID: 0}
+--- !u!114 &298912646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298912642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba47e441159b314a9204a4b50f23f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tempoDoMinigameAtual: 7
+  faseAtual: 0
+  tempoMinimo: 3
+  decrementoDeTempo: 0.1
+  txtFase: {fileID: 0}
+  canvaIntervalo: {fileID: 0}
+  eventos: {fileID: 0}
 --- !u!1 &353150989
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &519420029
 AudioListener:
   m_ObjectHideFlags: 0
@@ -441,7 +450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &588155150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,7 +615,7 @@ MonoBehaviour:
   bar: {fileID: 1117592897}
   indicator: {fileID: 1781132592}
   hitzone: {fileID: 353150990}
-  speed: 200
+  speed: 180
 --- !u!4 &841086520
 Transform:
   m_ObjectHideFlags: 0

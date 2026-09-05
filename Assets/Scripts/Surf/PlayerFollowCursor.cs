@@ -1,49 +1,73 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerFollowCursorPhysics : MonoBehaviour
+public class PlayerFollowCursorPhysics : MinigameBase
 {
-    [Header("Configurações de Movimento Vertical (Y)")]
+    [Header("Configuracoes de Movimento Vertical (Y)")]
     public float smoothTime = 0.15f;
     public float minY = -4.5f;
     public float maxY = 4.5f;
 
-    [Header("Mecânica de Avanço (X) por Oscilação")]
+    [Header("Mecanica de Avanï¿½o (X) por Oscilacao")]
     public float impulseForce = 0.5f;
     public float maxForwardSpeed = 5f;
     public float forwardDecay = 2f;
     public float oscillationThreshold = 0.05f;
 
-    [Header("Mecânica de Recuo (Puxar para trás)")]
+    [Header("Mecanica de Recuo (Puxar para tras)")]
     public float backwardPushSpeed = 1.5f;
     public float minX = -8f;
     public float maxX = 8f;
 
     private Camera mainCamera;
     private Rigidbody2D rb;
-    private float velocityY = 0f; 
-
+    private float velocityY = 0f;
     private float currentForwardSpeed = 0f;
     private float lastTargetY = 0f;
     private bool movingUp = false;
-
     private bool hasInput = false;
     private Vector2 targetWorldPos;
+    private bool isDead = false;
+
+    [Header("Knockback")]
+    public float knockbackDecay = 8f;
+    private float knockbackVelocity = 0f;
+
+    [Header("Spawner de Galhos")]
+    public SpawnGalhos spawnGalhos;
+
+    [Header("Aceleracao geral do jogo")]
+    public float spawnTimerReducaoPorFase = 0.05f;
+    public float spawnTimerMinimo = 0.5f;
+
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        if (spawnGalhos != null)
+        {
+            float novoSpawnTimer = Mathf.Max(
+                spawnTimerMinimo,
+                spawnGalhos.baseSpawnTimer - (faseAtual * spawnTimerReducaoPorFase)
+            );
+            spawnGalhos.SetSpawnTimer(novoSpawnTimer);
+        }
+
+        return tempoGlobalSugerido;
+    }
 
     void Start()
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody2D>();
-
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
-
         lastTargetY = transform.position.y;
         targetWorldPos = transform.position;
     }
 
     void Update()
     {
+        if (isDead) return;
+
         Vector3 inputPosition = Vector3.zero;
         hasInput = false;
 
@@ -63,8 +87,7 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
         {
             inputPosition.z = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
             Vector3 worldPos = mainCamera.ScreenToWorldPoint(inputPosition);
-
-            targetWorldPos = worldPos; 
+            targetWorldPos = worldPos;
 
             float currentTargetY = worldPos.y;
             float deltaY = currentTargetY - lastTargetY;
@@ -72,7 +95,6 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
             if (Mathf.Abs(deltaY) > oscillationThreshold)
             {
                 bool dynamicMovingUp = deltaY > 0;
-
                 if (dynamicMovingUp != movingUp)
                 {
                     movingUp = dynamicMovingUp;
@@ -86,14 +108,16 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
 
     void FixedUpdate()
     {
-        currentForwardSpeed = Mathf.MoveTowards(currentForwardSpeed, 0f, forwardDecay * Time.fixedDeltaTime);
-        float movementX = (currentForwardSpeed - backwardPushSpeed) * Time.fixedDeltaTime;
+        if (isDead) return;
 
+        currentForwardSpeed = Mathf.MoveTowards(currentForwardSpeed, 0f, forwardDecay * Time.fixedDeltaTime);
+        knockbackVelocity = Mathf.MoveTowards(knockbackVelocity, 0f, knockbackDecay * Time.fixedDeltaTime);
+
+        float movementX = (currentForwardSpeed - backwardPushSpeed + knockbackVelocity) * Time.fixedDeltaTime;
         float newX = rb.position.x + movementX;
         newX = Mathf.Clamp(newX, minX, maxX);
 
         float newY = rb.position.y;
-
         if (hasInput)
         {
             float targetYClamped = Mathf.Clamp(targetWorldPos.y, minY, maxY);
@@ -101,5 +125,30 @@ public class PlayerFollowCursorPhysics : MonoBehaviour
         }
 
         rb.MovePosition(new Vector2(newX, newY));
+
+        if (newX <= minX)
+        {
+            Die();
+        }
+    }
+
+    public void ApplyKnockback(float amount)
+    {
+        knockbackVelocity -= Mathf.Abs(amount);
+    }
+
+    private void Die()
+    {
+        if (jogoFinalizado) return;
+        isDead = true;
+        Debug.Log("Player morreu: chegou no X minimo do surf.");
+        Perder();
+    }
+
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado) return;
+        isDead = true;
+        Vencer();
     }
 }
