@@ -5564,7 +5564,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1048324003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4de2679695dded4a9a3f05c928efb56, type: 3}
+  m_Script: {fileID: 11500000, guid: 4aa42b0c27c04c3448bfd3c11cb7c5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pivoCima: {fileID: 1189868164}
