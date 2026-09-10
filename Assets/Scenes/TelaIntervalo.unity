@@ -500,6 +500,7 @@ MonoBehaviour:
   faseAtual: 0
   tempoMinimo: 3
   decrementoDeTempo: 0.1
+  timerCongelado: 0
   txtFase: {fileID: 0}
   canvaIntervalo: {fileID: 1155312265}
   eventos: {fileID: 191912570}
@@ -515,6 +516,7 @@ GameObject:
   - component: {fileID: 593608555}
   - component: {fileID: 593608554}
   - component: {fileID: 593608557}
+  - component: {fileID: 593608558}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -558,9 +560,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.050000012
     width: 1
-    height: 1
+    height: 0.9
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -640,6 +642,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &593608558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593608553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b90458fa581f454eb03ec5cead91b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetAspectWidth: 16
+  targetAspectHeight: 9
 --- !u!1 &1155312265
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,9 +724,9 @@ Canvas:
   m_GameObject: {fileID: 1155312265}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 593608555}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -775,10 +791,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1155312269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 450}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163976337
 MonoBehaviour:

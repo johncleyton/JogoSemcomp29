@@ -7,6 +7,7 @@ using Unity.Services.Leaderboards;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManagerRework : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class GameManagerRework : MonoBehaviour
     private bool estaJogando = false;
     private float timerInterno = 0f;
     private bool isGameOver = false;
+    public bool timerCongelado = false;
 
     public TMP_Text txtFase;
     public GameObject canvaIntervalo, eventos;
@@ -98,6 +100,8 @@ public class GameManagerRework : MonoBehaviour
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(cenaMinigameAtiva));
 
+            AjustarCanvasDaFase(cenaMinigameAtiva);
+
             MinigameBase minigameAtual = FindObjectOfType<MinigameBase>();
             
             if (minigameAtual != null)
@@ -107,23 +111,25 @@ public class GameManagerRework : MonoBehaviour
 
             Debug.Log(timerInterno);
 
+            timerCongelado = false;
             estaJogando = true;
+            bool tempoEsgotadoAcionado = false;
 
-            // Espera o tempo acabar
-            while (timerInterno > 0 && estaJogando)
+            while (estaJogando)
             {
-                //Debug.Log(timerInterno);
-                timerInterno -= Time.deltaTime;
-                yield return null; // Espera o próximo frame
-            }
-            
-            if (estaJogando && timerInterno <= 0)
-            {
-                estaJogando = false;
-                if (minigameAtual != null)
-                    minigameAtual.TempoEsgotado();
-                else
-                    GameOver();
+                if (!timerCongelado && !tempoEsgotadoAcionado)
+                {
+                    timerInterno -= Time.deltaTime;
+                    if (timerInterno <= 0)
+                    {
+                        tempoEsgotadoAcionado = true;
+                        if (minigameAtual != null)
+                            minigameAtual.TempoEsgotado();
+                        else
+                            GameOver();
+                    }
+                }
+                yield return null;
             }
 
             if (isGameOver)
@@ -168,5 +174,35 @@ public class GameManagerRework : MonoBehaviour
         
         SceneManager.LoadScene(0);
 
+    }
+
+    private void AjustarCanvasDaFase(int indexDaCena)
+    {
+        // Pega a cena do minigame que acabou de carregar
+        Scene cenaCarregada = SceneManager.GetSceneByBuildIndex(indexDaCena);
+        
+        // Pega todos os objetos soltos na raiz dessa cena
+        GameObject[] objetosRaiz = cenaCarregada.GetRootGameObjects();
+        
+        foreach (GameObject obj in objetosRaiz)
+        {
+            // Prende todos os Canvas do minigame na Câmera Principal
+            Canvas[] canvases = obj.GetComponentsInChildren<Canvas>(true);
+            foreach (Canvas canvas in canvases)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                canvas.worldCamera = Camera.main; 
+            }
+
+            // Força o Scaler a usar a sua proporção original de 800x600
+            CanvasScaler[] scalers = obj.GetComponentsInChildren<CanvasScaler>(true);
+            foreach (CanvasScaler scaler in scalers)
+            {
+                scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                scaler.referenceResolution = new Vector2(800, 600); 
+                scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                scaler.matchWidthOrHeight = 0f; // O valor que alinhou a UI perfeitamente com a física
+            }
+        }
     }
 }
