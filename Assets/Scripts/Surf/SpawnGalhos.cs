@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnGalhos : MonoBehaviour
 {
-    public GameObject prefab;
+    public GameObject[] prefabs;
 
     [Header("Spawn")]
     public float baseSpawnTimer = 2f;
@@ -30,7 +30,9 @@ public class SpawnGalhos : MonoBehaviour
     {
         if (!canSpawn) return;
 
-        Instantiate(prefab, spawnPoints[Random.Range(0, spawnPoints.Length)]);
+        int i = Random.Range(0, prefabs.Length);
+
+        Instantiate(prefabs[i], spawnPoints[Random.Range(0, spawnPoints.Length)]);
         StartCoroutine(BlockSpawn());
     }
 

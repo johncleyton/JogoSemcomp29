@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerFollowCursorPhysics : MinigameBase
@@ -8,7 +9,7 @@ public class PlayerFollowCursorPhysics : MinigameBase
     public float minY = -4.5f;
     public float maxY = 4.5f;
 
-    [Header("Mecanica de Avan�o (X) por Oscilacao")]
+    [Header("Mecanica de Avanco (X) por Oscilacao")]
     public float impulseForce = 0.5f;
     public float maxForwardSpeed = 5f;
     public float forwardDecay = 2f;
@@ -16,8 +17,18 @@ public class PlayerFollowCursorPhysics : MinigameBase
 
     [Header("Mecanica de Recuo (Puxar para tras)")]
     public float backwardPushSpeed = 1.5f;
-    public float minX = -8f;
+    public float minX = -6.0f;
     public float maxX = 8f;
+    public float deathThresholdX = -5.5f;
+
+    [Header("Morte")]
+    public float tempoAnimacaoMorte = 1.2f;
+
+    [Header("Animator")]
+    public string paramCima = "cima";
+    public string paramBaixo = "baixo";
+    public float verticalStateCooldown = 0.12f;
+    private Animator animator;
 
     private Camera mainCamera;
     private Rigidbody2D rb;
@@ -28,6 +39,9 @@ public class PlayerFollowCursorPhysics : MinigameBase
     private bool hasInput = false;
     private Vector2 targetWorldPos;
     private bool isDead = false;
+
+    private bool? currentVerticalState = null;
+    private float verticalStateTimer = 0f;
 
     [Header("Knockback")]
     public float knockbackDecay = 8f;
@@ -62,11 +76,18 @@ public class PlayerFollowCursorPhysics : MinigameBase
         rb.freezeRotation = true;
         lastTargetY = transform.position.y;
         targetWorldPos = transform.position;
+
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
     }
 
     void Update()
     {
         if (isDead) return;
+
+        verticalStateTimer += Time.deltaTime;
 
         Vector3 inputPosition = Vector3.zero;
         hasInput = false;
@@ -82,6 +103,8 @@ public class PlayerFollowCursorPhysics : MinigameBase
             inputPosition = Input.mousePosition;
             hasInput = true;
         }
+
+        bool? desiredState = null;
 
         if (hasInput)
         {
@@ -101,9 +124,46 @@ public class PlayerFollowCursorPhysics : MinigameBase
                     currentForwardSpeed += impulseForce;
                     currentForwardSpeed = Mathf.Clamp(currentForwardSpeed, 0f, maxForwardSpeed);
                 }
+
+                desiredState = dynamicMovingUp;
             }
+
             lastTargetY = currentTargetY;
         }
+
+        RequestVerticalState(desiredState);
+    }
+
+    private void RequestVerticalState(bool? desiredState)
+    {
+        if (desiredState == currentVerticalState)
+        {
+            return;
+        }
+
+        if (verticalStateTimer < verticalStateCooldown)
+        {
+            return;
+        }
+
+        currentVerticalState = desiredState;
+        verticalStateTimer = 0f;
+
+        ApplyVerticalAnimatorBools(desiredState);
+    }
+
+    private void ApplyVerticalAnimatorBools(bool? isMovingUp)
+    {
+        if (animator == null) return;
+
+        bool cima = isMovingUp == true;
+        bool baixo = isMovingUp == false && isMovingUp != null;
+
+        if (animator.GetBool(paramCima) != cima)
+            animator.SetBool(paramCima, cima);
+
+        if (animator.GetBool(paramBaixo) != baixo)
+            animator.SetBool(paramBaixo, baixo);
     }
 
     void FixedUpdate()
@@ -126,7 +186,7 @@ public class PlayerFollowCursorPhysics : MinigameBase
 
         rb.MovePosition(new Vector2(newX, newY));
 
-        if (newX <= minX)
+        if (newX <= deathThresholdX)
         {
             Die();
         }
@@ -140,15 +200,39 @@ public class PlayerFollowCursorPhysics : MinigameBase
     private void Die()
     {
         if (jogoFinalizado) return;
+
         isDead = true;
-        Debug.Log("Player morreu: chegou no X minimo do surf.");
+        animator.SetTrigger("Cair");
+        rb.velocity = Vector2.zero;
+
+        StartCoroutine(RotinaMorteSlowMotion());
+    }
+
+    private IEnumerator RotinaMorteSlowMotion()
+    {
+        float tempoDecorrido = 0f;
+
+        while (tempoDecorrido < tempoAnimacaoMorte)
+        {
+            tempoDecorrido += Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.Lerp(1f, 0f, tempoDecorrido / tempoAnimacaoMorte);
+            yield return null;
+        }
+
+        Time.timeScale = 1f;
         Perder();
     }
 
     public override void TempoEsgotado()
     {
         if (jogoFinalizado) return;
+
         isDead = true;
         Vencer();
+    }
+
+    private void OnDestroy()
+    {
+        Time.timeScale = 1f;
     }
 }
