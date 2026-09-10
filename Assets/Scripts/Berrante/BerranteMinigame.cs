@@ -5,8 +5,8 @@ public class BerranteMinigame : MinigameBase
 {
     [Header("Referências")]
     public DetectorAudio detector;
-    public Image fillBar;
-    public Transform cameraTransform;
+    public RectTransform barra;
+    public RectTransform indicador;
 
     [Header("Configuração de áudio")]
     public float audioSens = 5f;
@@ -18,30 +18,38 @@ public class BerranteMinigame : MinigameBase
     public float drainSpeed = 0.3f;
     public float timeLimit = 4f;
 
-    [Header("Tremor de câmera (shake)")]
-    public float shakeIntensity = 0.15f;
-    public float shakeSpeed = 25f;
+    [Header("Configuração da barra (visual)")]
+    public float paddingEsquerda = 10f;
+    public float paddingDireita = 10f;
 
     [Header("Fallback sem microfone")]
     public bool forcarFallback = false;
     public KeyCode fallbackKey = KeyCode.Space;
     public float fallbackFillPerPress = 0.08f;
 
+    [Header("Animators")]
+    public Animator player;
+    public Animator vacas;
+
+    [Header("Timers de animação")]
+    public float delayAnimacaoLose = 1f;
+    public float delayAnimacaoWin = 1f;
+
     private float currentFill = 0f;
-    private Vector3 cameraOriginalPos;
     private bool usandoFallback = false;
+
+    private float margemIndicador;
 
     void Start()
     {
-        if (fillBar != null)
-            fillBar.fillAmount = 0f;
+        Canvas.ForceUpdateCanvases();
 
-        if (cameraTransform != null)
-            cameraOriginalPos = cameraTransform.localPosition;
+        if (indicador != null)
+            margemIndicador = indicador.rect.width * 0.5f;
+
+        AtualizarIndicador(0f);
 
         usandoFallback = forcarFallback || detector == null || Microphone.devices.Length == 0;
-        if (usandoFallback)
-            Debug.Log("Nenhum microfone encontrado");
     }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
@@ -64,6 +72,7 @@ public class BerranteMinigame : MinigameBase
             else
             {
                 soprando = false;
+                currentFill -= drainSpeed * Time.deltaTime;
             }
         }
         else
@@ -76,33 +85,61 @@ public class BerranteMinigame : MinigameBase
                 currentFill -= drainSpeed * Time.deltaTime;
         }
 
+        if (soprando)
+            player.SetTrigger("Soprando");
+
         currentFill = Mathf.Clamp01(currentFill);
-
-        if (fillBar != null)
-        {
-            fillBar.fillAmount = currentFill;
-            fillBar.color = Color.Lerp(Color.red, Color.green, currentFill);
-        }
-
-        if (cameraTransform != null)
-        {
-            if (soprando)
-            {
-                float offsetX = (Mathf.PerlinNoise(Time.time * shakeSpeed, 0f) - 0.5f) * shakeIntensity;
-                float offsetY = (Mathf.PerlinNoise(0f, Time.time * shakeSpeed) - 0.5f) * shakeIntensity;
-                cameraTransform.localPosition = cameraOriginalPos + new Vector3(offsetX, offsetY, 0f);
-            }
-            else
-            {
-                cameraTransform.localPosition = cameraOriginalPos;
-            }
-        }
+        AtualizarIndicador(currentFill);
 
         if (currentFill >= requiredFill)
         {
-            if (cameraTransform != null)
-                cameraTransform.localPosition = cameraOriginalPos;
-            Vencer();
+            jogoFinalizado = true;
+
+            vacas.SetTrigger("Win");
+            player.SetTrigger("Win");
+
+            StartCoroutine(EsperarEVencer());
         }
+    }
+
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado)
+            return;
+
+        jogoFinalizado = true;
+
+        player.SetTrigger("Lose");
+
+        GameManagerRework.Instance.StartCoroutine(EsperarEPerder());
+    }
+
+    private System.Collections.IEnumerator EsperarEPerder()
+    {
+        yield return new WaitForSeconds(delayAnimacaoLose);
+        Perder();
+    }
+
+    private System.Collections.IEnumerator EsperarEVencer()
+    {
+        yield return new WaitForSeconds(delayAnimacaoWin);
+        Vencer();
+    }
+
+    private void AtualizarIndicador(float progresso)
+    {
+        if (indicador == null || barra == null) return;
+
+        float larguraBarra = barra.rect.width;
+        float margemBase = Mathf.Min(margemIndicador, larguraBarra * 0.5f);
+
+        float esquerda = margemBase + paddingEsquerda;
+        float direita = larguraBarra - margemBase - paddingDireita;
+
+        float x = Mathf.Lerp(esquerda, direita, progresso);
+
+        Vector2 pos = indicador.anchoredPosition;
+        pos.x = x;
+        indicador.anchoredPosition = pos;
     }
 }
