@@ -32,7 +32,7 @@ public class Espetinho : MinigameBase
 
             //existem 6 posicoes possiveis para a comida nascer. As posicoes sao diferentes
             //apenas no eixo x. 
-            Vector3 posicao = new Vector3((float)(-8 + 3.2 * Random.Range(0, 5)), 7f, -6f);
+            Vector3 posicao = new Vector3((float)(-9 + 2.25 * Random.Range(0, 7)), 7f, -6f);
             Instantiate(comida, posicao, Quaternion.identity);
         }
     }
