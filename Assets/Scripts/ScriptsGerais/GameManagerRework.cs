@@ -17,9 +17,14 @@ public class GameManagerRework : MonoBehaviour
 
     // Antigas variaveis globais
     [Header("Game State")]
-    public float tempoDoMinigameAtual = 7f; 
+    public float tempoDoMinigameAtual = 7f;
     public int faseAtual = 0;               
     
+    [Header("Barra de tempo")]
+    public GameObject canvasHUD;
+    private float tempoMaximoDaFase; 
+    public Image barraTempo;
+
     [Header("Configurações")]
     public float tempoMinimo = 3.0f;
     public float decrementoDeTempo = 0.1f;
@@ -70,12 +75,17 @@ public class GameManagerRework : MonoBehaviour
 
     IEnumerator CicloDeJogo()
     {
+        if (canvasHUD != null) 
+            canvasHUD.SetActive(false);
+
         while (true) // Loop infinito até dar GameOver
         {
             faseAtual++;
             
             estaJogando = false;
             canvaIntervalo.SetActive(true);
+            if (canvasHUD != null) 
+                canvasHUD.SetActive(false);
 
             Debug.Log($"Iniciando Fase {faseAtual}. Prepare-se!");
             
@@ -91,6 +101,8 @@ public class GameManagerRework : MonoBehaviour
             // Espera o tempo da animação do intervalo, tanto faz o tempo
             yield return new WaitForSeconds(3f);
             canvaIntervalo.SetActive(false);
+            if (canvasHUD != null) 
+                canvasHUD.SetActive(true);
 
             asyncLoad.allowSceneActivation = true; // Ativa a cena carregada
             cenaMinigameAtiva = randomScene;
@@ -109,6 +121,8 @@ public class GameManagerRework : MonoBehaviour
             else
                 timerInterno = tempoDoMinigameAtual;
 
+            tempoMaximoDaFase = timerInterno;
+
             Debug.Log(timerInterno);
 
             timerCongelado = false;
@@ -120,6 +134,9 @@ public class GameManagerRework : MonoBehaviour
                 if (!timerCongelado && !tempoEsgotadoAcionado)
                 {
                     timerInterno -= Time.deltaTime;
+                    if (barraTempo != null)
+                        barraTempo.fillAmount = timerInterno / tempoMaximoDaFase;
+
                     if (timerInterno <= 0)
                     {
                         tempoEsgotadoAcionado = true;

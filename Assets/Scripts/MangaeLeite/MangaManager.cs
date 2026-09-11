@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MangaManager : MinigameBase
 {
-    double cooldown = 1.5;
+    double cooldown = 0.5;
     float timer_total = 0f;
 
 
-    [Header("Configurações de Spawn")]
+    [Header("Configuraï¿½ï¿½es de Spawn")]
     public GameObject mangaPrefab;
     public Transform areaTop;
 

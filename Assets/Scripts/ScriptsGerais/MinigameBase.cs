@@ -101,4 +101,13 @@ public abstract class MinigameBase : MonoBehaviour
         }
     }
 
+    /*
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado) 
+            return; 
+        anim.SetTrigger("tempoAcabou");
+        PerderComAtraso(2f);
+    }
+    */
 }
