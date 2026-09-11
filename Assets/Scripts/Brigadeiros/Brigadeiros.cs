@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Brigadeiros : MonoBehaviour
+public class Brigadeiros : MinigameBase
 {
-    private GameManager gameManager;
+    public int qtdBrigadeiro;
     [SerializeField] GameObject brigadeiro;
     [SerializeField] GameObject spawn1;
     [SerializeField] GameObject spawn2;
@@ -25,7 +25,7 @@ public class Brigadeiros : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = Object.FindFirstObjectByType<GameManager>();
+        qtdBrigadeiro = UnityEngine.Random.Range(Mathf.RoundToInt(10 - GameManagerRework.Instance.tempoDoMinigameAtual), Mathf.RoundToInt(12 - GameManagerRework.Instance.tempoDoMinigameAtual));
 
         spawnpoint.Add(spawn1.transform.position);
         spawnpoint.Add(spawn2.transform.position);
@@ -40,7 +40,7 @@ public class Brigadeiros : MonoBehaviour
         spawnpoint.Add(spawn11.transform.position);
         spawnpoint.Add(spawn12.transform.position);
 
-        for (int i = 0; i < gameManager.qtdBrigadeiro; i++)
+        for (int i = 0; i < qtdBrigadeiro; i++)
         {
             Instantiate(brigadeiro, spawnpoint[i], Quaternion.identity);
         }
@@ -49,15 +49,10 @@ public class Brigadeiros : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.qtdBrigadeiro == 0)
+        if (qtdBrigadeiro == 0)
         {
             Debug.Log("GANHOU");
-            SceneManager.LoadScene(4);
-        }
-        else if (gameManager.timer <= 0)
-        {
-            Debug.Log("PERDEU");
-
+            Vencer();
         }
     }
 }
