@@ -93,12 +93,10 @@ public class BerranteMinigame : MinigameBase
 
         if (currentFill >= requiredFill)
         {
-            jogoFinalizado = true;
-
             vacas.SetTrigger("Win");
             player.SetTrigger("Win");
 
-            StartCoroutine(EsperarEVencer());
+            VencerComAtraso(delayAnimacaoWin);
         }
     }
 
@@ -107,23 +105,9 @@ public class BerranteMinigame : MinigameBase
         if (jogoFinalizado)
             return;
 
-        jogoFinalizado = true;
-
         player.SetTrigger("Lose");
 
-        GameManagerRework.Instance.StartCoroutine(EsperarEPerder());
-    }
-
-    private System.Collections.IEnumerator EsperarEPerder()
-    {
-        yield return new WaitForSeconds(delayAnimacaoLose);
-        Perder();
-    }
-
-    private System.Collections.IEnumerator EsperarEVencer()
-    {
-        yield return new WaitForSeconds(delayAnimacaoWin);
-        Vencer();
+        PerderComAtraso(delayAnimacaoLose);
     }
 
     private void AtualizarIndicador(float progresso)
