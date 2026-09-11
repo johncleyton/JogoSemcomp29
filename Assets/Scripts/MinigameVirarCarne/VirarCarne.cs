@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VirarCarne : MonoBehaviour
+public class VirarCarne : MinigameBase
 {
     public RectTransform bar;
     public RectTransform indicator;
@@ -23,26 +23,20 @@ public class VirarCarne : MonoBehaviour
 
      void MoveIndicator()
     {
-        Vector2 pos = indicator.anchoredPosition;
-        if (movingUp)
-        {
-            pos.y += speed * Time.deltaTime;
-        }
-        else
-        {
-            pos.y -= speed * Time.deltaTime;
-        }
-
         float topLimit = bar.rect.height/2;
         float bottomLimit = -bar.rect.height/2;
 
-        if (pos.y > topLimit)
+        Vector2 pos = indicator.anchoredPosition;
+        float dir = movingUp ? 1f : -1f;
+
+        pos.y += speed * dir * Time.deltaTime;
+        
+        if (pos.y >= topLimit)
         {
             pos.y = topLimit;
             movingUp = false;
         }
-
-        if (pos.y < bottomLimit)
+        else if (pos.y <= bottomLimit)
         {
             pos.y = bottomLimit;
             movingUp = true;
@@ -60,11 +54,11 @@ public class VirarCarne : MonoBehaviour
 
         if (yIndicator >= min && yIndicator <= max)
         {
-            Debug.Log("acertou");
+            Vencer();
         }
         else
         {
-            Debug.Log("não");
+            Perder();
         }
     }
 }

@@ -1,166 +1,230 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Serialization;
+using TMPro;
 
-public enum AcaoTosa
-{
-    NaoTosar,
-    TosarParcial,
-    TosarNormal
-}
-
-public class TosquieManager : MonoBehaviour
+public class TosquieManager : MinigameBase
 {
     public static TosquieManager Instance;
 
+    [Header("Fila de ovelhas")]
+    [Tooltip("Prefab da Ovelha (Assets/Prefabs/TosquieAOvelha/Ovelha).")]
     public GameObject ovelhaPrefab;
-    public Transform centroTosaPoint;
-    public Transform filaPoint; // onde a proxima ovelha aguarda
-    public OvelhaController ovelhaAtual;
-    public OvelhaController proxOvelha;
+    [Tooltip("Onde cada ovelha nova aparece. Pode usar o objeto 'Centro'.")]
+    public Transform pontoSpawnOvelha;
 
-    public Text placarText;
-    public Slider timerSlider;
+    [Header("Tosquiadora")]
+    public TosquiadoraController tosquiadora;
 
+    [Header("UI - Placar e status")]
+    public TMP_Text placarText;
+    public TMP_Text tentativasText;
 
-    public int totalOvelhas = 6;
-    public float tempoOvelha = 5f;
+    [Header("UI - Botões dos pentes")]
+    public Button botaoPenteMenor;   // Ovelha EmPerfeitoEstado -> Pente Menor (Index 0)
+    public Button botaoPenteMaior;   // Ovelha MuitoVelha        -> Pente Maior (Index 1)
+    public Button botaoDescarta;     // Ovelha MuitoNova         -> Descarta   (Index 2)
 
+    [Header("Configurações")]
+    [FormerlySerializedAs("totalFatias")]
+    [Tooltip("Quantas ovelhas precisam ser tosquiadas corretamente para vencer o minigame.")]
+    public int ovelhasNecessarias = 6;
+    [Tooltip("Quantas vezes a tosquiadora pode cair sem acertar lã, por ovelha, antes dela escapar.")]
+    public int tentativasPorOvelha = 3;
 
-    private int ovelhasAtendidas = 0;
-    private float tempoRestante;
+    private OvelhaController ovelhaAtual;
+    private int pedacosRestantesNaOvelha;
+    private int ovelhasConcluidas = 0;
+    private int tentativasRestantes;
+    private bool aguardandoEscolha = true;
 
-    private bool gameOver = false;
+    public bool JogoEncerrado => jogoFinalizado;
+    public bool FaseDeTosquia => !aguardandoEscolha;
 
     void Awake()
     {
-      if(Instance == null) Instance = this;  
+        if (Instance == null) Instance = this;
     }
 
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        return tempoGlobalSugerido;
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
-        PrepararProxOvelha();
-        AvancarFila();
-        
+        ovelhasConcluidas = 0;
+        AtualizarPlacar();
+
+        if (botaoPenteMenor != null) botaoPenteMenor.onClick.AddListener(EscolherPenteMenor);
+        if (botaoPenteMaior != null) botaoPenteMaior.onClick.AddListener(EscolherPenteMaior);
+        if (botaoDescarta != null) botaoDescarta.onClick.AddListener(EscolherDescarta);
+
+        if (tosquiadora != null) tosquiadora.PodeAgir = false;
+
+        NovaOvelha();
     }
 
-    // Update is called once per frame
-    void Update()
+    void NovaOvelha()
     {
-        if(gameOver || ovelhaAtual == null) return;
-
-
-        tempoRestante -= Time.deltaTime;
-
-        if(timerSlider != null)
+        if (ovelhaPrefab == null)
         {
-            timerSlider.value = tempoRestante / tempoOvelha;
+            Debug.LogError("TosquieManager: 'Ovelha Prefab' não foi atribuído no Inspector.");
+            return;
         }
 
+        Vector3 posicao = pontoSpawnOvelha != null ? pontoSpawnOvelha.position : Vector3.zero;
+        GameObject instancia = Instantiate(ovelhaPrefab, posicao, Quaternion.identity);
+        ovelhaAtual = instancia.GetComponent<OvelhaController>();
 
-        if(tempoRestante <= 0)
+        if (ovelhaAtual == null)
         {
-            FinalizarJogo(false, "Demorou muito para tosar!");
-        }
-    }
-
-    private void PrepararProxOvelha()
-    {
-        GameObject novaOvelha = Instantiate(ovelhaPrefab, filaPoint.position, Quaternion.identity);
-
-        proxOvelha = novaOvelha.GetComponent<OvelhaController>();
-
-
-        // estado sortedo
-        EstadoOvelha estadoSorteado = (EstadoOvelha)Random.Range(0,3);
-
-        proxOvelha.Inicializar(estadoSorteado);
-    }
-
-
-
-    private void AvancarFila()
-    {
-        if(proxOvelha != null)
-        {
-            ovelhaAtual = proxOvelha;
-
-            ovelhaAtual.transform.position = centroTosaPoint.position;
-
-            PrepararProxOvelha();
-
-            tempoRestante = tempoOvelha;
-
-            AtualizarUI();
-        }
-    }
-
-    public void ReceberAcaoJogador(int acaoIndex)
-    {
-        if(gameOver || ovelhaAtual == null) return;
-
-        AcaoTosa acaoEscolhida = (AcaoTosa)acaoIndex;
-
-        ValidarAcao(acaoEscolhida);
-    }
-
-
-private void ValidarAcao(AcaoTosa acaoEscolhida)
-    {
-        bool acaoCorreta = false;
-
-        // Lógica de validação baseada no estado da ovelha
-        switch (ovelhaAtual.estadoAtual)
-        {
-            case EstadoOvelha.Nova:
-                acaoCorreta = (acaoEscolhida == AcaoTosa.NaoTosar);
-                break;
-            case EstadoOvelha.Velha:
-                acaoCorreta = (acaoEscolhida == AcaoTosa.TosarParcial);
-                break;
-            case EstadoOvelha.Perfeita:
-                acaoCorreta = (acaoEscolhida == AcaoTosa.TosarNormal);
-                break;
+            Debug.LogError("TosquieManager: o prefab da Ovelha não tem o componente OvelhaController.");
+            return;
         }
 
-        if (acaoCorreta)
-        {
-            ovelhasAtendidas++;
-            ovelhaAtual.SairDaTela();
-            ovelhaAtual = null;
+        EstadoOvelha novoEstado = (EstadoOvelha)Random.Range(0, 3);
+        ovelhaAtual.Inicializar(novoEstado);
 
-            if (ovelhasAtendidas >= totalOvelhas)
-            {
-                FinalizarJogo(true, "Todas as ovelhas foram tosadas!");
-            }
-            else
-            {
-                AvancarFila();
-            }
+        pedacosRestantesNaOvelha = ContarPedacosDeLa(instancia);
+        if (pedacosRestantesNaOvelha <= 0)
+        {
+            Debug.LogWarning("TosquieManager: a ovelha instanciada não tem nenhum filho com a tag 'La");
+        }
+
+        aguardandoEscolha = true;
+        tentativasRestantes = tentativasPorOvelha;
+        AtualizarTentativas();
+        DefinirBotoesInterativos(true);
+
+        if (tosquiadora != null) tosquiadora.PodeAgir = false;
+    }
+
+    int ContarPedacosDeLa(GameObject raiz)
+    {
+        int total = 0;
+        foreach (Transform filho in raiz.GetComponentsInChildren<Transform>(true))
+        {
+            if (filho.CompareTag("La")) total++;
+        }
+        return total;
+    }
+
+    public void EscolherPenteMenor() => ProcessarEscolha(EstadoOvelha.EmPerfeitoEstado);
+    public void EscolherPenteMaior() => ProcessarEscolha(EstadoOvelha.MuitoVelha);
+    public void EscolherDescarta() => ProcessarEscolha(EstadoOvelha.MuitoNova);
+
+    void ProcessarEscolha(EstadoOvelha estadoEscolhido)
+    {
+        if (jogoFinalizado || !aguardandoEscolha || ovelhaAtual == null) return;
+
+        if (estadoEscolhido == ovelhaAtual.estadoAtual)
+        {
+            IniciarTosquia();
         }
         else
         {
-            FinalizarJogo(false, "Você errou a mão na tosa!");
+            StartCoroutine(FeedbackErro());
         }
     }
 
-    private void AtualizarUI()
+    IEnumerator FeedbackErro()
     {
-        if(placarText != null)
+        DefinirBotoesInterativos(false);
+        yield return new WaitForSeconds(0.35f);
+        if (!jogoFinalizado && aguardandoEscolha)
+            DefinirBotoesInterativos(true);
+    }
+
+    void IniciarTosquia()
+    {
+        aguardandoEscolha = false;
+        DefinirBotoesInterativos(false);
+
+        if (tosquiadora != null)
         {
-            placarText.text = $"{ovelhasAtendidas}/{totalOvelhas}";
+            tosquiadora.ResetarParaTopo();
+            tosquiadora.PodeAgir = true;
         }
     }
 
-    private void FinalizarJogo(bool ganhou, string msg)
+    void DefinirBotoesInterativos(bool valor)
     {
-        gameOver = true;
-        Debug.Log(msg);
+        if (botaoPenteMenor != null) botaoPenteMenor.interactable = valor;
+        if (botaoPenteMaior != null) botaoPenteMaior.interactable = valor;
+        if (botaoDescarta != null) botaoDescarta.interactable = valor;
+    }
 
-        // vitoria e derrota
-    } 
+    // Chamado pela TosquiadoraController quando ela acerta um pedaço de lã (tag "La")
+    public void CortouLa()
+    {
+        if (jogoFinalizado) return;
+
+        pedacosRestantesNaOvelha--;
+
+        if (pedacosRestantesNaOvelha > 0)
+        {
+            // ainda sobra lã nesta ovelha: a tosquiadora continua ativa para o próximo pedaço
+            return;
+        }
+
+        // ovelha totalmente tosquiada
+        ovelhasConcluidas++;
+        AtualizarPlacar();
+
+        if (ovelhasConcluidas >= ovelhasNecessarias)
+        {
+            if (tosquiadora != null) tosquiadora.PodeAgir = false;
+            Vencer();
+            return;
+        }
+
+        EncerrarOvelhaAtual();
+    }
+
+    // Chamado pela TosquiadoraController quando ela cai sem acertar lã
+    public void TentativaFalhou()
+    {
+        if (jogoFinalizado) return;
+
+        tentativasRestantes--;
+        AtualizarTentativas();
+
+        if (tentativasRestantes <= 0)
+        {
+            // ovelha escapou sem ser totalmente tosquiada
+            EncerrarOvelhaAtual();
+        }
+    }
+
+    void EncerrarOvelhaAtual()
+    {
+        if (tosquiadora != null) tosquiadora.PodeAgir = false;
+        if (ovelhaAtual != null)
+        {
+            ovelhaAtual.SairDaTela();
+            ovelhaAtual = null;
+        }
+        NovaOvelha();
+    }
+
+    void AtualizarPlacar()
+    {
+        if (placarText != null)
+            placarText.text = $"{ovelhasConcluidas}/{ovelhasNecessarias}";
+    }
+
+    void AtualizarTentativas()
+    {
+        if (tentativasText != null)
+            tentativasText.text = $"Tentativas: {tentativasRestantes}";
+    }
+
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado) return;
+        Perder();
+        base.TempoEsgotado();
+    }
 }

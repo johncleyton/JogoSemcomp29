@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragDropGrav : MonoBehaviour
+public class DragDropGrav : MinigameBase
 {
-    private GameManager gameManager;
+    private Brigadeiros brigadeiro;
     private bool isClicked = false;
     Rigidbody2D rb;
     List<Vector3> ponto_momento = new List<Vector3>();
 
     private void Awake()
     {
-        gameManager = Object.FindFirstObjectByType<GameManager>();
+        brigadeiro = Object.FindFirstObjectByType<Brigadeiros>();
         ponto_momento.Add(Vector3.zero);
         ponto_momento.Add(Vector3.zero);
         rb = GetComponent<Rigidbody2D>();
@@ -70,8 +70,7 @@ public class DragDropGrav : MonoBehaviour
         if (collision.gameObject.layer == 4)
         {
             Destroy(gameObject);
-            gameManager.qtdBrigadeiro -= 1;
-            //Debug.Log(GameManager.qtdBrigadeiro);
+            brigadeiro.qtdBrigadeiro -= 1;
         }
     }
 }

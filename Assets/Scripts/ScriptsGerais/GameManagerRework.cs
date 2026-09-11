@@ -7,6 +7,7 @@ using Unity.Services.Leaderboards;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManagerRework : MonoBehaviour
 {
@@ -16,9 +17,14 @@ public class GameManagerRework : MonoBehaviour
 
     // Antigas variaveis globais
     [Header("Game State")]
-    public float tempoDoMinigameAtual = 7f; 
+    public float tempoDoMinigameAtual = 7f;
     public int faseAtual = 0;               
     
+    [Header("Barra de tempo")]
+    public GameObject canvasHUD;
+    private float tempoMaximoDaFase; 
+    public Image barraTempo;
+
     [Header("Configurações")]
     public float tempoMinimo = 3.0f;
     public float decrementoDeTempo = 0.1f;
@@ -29,6 +35,8 @@ public class GameManagerRework : MonoBehaviour
     // Variáveis de controle de fluxo
     private bool estaJogando = false;
     private float timerInterno = 0f;
+    private bool isGameOver = false;
+    public bool timerCongelado = false;
 
     public TMP_Text txtFase;
     public GameObject canvaIntervalo, eventos;
@@ -67,12 +75,17 @@ public class GameManagerRework : MonoBehaviour
 
     IEnumerator CicloDeJogo()
     {
+        if (canvasHUD != null) 
+            canvasHUD.SetActive(false);
+
         while (true) // Loop infinito até dar GameOver
         {
             faseAtual++;
             
             estaJogando = false;
             canvaIntervalo.SetActive(true);
+            if (canvasHUD != null) 
+                canvasHUD.SetActive(false);
 
             Debug.Log($"Iniciando Fase {faseAtual}. Prepare-se!");
             
@@ -88,14 +101,18 @@ public class GameManagerRework : MonoBehaviour
             // Espera o tempo da animação do intervalo, tanto faz o tempo
             yield return new WaitForSeconds(3f);
             canvaIntervalo.SetActive(false);
+            if (canvasHUD != null) 
+                canvasHUD.SetActive(true);
 
             asyncLoad.allowSceneActivation = true; // Ativa a cena carregada
             cenaMinigameAtiva = randomScene;
             
-            //while (!asyncLoad.isDone)
+            while (!asyncLoad.isDone)
                 yield return null;
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(cenaMinigameAtiva));
+
+            AjustarCanvasDaFase(cenaMinigameAtiva);
 
             MinigameBase minigameAtual = FindObjectOfType<MinigameBase>();
             
@@ -104,25 +121,37 @@ public class GameManagerRework : MonoBehaviour
             else
                 timerInterno = tempoDoMinigameAtual;
 
+            tempoMaximoDaFase = timerInterno;
+
             Debug.Log(timerInterno);
 
+            timerCongelado = false;
             estaJogando = true;
+            bool tempoEsgotadoAcionado = false;
 
-            // Espera o tempo acabar
-            while (timerInterno > 0 && estaJogando)
+            while (estaJogando)
             {
-                //Debug.Log(timerInterno);
-                timerInterno -= Time.deltaTime;
-                yield return null; // Espera o próximo frame
+                if (!timerCongelado && !tempoEsgotadoAcionado)
+                {
+                    timerInterno -= Time.deltaTime;
+                    if (barraTempo != null)
+                        barraTempo.fillAmount = timerInterno / tempoMaximoDaFase;
+
+                    if (timerInterno <= 0)
+                    {
+                        tempoEsgotadoAcionado = true;
+                        if (minigameAtual != null)
+                            minigameAtual.TempoEsgotado();
+                        else
+                            GameOver();
+                    }
+                }
+                yield return null;
             }
-            
-            if (estaJogando && timerInterno <= 0)
+
+            if (isGameOver)
             {
-                estaJogando = false;
-                if (minigameAtual != null)
-                    minigameAtual.TempoEsgotado();
-                else
-                    GameOver();
+                yield break; 
             }
 
             // Acabou o tempo, avisa que o jogador nao pode mais jogar
@@ -145,6 +174,7 @@ public class GameManagerRework : MonoBehaviour
 
     public async void GameOver()
     {
+        isGameOver = true;
         StopAllCoroutines(); // Para o loop do jogo
         estaJogando = false;
 
@@ -161,5 +191,35 @@ public class GameManagerRework : MonoBehaviour
         
         SceneManager.LoadScene(0);
 
+    }
+
+    private void AjustarCanvasDaFase(int indexDaCena)
+    {
+        // Pega a cena do minigame que acabou de carregar
+        Scene cenaCarregada = SceneManager.GetSceneByBuildIndex(indexDaCena);
+        
+        // Pega todos os objetos soltos na raiz dessa cena
+        GameObject[] objetosRaiz = cenaCarregada.GetRootGameObjects();
+        
+        foreach (GameObject obj in objetosRaiz)
+        {
+            // Prende todos os Canvas do minigame na Câmera Principal
+            Canvas[] canvases = obj.GetComponentsInChildren<Canvas>(true);
+            foreach (Canvas canvas in canvases)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                canvas.worldCamera = Camera.main; 
+            }
+
+            // Força o Scaler a usar a sua proporção original de 800x600
+            CanvasScaler[] scalers = obj.GetComponentsInChildren<CanvasScaler>(true);
+            foreach (CanvasScaler scaler in scalers)
+            {
+                scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                scaler.referenceResolution = new Vector2(800, 600); 
+                scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                scaler.matchWidthOrHeight = 0f; // O valor que alinhou a UI perfeitamente com a física
+            }
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public abstract class MinigameBase : MonoBehaviour
@@ -58,6 +59,55 @@ public abstract class MinigameBase : MonoBehaviour
         if (jogoFinalizado) 
             return;
         Vencer();
+    }
+    */
+
+    public void VencerComAtraso(float tempoDeEspera)
+    {
+        if (jogoFinalizado) 
+            return;
+        jogoFinalizado = true;
+        
+        // Pausa o relógio do GameManager para a cena não fechar
+        GameManagerRework.Instance.timerCongelado = true; 
+        StartCoroutine(RotinaFimDeJogo(true, tempoDeEspera));
+    }
+
+    public void PerderComAtraso(float tempoDeEspera)
+    {
+        if (jogoFinalizado) 
+            return;
+        jogoFinalizado = true;
+
+        GameManagerRework.Instance.timerCongelado = true; 
+        StartCoroutine(RotinaFimDeJogo(false, tempoDeEspera));
+    }
+
+    private IEnumerator RotinaFimDeJogo(bool vitoria, float tempo)
+    {
+        // Aguarda a duração da animacao
+        yield return new WaitForSeconds(tempo); 
+        
+        // Depois de esperar, chama a função correta
+        if (vitoria)
+        {
+            Debug.Log("Minigame: Vitória após animação!");
+            GameManagerRework.Instance.VenceuMinigame();
+        }
+        else
+        {
+            Debug.Log("Minigame: Derrota após animação!");
+            GameManagerRework.Instance.GameOver();
+        }
+    }
+
+    /*
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado) 
+            return; 
+        anim.SetTrigger("tempoAcabou");
+        PerderComAtraso(2f);
     }
     */
 }

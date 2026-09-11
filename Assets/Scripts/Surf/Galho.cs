@@ -13,7 +13,6 @@ public class Galho : MonoBehaviour
 
     [Header("Destruicao")]
     public float destroyXPosition = -11f;
-
     public float colliderDisableTime = 0.5f;
 
     private Rigidbody2D rb;
@@ -33,6 +32,7 @@ public class Galho : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(speed, rb.velocity.y);
