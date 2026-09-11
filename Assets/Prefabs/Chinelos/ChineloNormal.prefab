@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 555773134, guid: f4d1ff027c04f674091a0f07cd38e5db, type: 3}
+  m_Sprite: {fileID: 922373906, guid: 6cf079ab6404b7d4eaad3b06415054f8, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -146,5 +146,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   estaVirado: 0
-  spriteNormal: {fileID: 555773134, guid: f4d1ff027c04f674091a0f07cd38e5db, type: 3}
-  spriteVirado: {fileID: -1737370379, guid: f4d1ff027c04f674091a0f07cd38e5db, type: 3}
+  spriteNormal: {fileID: 922373906, guid: 6cf079ab6404b7d4eaad3b06415054f8, type: 3}
+  spriteVirado: {fileID: 1644233707, guid: 6cf079ab6404b7d4eaad3b06415054f8, type: 3}
