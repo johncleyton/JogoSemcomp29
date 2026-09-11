@@ -2,47 +2,105 @@ using UnityEngine;
 
 public class ParallaxLoopUI : MonoBehaviour
 {
-    [Tooltip("Velocidade do scroll em pixels por segundo")]
-    public float scrollSpeed = 50f;
+    [Header("Fundo (cobre a tela inteira, várias cópias em loop)")]
+    public Transform[] backgroundPieces;
+    public float backgroundScrollSpeed = 2f;
+    public bool ajustarEscalaDoFundo = true;
 
-    [Tooltip("As duas (ou mais) copias da mesma imagem, lado a lado")]
-    public RectTransform[] backgroundPieces;
+    [Header("Onda (peça única, estática, escala proporcional pra caber na largura)")]
+    public Transform wavePiece;
+    public bool ajustarEscalaDaOnda = true;
 
-    private float imageWidth;
-    private float startX;
+    private float bgImageWidth;
+    private float bgStartX;
 
     void Start()
     {
-        if (backgroundPieces.Length == 0) return;
-
-        imageWidth = backgroundPieces[0].rect.width;
-
-        startX = backgroundPieces[0].anchoredPosition.x;
-
-        for (int i = 0; i < backgroundPieces.Length; i++)
+        if (backgroundPieces.Length > 0)
         {
-            Vector2 pos = backgroundPieces[i].anchoredPosition;
-            pos.x = startX + (i * imageWidth);
-            pos.y = backgroundPieces[0].anchoredPosition.y;
-            backgroundPieces[i].anchoredPosition = pos;
+            if (ajustarEscalaDoFundo)
+            {
+                foreach (Transform piece in backgroundPieces)
+                    AjustarAlturaTela(piece);
+            }
+
+            SpriteRenderer sr = backgroundPieces[0].GetComponent<SpriteRenderer>();
+            bgImageWidth = sr.bounds.size.x;
+            bgStartX = backgroundPieces[0].position.x;
+
+            for (int i = 0; i < backgroundPieces.Length; i++)
+            {
+                Vector3 pos = backgroundPieces[i].position;
+                pos.x = bgStartX + (i * bgImageWidth);
+                pos.y = backgroundPieces[0].position.y;
+                backgroundPieces[i].position = pos;
+            }
         }
+
+        if (wavePiece != null && ajustarEscalaDaOnda)
+        {
+            AjustarLarguraTela(wavePiece);
+        }
+    }
+
+    // Escala uniforme pra cobrir a ALTURA da câmera (usado pro fundo)
+    private void AjustarAlturaTela(Transform piece)
+    {
+        SpriteRenderer sr = piece.GetComponent<SpriteRenderer>();
+        Camera cam = Camera.main;
+
+        if (sr == null || cam == null || !cam.orthographic) return;
+
+        float alturaCamera = cam.orthographicSize * 2f;
+        float alturaSprite = sr.sprite.bounds.size.y;
+
+        float escalaNecessaria = alturaCamera / alturaSprite;
+
+        Vector3 escala = piece.localScale;
+        escala.x = escalaNecessaria;
+        escala.y = escalaNecessaria;
+        piece.localScale = escala;
+    }
+
+    // Escala uniforme pra cobrir a LARGURA da câmera (usado pra onda)
+    private void AjustarLarguraTela(Transform piece)
+    {
+        SpriteRenderer sr = piece.GetComponent<SpriteRenderer>();
+        Camera cam = Camera.main;
+
+        if (sr == null || cam == null || !cam.orthographic) return;
+
+        float alturaCamera = cam.orthographicSize * 2f;
+        float larguraCamera = alturaCamera * cam.aspect;
+
+        float larguraSprite = sr.sprite.bounds.size.x;
+
+        float escalaNecessaria = larguraCamera / larguraSprite;
+
+        Vector3 escala = piece.localScale;
+        escala.x = escalaNecessaria;
+        escala.y = escalaNecessaria;
+        piece.localScale = escala;
     }
 
     void Update()
     {
-        foreach (RectTransform piece in backgroundPieces)
+        if (backgroundPieces.Length == 0) return;
+
+        foreach (Transform piece in backgroundPieces)
         {
-            Vector2 pos = piece.anchoredPosition;
-            pos.x -= scrollSpeed * Time.deltaTime;
-            piece.anchoredPosition = pos;
+            Vector3 pos = piece.position;
+            pos.x -= backgroundScrollSpeed * Time.deltaTime;
+            piece.position = pos;
         }
-        foreach (RectTransform piece in backgroundPieces)
+
+        foreach (Transform piece in backgroundPieces)
         {
-            if (piece.anchoredPosition.x <= startX - imageWidth)
+            if (piece.position.x <= bgStartX - bgImageWidth)
             {
-                Vector2 pos = piece.anchoredPosition;
-                pos.x += imageWidth * backgroundPieces.Length;
-                piece.anchoredPosition = pos;
+                Vector3 pos = piece.position;
+                pos.x += bgImageWidth * backgroundPieces.Length;
+                piece.position = pos;
             }
         }
     }

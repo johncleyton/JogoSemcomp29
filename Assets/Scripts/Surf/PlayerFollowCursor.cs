@@ -24,6 +24,9 @@ public class PlayerFollowCursorPhysics : MinigameBase
     [Header("Morte")]
     public float tempoAnimacaoMorte = 1.2f;
 
+    [Header("Vitória")]
+    public float tempoAnimacaoVitoria = 1f;
+
     [Header("Animator")]
     public string paramCima = "cima";
     public string paramBaixo = "baixo";
@@ -220,7 +223,7 @@ public class PlayerFollowCursorPhysics : MinigameBase
         }
 
         Time.timeScale = 1f;
-        Perder();
+        PerderComAtraso(0f);
     }
 
     public override void TempoEsgotado()
@@ -228,7 +231,7 @@ public class PlayerFollowCursorPhysics : MinigameBase
         if (jogoFinalizado) return;
 
         isDead = true;
-        Vencer();
+        VencerComAtraso(tempoAnimacaoVitoria);
     }
 
     private void OnDestroy()
