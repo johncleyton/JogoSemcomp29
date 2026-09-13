@@ -605,6 +605,12 @@ MonoBehaviour:
   tempoMinimo: 3
   decrementoDeTempo: 0.1
   timerCongelado: 0
+  listaDeMinigames:
+  - {fileID: 11400000, guid: 415b0ddf4e72fec42ac0913f45f05c4e, type: 2}
+  - {fileID: 11400000, guid: a17b5d4e300c779468df3ae2c0fb5ba4, type: 2}
+  - {fileID: 11400000, guid: d21eecf9669cbce4fa510a80cbd3c375, type: 2}
+  - {fileID: 11400000, guid: 4e9246b096a1ce04382e54bce76123c9, type: 2}
+  txtInstrucao: {fileID: 4464091}
   txtFase: {fileID: 0}
   canvaIntervalo: {fileID: 1155312265}
   eventos: {fileID: 191912570}
@@ -663,9 +669,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.055555552
+    x: 0.00011000037
     y: 0
-    width: 0.8888889
+    width: 0.99978
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -972,7 +978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -13.645}
+  m_AnchoredPosition: {x: 0, y: -13.64502}
   m_SizeDelta: {x: 800, y: 27.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2075195515

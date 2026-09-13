@@ -17,10 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Cavalhada.unity
     guid: 600f2ea90d9807143abcc86c294e104e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MinigameTruco.unity
     guid: c319439a4a249b6499cff89ecf9da56b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MinigameVirarCarne.unity
     guid: 3d4fcbd8478b6c7499b709d66267648d
   - enabled: 0
@@ -38,7 +38,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/CachorroGame.unity
     guid: 888530e680f266042b8a16e26d48a32e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Flappipa.unity
     guid: 41ec691beefe244f4a77eee58e51d099
   - enabled: 0
@@ -59,7 +59,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PulaFogueira.unity
     guid: 22b3ac1ac6644664d8df7aef67f0f8e0
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Pesca.unity
     guid: 57661d1407da77c45aaa25c4f616e375
   - enabled: 0
@@ -83,4 +83,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ArtesanatoPiacava.unity
     guid: b2b75b671a6c49749951ba3dae7f2f49
+  - enabled: 1
+    path: Assets/Scenes/AcendeFogueira.unity
+    guid: ef2376e4968915d7d88126cda6013f22
+  - enabled: 1
+    path: Assets/Scenes/PaodariaDeQueijo.unity
+    guid: b15e77e2b4307cea8b0d01de5eaeffa8
   m_configObjects: {}

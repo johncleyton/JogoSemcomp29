@@ -1,21 +1,16 @@
 using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManagerRework : MonoBehaviour
 {
-    // Permite que qualquer minigame acesse o GameManager facilmente
-    // a partir do singleton (lina omg!!!!)
     public static GameManagerRework Instance { get; private set; }
 
-    // Antigas variaveis globais
     [Header("Game State")]
     public float tempoDoMinigameAtual = 7f;
     public int faseAtual = 0;               
@@ -29,8 +24,7 @@ public class GameManagerRework : MonoBehaviour
     public float tempoMinimo = 3.0f;
     public float decrementoDeTempo = 0.1f;
     
-    private int sceneCount = 0;
-    private int cenaMinigameAtiva = -1; // Guarda o índice da cena do minigame que está rodando
+    private string cenaMinigameAtiva = ""; 
 
     // Variáveis de controle de fluxo
     private bool estaJogando = false;
@@ -38,11 +32,16 @@ public class GameManagerRework : MonoBehaviour
     private bool isGameOver = false;
     public bool timerCongelado = false;
 
+    [Header("Minigames")]
+    public MinigameData[] listaDeMinigames; 
+    
+    [Header("UI")]
+    public TMP_Text txtInstrucao;
     public TMP_Text txtFase;
     public GameObject canvaIntervalo, eventos;
+
     async void Awake()
     {
-        // Configuração do Singleton
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -50,11 +49,9 @@ public class GameManagerRework : MonoBehaviour
         }
         Instance = this;
 
-        // Inicializa o banco de dados para alterar a pontuação ao fim de jogo
         try
         {
             await UnityServices.InitializeAsync();
-            
             Debug.Log("UGS Inicializado com sucesso.");
         }
         catch (Exception e)
@@ -65,11 +62,6 @@ public class GameManagerRework : MonoBehaviour
 
     void Start()
     {
-        // Subtrai 1 se a cena desse manager estiver nas settings
-        sceneCount = SceneManager.sceneCountInBuildSettings; 
-        Debug.Log($"Quantas cenas: {sceneCount}");
-        
-        // Inicia o loop do jogo
         StartCoroutine(CicloDeJogo());
     }
 
@@ -78,7 +70,7 @@ public class GameManagerRework : MonoBehaviour
         if (canvasHUD != null) 
             canvasHUD.SetActive(false);
 
-        while (true) // Loop infinito até dar GameOver
+        while (true) 
         {
             faseAtual++;
             
@@ -89,29 +81,33 @@ public class GameManagerRework : MonoBehaviour
 
             Debug.Log($"Iniciando Fase {faseAtual}. Prepare-se!");
             
-            // Sorteia e começa a carregar o próximo minigame em segundo plano usando o LoadSceneAsync()
-            int randomScene = UnityEngine.Random.Range(2, sceneCount);
-            Debug.Log($"Cena escolhida: {randomScene}");
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(randomScene, LoadSceneMode.Additive);
-            asyncLoad.allowSceneActivation = false; // Nao carrega de imediato por causa da transicao
+            int randomSorteio = UnityEngine.Random.Range(0, listaDeMinigames.Length);
+            MinigameData minigameEscolhido = listaDeMinigames[randomSorteio];
 
-            // Limpa lixo de memória para rodar mais fluido
+            Debug.Log($"Minigame Escolhido: {minigameEscolhido.nomeDoJogo}");
+
+            // Estampa a instrução na tela
+            if (txtInstrucao != null)
+                txtInstrucao.text = minigameEscolhido.instrucao;
+
+            cenaMinigameAtiva = minigameEscolhido.nomeDaCena;
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(cenaMinigameAtiva, LoadSceneMode.Additive);
+            
+            asyncLoad.allowSceneActivation = false; 
+
             System.GC.Collect();
-
-            // Espera o tempo da animação do intervalo, tanto faz o tempo
             yield return new WaitForSeconds(3f);
+            
             canvaIntervalo.SetActive(false);
             if (canvasHUD != null) 
                 canvasHUD.SetActive(true);
 
-            asyncLoad.allowSceneActivation = true; // Ativa a cena carregada
-            cenaMinigameAtiva = randomScene;
+            asyncLoad.allowSceneActivation = true; 
             
             while (!asyncLoad.isDone)
                 yield return null;
 
-            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(cenaMinigameAtiva));
-
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(cenaMinigameAtiva));
             AjustarCanvasDaFase(cenaMinigameAtiva);
 
             MinigameBase minigameAtual = FindObjectOfType<MinigameBase>();
@@ -122,7 +118,6 @@ public class GameManagerRework : MonoBehaviour
                 timerInterno = tempoDoMinigameAtual;
 
             tempoMaximoDaFase = timerInterno;
-
             Debug.Log(timerInterno);
 
             timerCongelado = false;
@@ -134,6 +129,7 @@ public class GameManagerRework : MonoBehaviour
                 if (!timerCongelado && !tempoEsgotadoAcionado)
                 {
                     timerInterno -= Time.deltaTime;
+                    
                     if (barraTempo != null)
                         barraTempo.fillAmount = timerInterno / tempoMaximoDaFase;
 
@@ -154,28 +150,23 @@ public class GameManagerRework : MonoBehaviour
                 yield break; 
             }
 
-            // Acabou o tempo, avisa que o jogador nao pode mais jogar
             estaJogando = false;
-            
-            // Atualiza o timer pro próximo minigame
             tempoDoMinigameAtual = Mathf.Max(tempoDoMinigameAtual - decrementoDeTempo, tempoMinimo);
 
-            // Descarrega o minigame que acabou de ser jogado
-            if (cenaMinigameAtiva != -1)
+            if (!string.IsNullOrEmpty(cenaMinigameAtiva))
                 SceneManager.UnloadSceneAsync(cenaMinigameAtiva);
         }
     }
 
     public void VenceuMinigame()
     {
-        // Um minigame chama essa função e para o timer antes
         estaJogando = false; 
     }
 
     public async void GameOver()
     {
         isGameOver = true;
-        StopAllCoroutines(); // Para o loop do jogo
+        StopAllCoroutines(); 
         estaJogando = false;
 
         Debug.Log($"Game Over! Enviando pontuação: {faseAtual} para o Leaderboard...");
@@ -190,20 +181,15 @@ public class GameManagerRework : MonoBehaviour
         }
         
         SceneManager.LoadScene(0);
-
     }
 
-    private void AjustarCanvasDaFase(int indexDaCena)
+    private void AjustarCanvasDaFase(string nomeDaCena)
     {
-        // Pega a cena do minigame que acabou de carregar
-        Scene cenaCarregada = SceneManager.GetSceneByBuildIndex(indexDaCena);
-        
-        // Pega todos os objetos soltos na raiz dessa cena
+        Scene cenaCarregada = SceneManager.GetSceneByName(nomeDaCena);
         GameObject[] objetosRaiz = cenaCarregada.GetRootGameObjects();
         
         foreach (GameObject obj in objetosRaiz)
         {
-            // Prende todos os Canvas do minigame na Câmera Principal
             Canvas[] canvases = obj.GetComponentsInChildren<Canvas>(true);
             foreach (Canvas canvas in canvases)
             {
@@ -211,14 +197,13 @@ public class GameManagerRework : MonoBehaviour
                 canvas.worldCamera = Camera.main; 
             }
 
-            // Força o Scaler a usar a sua proporção original de 800x600
             CanvasScaler[] scalers = obj.GetComponentsInChildren<CanvasScaler>(true);
             foreach (CanvasScaler scaler in scalers)
             {
                 scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
                 scaler.referenceResolution = new Vector2(800, 600); 
                 scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-                scaler.matchWidthOrHeight = 0f; // O valor que alinhou a UI perfeitamente com a física
+                scaler.matchWidthOrHeight = 0f; 
             }
         }
     }
