@@ -98,11 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34afefe4050c3c89b7ff3a31a8ae06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flightDuration: 3
+  flightDuration: 1.5
   gotCaught: 0
   ingredientData: {fileID: 11400000, guid: edf526078ac616911b67a6e7d4c74303, type: 2}
   targetPos: {x: 0, y: 0, z: 0}
-  speed: 10
+  speed: 12
   arcHeight: 1
 --- !u!58 &8142330708949258592
 CircleCollider2D:
@@ -136,6 +136,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06, y: 0.27}
+  m_Offset: {x: 0.060000062, y: 0.30525184}
   serializedVersion: 2
-  m_Radius: 0.93
+  m_Radius: 1.1297612

@@ -28,7 +28,7 @@ EditorBuildSettings:
     guid: 1a2f738764999834ab34c1984157e732
   - enabled: 0
     path: Assets/Scenes/Cena 1.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    guid: fef4235604ec2cefd87f242d2412478d
   - enabled: 0
     path: Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
@@ -59,7 +59,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PulaFogueira.unity
     guid: 22b3ac1ac6644664d8df7aef67f0f8e0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Pesca.unity
     guid: 57661d1407da77c45aaa25c4f616e375
   - enabled: 0
@@ -83,7 +83,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ArtesanatoPiacava.unity
     guid: b2b75b671a6c49749951ba3dae7f2f49
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AcendeFogueira.unity
     guid: ef2376e4968915d7d88126cda6013f22
   - enabled: 1
