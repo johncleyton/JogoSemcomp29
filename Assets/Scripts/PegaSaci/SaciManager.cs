@@ -19,11 +19,17 @@ public class SaciBoss: MinigameBase
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && janelaDeParry)
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("acertou!");
-            jogandoPeneira = true;
-            VencerComAtraso(1.5f);
+            if (janelaDeParry)
+            {
+                Debug.Log("acertou!");
+                jogandoPeneira = true;
+                VencerComAtraso(1.5f);
+            } else
+            {
+                Perder();
+            }
         }
 
         if (jogandoPeneira)
@@ -42,5 +48,7 @@ public class SaciBoss: MinigameBase
         yield return new WaitForSeconds(0.3f);
         spriteRenderer.color = new Color(176f/255f, 82f/255f, 0f);
         janelaDeParry = false;
+        Perder();
     }
+
 }
