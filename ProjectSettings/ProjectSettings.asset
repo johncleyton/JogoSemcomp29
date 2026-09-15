@@ -164,6 +164,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.Semcomp.JogoSemcomp29
+    Standalone: com.Semcomp.JogoSemcomp29
   buildNumber:
     Standalone: 0
     VisionOS: 0
