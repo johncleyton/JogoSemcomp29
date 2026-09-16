@@ -15,3 +15,4 @@ MonoBehaviour:
   nomeDoJogo: Espetinho
   instrucao: "Fa\xE7a os espetinhos antes que o tempo acabe!"
   nomeDaCena: Espetinho
+  tipoJogo: 1

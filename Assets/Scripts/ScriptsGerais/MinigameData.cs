@@ -5,5 +5,7 @@ public class MinigameData : ScriptableObject
 {
     public string nomeDoJogo;
     public string instrucao; 
-    public string nomeDaCena; 
+    public string nomeDaCena;
+    // 0 - normal, 1 - sobrevivência
+    public int tipoJogo; 
 }

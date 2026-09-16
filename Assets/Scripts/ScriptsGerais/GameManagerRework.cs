@@ -37,8 +37,15 @@ public class GameManagerRework : MonoBehaviour
     
     [Header("UI")]
     public TMP_Text txtInstrucao;
-    public TMP_Text txtFase;
+    public TMP_Text txtPontuacao;
     public GameObject canvaIntervalo, eventos;
+
+    public int pontuacaoJogador = 0;
+
+
+    public int vidasIniciais = 3;
+    private int vidasAtuais;
+    public Image[] spritesVidas;
 
     async void Awake()
     {
@@ -58,6 +65,10 @@ public class GameManagerRework : MonoBehaviour
         {
             Debug.LogError("Erro UGS: " + e.Message);
         }
+
+        txtPontuacao.text = "Pontuação: " + pontuacaoJogador;
+
+        vidasAtuais = vidasIniciais;
     }
 
     void Start()
@@ -71,7 +82,7 @@ public class GameManagerRework : MonoBehaviour
             canvasHUD.SetActive(false);
 
         while (true) 
-        {
+        {            
             faseAtual++;
             
             estaJogando = false;
@@ -85,6 +96,7 @@ public class GameManagerRework : MonoBehaviour
             MinigameData minigameEscolhido = listaDeMinigames[randomSorteio];
 
             Debug.Log($"Minigame Escolhido: {minigameEscolhido.nomeDoJogo}");
+
 
             // Estampa a instrução na tela
             if (txtInstrucao != null)
@@ -124,6 +136,8 @@ public class GameManagerRework : MonoBehaviour
             estaJogando = true;
             bool tempoEsgotadoAcionado = false;
 
+            int vidasInicio = vidasAtuais;
+
             while (estaJogando)
             {
                 if (!timerCongelado && !tempoEsgotadoAcionado)
@@ -132,7 +146,6 @@ public class GameManagerRework : MonoBehaviour
                     
                     if (barraTempo != null)
                         barraTempo.fillAmount = timerInterno / tempoMaximoDaFase;
-
                     if (timerInterno <= 0)
                     {
                         tempoEsgotadoAcionado = true;
@@ -150,6 +163,22 @@ public class GameManagerRework : MonoBehaviour
                 yield break; 
             }
 
+            if (vidasAtuais == vidasInicio)
+            {
+                int quantosPontos = 0;
+                if (minigameEscolhido.tipoJogo == 0)
+                    quantosPontos = Mathf.Max(100, Mathf.RoundToInt(5000 * (timerInterno / tempoMaximoDaFase)));
+                else if (minigameEscolhido.tipoJogo == 1)
+                    quantosPontos = 2500;
+                
+                pontuacaoJogador += quantosPontos;
+
+                if (txtPontuacao != null)
+                    txtPontuacao.text = "Pontuação: " + pontuacaoJogador;
+
+                Debug.Log($"Venceu! Ganhou {quantosPontos} pontos. Total: {pontuacaoJogador}");
+            }
+
             estaJogando = false;
             tempoDoMinigameAtual = Mathf.Max(tempoDoMinigameAtual - decrementoDeTempo, tempoMinimo);
 
@@ -165,14 +194,28 @@ public class GameManagerRework : MonoBehaviour
 
     public async void GameOver()
     {
+        vidasAtuais--;
+        spritesVidas[vidasAtuais].enabled = false;
+
+        estaJogando = false;
+
+        if (vidasAtuais <= 0)
+            SemVidas();
+        else
+            Debug.Log("Perdeu uma vida! Restam: " + vidasAtuais);
+    }
+
+    private async void SemVidas()
+    {
         isGameOver = true;
         StopAllCoroutines(); 
         estaJogando = false;
 
-        Debug.Log($"Game Over! Enviando pontuação: {faseAtual} para o Leaderboard...");
+        Debug.Log($"Game Over Definitivo! Enviando pontuação: {pontuacaoJogador} para o Leaderboard...");
         try
         {
-            var resposta = await LeaderboardsService.Instance.AddPlayerScoreAsync("top_jogadores", faseAtual);
+            // Alterado para enviar a pontuacaoJogador em vez da faseAtual
+            var resposta = await LeaderboardsService.Instance.AddPlayerScoreAsync("top_jogadores", pontuacaoJogador); 
             Debug.Log($"Recorde salvo: {resposta.Score}");
         }
         catch (System.Exception ex)

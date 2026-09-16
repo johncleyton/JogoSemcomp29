@@ -15,3 +15,4 @@ MonoBehaviour:
   nomeDoJogo: Flappipa
   instrucao: "Aperte na tela e desvie dos pr\xE9dios!"
   nomeDaCena: Flappipa
+  tipoJogo: 1

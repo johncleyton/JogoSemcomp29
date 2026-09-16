@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b70cdce3198d0e4f917ae6d827762c1, type: 3}
-  m_Name: Boiaserra
+  m_Name: Berrante
   m_EditorClassIdentifier: 
-  nomeDoJogo: Boiaserra
-  instrucao: "Acerte o ritmo e n\xE3o erre a coreografia!"
-  nomeDaCena: Boiaserra
-  tipoJogo: 1
+  nomeDoJogo: MinigameBerrante
+  instrucao: "Assopre o m\xE1ximo que puder seu berrante!"
+  nomeDaCena: MinigameBerrante

@@ -15,3 +15,4 @@ MonoBehaviour:
   nomeDoJogo: MinigameSurf
   instrucao: "Surfe a pororoca e n\xE3o seja atingido!"
   nomeDaCena: MinigameSurf
+  tipoJogo: 1
