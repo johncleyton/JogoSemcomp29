@@ -8,6 +8,9 @@ public class ChineloUISpawner : MonoBehaviour
     public GameObject viradoPrefab;
     public GameObject normalPrefab;
 
+    [Header("Área de Spawn")]
+    public RectTransform areaDeSpawn;
+
     [Header("Configurações de Visual")]
     [Range(0.1f, 0.9f)]
     public float proporcaoOcupacao = 0.6f;
@@ -32,6 +35,8 @@ public class ChineloUISpawner : MonoBehaviour
         EmbaralharLista(chinelosParaSpawnar);
 
         areaDoJogo = gameObject.GetComponent<RectTransform>();
+
+        if (areaDeSpawn == null) areaDeSpawn = areaDoJogo;
     }
 
     IEnumerator Start()
@@ -49,14 +54,16 @@ public class ChineloUISpawner : MonoBehaviour
         int colunas = 3;
         int linhas = 3;
 
-        float larguraTotal = areaDoJogo.rect.width;
-        float alturaTotal = areaDoJogo.rect.height;
+        float larguraTotal = areaDeSpawn.rect.width;
+        float alturaTotal = areaDeSpawn.rect.height;
 
         float larguraCelula = larguraTotal / colunas;
         float alturaCelula = alturaTotal / linhas;
 
-        float startX = -larguraTotal / 2f;
-        float startY = -alturaTotal / 2f;
+        Vector2 offsetCentro = GetOffsetRelativoAoPai();
+
+        float startX = -larguraTotal / 2f + offsetCentro.x;
+        float startY = -alturaTotal / 2f + offsetCentro.y;
 
         for (int x = 0; x < colunas; x++)
         {
@@ -72,10 +79,20 @@ public class ChineloUISpawner : MonoBehaviour
         EmbaralharLista(posicoesDoGrid);
     }
 
+    private Vector2 GetOffsetRelativoAoPai()
+    {
+        if (areaDeSpawn == areaDoJogo) return Vector2.zero;
+
+        Vector3 centroMundo = areaDeSpawn.TransformPoint(areaDeSpawn.rect.center);
+        Vector3 centroLocalNoPai = areaDoJogo.InverseTransformPoint(centroMundo);
+
+        return new Vector2(centroLocalNoPai.x, centroLocalNoPai.y);
+    }
+
     private void SpawnarChinelosUI()
     {
-        float larguraCelula = areaDoJogo.rect.width / 3f;
-        float alturaCelula = areaDoJogo.rect.height / 3f;
+        float larguraCelula = areaDeSpawn.rect.width / 3f;
+        float alturaCelula = areaDeSpawn.rect.height / 3f;
 
         float tamanhoBase = Mathf.Min(larguraCelula, alturaCelula) * proporcaoOcupacao;
 
@@ -92,7 +109,6 @@ public class ChineloUISpawner : MonoBehaviour
             Vector2 posicaoFinal = new Vector2(centroDaCelula.x + desvioX, centroDaCelula.y + desvioY);
             GameObject chineloInstanciado = Instantiate(chinelosParaSpawnar[i], areaDoJogo, false);
 
-            // 2. AQUI: Salvamos o clone instanciado na nossa nova lista!
             chinelosEmJogo.Add(chineloInstanciado);
 
             RectTransform rectChinelo = chineloInstanciado.GetComponent<RectTransform>();
