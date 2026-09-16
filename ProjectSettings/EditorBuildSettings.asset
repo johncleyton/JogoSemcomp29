@@ -59,7 +59,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PulaFogueira.unity
     guid: 22b3ac1ac6644664d8df7aef67f0f8e0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Pesca.unity
     guid: 57661d1407da77c45aaa25c4f616e375
   - enabled: 0
@@ -89,4 +89,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PaodariaDeQueijo.unity
     guid: b15e77e2b4307cea8b0d01de5eaeffa8
+    path: Assets/Scenes/Boiaserra.unity
+    guid: a43d6772339b6b2488ed8e860deec5d3
+  - enabled: 1
+    path: Assets/Scenes/Espetinho.unity
+    guid: e908da5b998685f4fa5e915bace272eb
   m_configObjects: {}

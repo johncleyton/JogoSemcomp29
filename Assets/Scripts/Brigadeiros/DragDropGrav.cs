@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class DragDropGrav : MinigameBase
 {
@@ -8,9 +9,11 @@ public class DragDropGrav : MinigameBase
     private bool isClicked = false;
     Rigidbody2D rb;
     List<Vector3> ponto_momento = new List<Vector3>();
+    [SerializeField] Sprite[] sprite;
 
     private void Awake()
     {
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprite[Random.Range(0, sprite.Length)];
         brigadeiro = Object.FindFirstObjectByType<Brigadeiros>();
         ponto_momento.Add(Vector3.zero);
         ponto_momento.Add(Vector3.zero);
@@ -63,14 +66,16 @@ public class DragDropGrav : MinigameBase
         rb.AddForce(120 * (ponto_momento[1] - ponto_momento[0]), ForceMode2D.Impulse);
     }
 
-
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        //Layer 4 eh "mouth"
         if (collision.gameObject.layer == 4)
         {
             Destroy(gameObject);
             brigadeiro.qtdBrigadeiro -= 1;
+        }
+        else if (collision.gameObject.layer == 7)
+        {
+            Perder();
         }
     }
 }
