@@ -30,6 +30,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Cena 1.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
+    guid: fef4235604ec2cefd87f242d2412478d
+  - enabled: 0
     path: Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
   - enabled: 1
@@ -59,7 +61,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PulaFogueira.unity
     guid: 22b3ac1ac6644664d8df7aef67f0f8e0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Pesca.unity
     guid: 57661d1407da77c45aaa25c4f616e375
   - enabled: 1
@@ -101,4 +103,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Parintins.unity
     guid: 9a3de69990876374ea16daecb877e124
+    path: Assets/Scenes/BotoVisualNovel.unity
+    guid: 694990d7877acd4e28e04049044ef81e
   m_configObjects: {}
