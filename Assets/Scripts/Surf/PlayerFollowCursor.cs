@@ -238,4 +238,10 @@ public class PlayerFollowCursorPhysics : MinigameBase
     {
         Time.timeScale = 1f;
     }
+
+    public void MorrerPorObstaculo()
+    {
+        Die();
+
+    }
 }

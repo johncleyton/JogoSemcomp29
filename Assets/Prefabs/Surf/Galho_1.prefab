@@ -127,9 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: -6
-  knockbackDistance: 5
   destroyXPosition: -11
-  colliderDisableTime: 0.5
 --- !u!61 &4433004738967515425
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,7 +157,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.9072734, y: 0.42736423}
