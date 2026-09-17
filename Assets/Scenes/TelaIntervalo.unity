@@ -606,10 +606,7 @@ MonoBehaviour:
   decrementoDeTempo: 0.1
   timerCongelado: 0
   listaDeMinigames:
-  - {fileID: 11400000, guid: fa76a64ffa029e646ae517c3906939f1, type: 2}
-  - {fileID: 11400000, guid: a17b5d4e300c779468df3ae2c0fb5ba4, type: 2}
-  - {fileID: 11400000, guid: 9c59b9aa2fcc85641b53f19298d534f9, type: 2}
-  - {fileID: 11400000, guid: d21eecf9669cbce4fa510a80cbd3c375, type: 2}
+  - {fileID: 11400000, guid: 31f14368be4cb724aacd75615c6703bc, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   canvaIntervalo: {fileID: 1155312265}
@@ -750,10 +747,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00020965934
-    y: 0
-    width: 0.9995807
-    height: 1
+    x: 0
+    y: 0.00018826127
+    width: 1
+    height: 0.9996235
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

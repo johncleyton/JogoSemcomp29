@@ -167,9 +167,9 @@ public class GameManagerRework : MonoBehaviour
             {
                 int quantosPontos = 0;
                 if (minigameEscolhido.tipoJogo == 0)
-                    quantosPontos = Mathf.Max(100, Mathf.RoundToInt(5000 * (timerInterno / tempoMaximoDaFase)));
+                    quantosPontos = Mathf.Max(1000, Mathf.RoundToInt(5000 * (timerInterno / tempoMaximoDaFase)));
                 else if (minigameEscolhido.tipoJogo == 1)
-                    quantosPontos = 2500;
+                    quantosPontos = 2000;
                 
                 pontuacaoJogador += quantosPontos;
 
