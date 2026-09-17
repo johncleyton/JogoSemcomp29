@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CoracoesEstrelas : MonoBehaviour
 {
+    private float timer = 0f;
 
     [Tooltip("0 para coração (Garantido) e 1 para estrela (Caprichoso)")]
     public int typeOfItem;
@@ -27,6 +28,10 @@ public class CoracoesEstrelas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        if(timer > 2f)
+        {
+            Destroy(gameObject);
+        }
     }
 }

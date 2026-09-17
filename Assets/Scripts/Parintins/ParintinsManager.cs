@@ -7,7 +7,7 @@ using UnityEngine;
 public class ParintinsManager : MinigameBase
 {
 
-    double cooldown = 0.3;
+    double cooldown = 0.5;
     float timer_total = 0f;
 
 
@@ -21,6 +21,7 @@ public class ParintinsManager : MinigameBase
     public GameObject boiCaprichoso;
 
     private int boiEscolhido;
+    private bool start = false;
 
     private float timer = 0f;
     private int counter = 0; 
@@ -38,7 +39,7 @@ public class ParintinsManager : MinigameBase
     void Start()
     {
 
-        boiEscolhido = Random.Range(0, 2);
+        boiEscolhido = UnityEngine.Random.value > 0.5f ? 1 : 0;
 
         StartCoroutine(ChooseBoiEscolhido());
     }
@@ -59,10 +60,12 @@ public class ParintinsManager : MinigameBase
         }
 
         notChosen.SetActive(true);
+        start = true;
     }
     // Update is called once per frame
     void Update()
     {
+        if (!start) return; 
         timer_total += Time.deltaTime;
 
         timer += Time.deltaTime;
@@ -78,7 +81,7 @@ public class ParintinsManager : MinigameBase
             TempoEsgotado();
         }
 
-        if (counter == 10)
+        if (counter == 5)
         {
             Vencer();
         }
@@ -88,12 +91,23 @@ public class ParintinsManager : MinigameBase
     {
         if (spawnpoints.Length == 0) return;
 
-        int indexSpawn = Random.Range(0, spawnpoints.Length);
+        List<Transform> emptySpawns = new List<Transform>();
+        foreach(Transform point in spawnpoints)
+        {
+            if(point.childCount == 0)
+            {
+                emptySpawns.Add(point);
+            }
+        }
+
+        if (emptySpawns.Count == 0) return;
+
+        int indexSpawn = UnityEngine.Random.Range(0, emptySpawns.Count);
         Transform chosenSpawn = spawnpoints[indexSpawn];
 
-        GameObject spawningPrefab = Random.Range(0, 2) == 0 ? prefabCoracao : prefabEstrela;
+        GameObject spawningPrefab = UnityEngine.Random.value > 0.5f ? prefabCoracao : prefabEstrela;
 
-        Instantiate(spawningPrefab, chosenSpawn.position, Quaternion.identity);
+        Instantiate(spawningPrefab, chosenSpawn.position, Quaternion.identity, chosenSpawn);
     }
 
     public void Clicked(int typeOfItem)
