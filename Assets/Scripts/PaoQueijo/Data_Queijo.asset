@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Data_Queijo
   m_EditorClassIdentifier: 
   nameIngredient: Queijo
-  iconUI: {fileID: 0}
-  prefabModel: {fileID: 0}
+  iconUI: {fileID: 21300000, guid: 686dc2c8789aca8f19f71234ec50014d, type: 3}
+  prefabModel: {fileID: 3129690338020748958, guid: 457bb82e7b960aaef841cb73b2a47ad2, type: 3}

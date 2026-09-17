@@ -66,7 +66,8 @@ public class CollectIngredients : MinigameBase
             if ((i1 == "Pao" && i2 == "Queijo") || (i1 == "Queijo" && i2 == "Pao"))
             {
                 paesFeitos++;
-                Debug.Log($"Pão de Queijo Perfeito! ({paesFeitos}/{metaPaesDeQueijo})");
+                // MENSAGEM ATUALIZADA AQUI:
+                Debug.Log($"formou (fez) pao de queijo! ({paesFeitos}/{metaPaesDeQueijo})");
                 
                 if (paesFeitos >= metaPaesDeQueijo)
                 {

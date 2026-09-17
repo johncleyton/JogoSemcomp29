@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a1f152b2daec1aa983f2b6be0f0c6b0, type: 3}
-  m_Name: Data_Pao
+  m_Script: {fileID: 11500000, guid: 6b70cdce3198d0e4f917ae6d827762c1, type: 3}
+  m_Name: PaodeQueijo
   m_EditorClassIdentifier: 
-  nameIngredient: Pao
-  iconUI: {fileID: 21300000, guid: 30aaf8b4e1a64a75cbf1dc3df6ca5cab, type: 3}
-  prefabModel: {fileID: 2253423632965602626, guid: 083c4d56ea8ce7663b9f764e651f59b0, type: 3}
+  nomeDoJogo: PaodeQueijo
+  instrucao: "Pegue P\xE3o e Queijo (Queijo e P\xE3o) para formar um P\xE3o de Queijo,
+    antes que eles se desfa\xE7am no cozinheiro!!"
+  nomeDaCena: PaodariaDeQueijo

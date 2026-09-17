@@ -7,7 +7,7 @@ public class IngredientBehaviour : MonoBehaviour
 
 
     [Tooltip("Quantos segundos demora a chegar na mesa")]
-    public float flightDuration = 3.0f;
+    public float flightDuration = 2.0f;
 
     private float timeElapsed = 0f;
 
