@@ -62,7 +62,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/WhackaCroc.unity
     guid: 3bace07e48c4e504faf4a65dbaa670bf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MangaeLeite.unity
     guid: 4e6e3946591aa1f4aa973a6931290c0b
+  - enabled: 1
+    path: Assets/Scenes/Parintins.unity
+    guid: 9a3de69990876374ea16daecb877e124
   m_configObjects: {}
