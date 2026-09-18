@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Brigadeiro.unity
     guid: 4a0ed0641815c964d8047185611291c7
   - enabled: 0
@@ -80,10 +80,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MangaeLeite.unity
     guid: 4e6e3946591aa1f4aa973a6931290c0b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Boiaserra.unity
     guid: a43d6772339b6b2488ed8e860deec5d3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Espetinho.unity
     guid: e908da5b998685f4fa5e915bace272eb
   m_configObjects: {}

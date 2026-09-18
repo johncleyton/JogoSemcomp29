@@ -39,7 +39,7 @@ public class Tapioca : MinigameBase
         if (tempo > cooldown && tempo < cooldown + erro) {
             if (!frito)
             {
-                animator[2].SetTrigger("Fritou");
+                animator[1].SetTrigger("Fritou");
                 Debug.Log("CLIQUE!");
                 frito = true;
             }
@@ -79,7 +79,6 @@ public class Tapioca : MinigameBase
     {
         vindo = false;
         animator[0].SetBool("Fritado", true);
-        animator[1].SetTrigger("Fritado");
         Debug.Log("Esperando");
         yield return new WaitForSeconds(0.55f);
         Debug.Log("Esperado");
