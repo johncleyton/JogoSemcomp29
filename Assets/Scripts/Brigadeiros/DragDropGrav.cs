@@ -54,7 +54,7 @@ public class DragDropGrav : MinigameBase
     private void OnMouseUp()
     {
         isClicked = false;
-        rb.gravityScale = 1f;
+        rb.gravityScale = 1.5f;
 
         //Tira o momento
         rb.velocity = Vector3.zero;
@@ -63,7 +63,7 @@ public class DragDropGrav : MinigameBase
         //Debug.Log(vetor_momento[1] - vetor_momento[0]);
         //Tira um vetor a partir dos pontos do brigadeiro nos dois
         //ultimos frames e adiciona uma forca nessa direcao
-        rb.AddForce(120 * (ponto_momento[1] - ponto_momento[0]), ForceMode2D.Impulse);
+        rb.AddForce(30 * (ponto_momento[1] - ponto_momento[0]), ForceMode2D.Impulse);
     }
 
     void OnCollisionEnter2D(Collision2D collision)

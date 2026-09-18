@@ -51,7 +51,7 @@ public class espetoMov : MinigameBase
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         mouseWorldPos.z = -5f;
-        mouseWorldPos.y = -3.76f;
+        mouseWorldPos.y = -3.17f;
 
         if (isClicked)
         {
@@ -66,13 +66,15 @@ public class espetoMov : MinigameBase
             //vao uma posicao para baixo.
             //Existem 5 posicoes possiveis (sendo a ultima quase invisivel
             //para o jogador). Vao de -2.4f ate -5.2f com distancia de -0.7f
-            mouseWorldPos.y = -1.7f;
+            mouseWorldPos.z = -6f;
+            mouseWorldPos.y = -0.2f;
             for (int i = 5; i > -1; i--)
             {
                 if (comidas[i] != null)
                 {
-                    mouseWorldPos.y -= 0.7f;
-                    if (mouseWorldPos.y < -5.2f)
+                    mouseWorldPos.y -= 0.9f;
+                    Debug.Log("comida " + i + " e " + mouseWorldPos.y);
+                    if (mouseWorldPos.y < -4.8f)
                     {
                         //o i aqui eh sempre 0 e so acontece quando tem
                         //6 Transforms no vetor
