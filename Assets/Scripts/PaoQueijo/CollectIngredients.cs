@@ -31,7 +31,7 @@ public class CollectIngredients : MinigameBase
     {
         // Aumenta a quantidade de pães de queijo necessários conforme a fase avança
         metaPaesDeQueijo = 2 + (faseAtual / 4);
-        return tempoGlobalSugerido;
+        return 30f;
     }
 
     public void AddIngredient(IngredientData data)

@@ -15,4 +15,4 @@ MonoBehaviour:
   nomeDoJogo: PaodariaDeQueijo
   instrucao: "Pegue o p\xE3o, depois o queijo!"
   nomeDaCena: PaodariaDeQueijo
-  tipoJogo: 1
+  tipoJogo: 0
