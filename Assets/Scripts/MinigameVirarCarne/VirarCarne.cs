@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class VirarCarne : MinigameBase
@@ -10,6 +11,13 @@ public class VirarCarne : MinigameBase
 
     public float speed = 100f;
     private bool movingUp = true;
+
+
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        speed = Mathf.Min(speed + faseAtual*5, 300);
+        return tempoGlobalSugerido;
+    }
 
     void Update()
     {

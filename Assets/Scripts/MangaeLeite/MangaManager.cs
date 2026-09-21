@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MangaManager : MinigameBase
 {
-    double cooldown = 0.5;
+    double cooldown = 0.2;
     float timer_total = 0f;
 
 
