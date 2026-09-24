@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b70cdce3198d0e4f917ae6d827762c1, type: 3}
   m_Name: PaodeQueijo
   m_EditorClassIdentifier: 
-  nomeDoJogo: PaodeQueijo
-  instrucao: "Pegue P\xE3o e Queijo (Queijo e P\xE3o) para formar um P\xE3o de Queijo,
-    antes que eles se desfa\xE7am no cozinheiro!!"
+  nomeDoJogo: "P\xE3o de Queijo"
+  instrucao: "Fa\xE7a 3 p\xE3o de queijo!"
   nomeDaCena: PaodariaDeQueijo
+  tipoJogo: 0

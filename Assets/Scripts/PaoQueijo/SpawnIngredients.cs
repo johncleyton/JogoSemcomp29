@@ -4,104 +4,69 @@ using UnityEngine;
 
 public class SpawnIngredients : MonoBehaviour
 {
-
     [Tooltip("Drag here Pao and Queijo prefabs")]
     public GameObject[] ingredientPrefabs;
-
     public Transform targetPoint;
+    
+    [Header("Configurações de Velocidade")]
+    [Tooltip("Tempo entre cada lançamento. Deixei baixo (0.3s) para chover ingrediente!")]
+    public float tempoEntreLancamentos = 0.3f;
 
     private Camera cam;
 
     void Awake()
     {
-        // CORRIGIDO: evita chamar Camera.main repetidamente em CalculateSpawn
         cam = Camera.main;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        // CORRIGIDO: avisa claramente no Console se faltar configuração no
-        // Inspector, em vez de deixar o InvokeRepeating lançar erro a cada 2s
-        if (targetPoint == null)
-        {
-            Debug.LogError("SpawnIngredients: 'targetPoint' não foi definido no Inspector. Os ingredientes não terão para onde voar.");
-        }
-
-        if (ingredientPrefabs == null || ingredientPrefabs.Length == 0)
-        {
-            Debug.LogError("SpawnIngredients: nenhum prefab foi colocado em 'ingredientPrefabs'.");
-        }
-
-        // usado para calcular uma linha justa 
-        // para tacar coisas no player
-        // CalculateSpawn();
-
-        // wait 2 sec, launch every 0.3 s 
-        InvokeRepeating(nameof(LaunchProjectile), 2.0f, 2.0f);
+        if (targetPoint == null) Debug.LogError("SpawnIngredients: 'targetPoint' faltando.");
+        if (ingredientPrefabs == null || ingredientPrefabs.Length == 0) Debug.LogError("SpawnIngredients: prefab faltando.");
+        
+        // O InvokeRepeating foi removido daqui e passado para o método abaixo
     }
 
+    // Função chamada pelo CollectIngredients assim que o jogador clicar
+    public void ComecarSpawns()
+    {
+        InvokeRepeating(nameof(LaunchProjectile), 0.1f, tempoEntreLancamentos);
+    }
 
     public void LaunchProjectile()
     {
-        // CORRIGIDO: aborta com segurança em vez de quebrar com exceção
-        // se a configuração no Inspector estiver incompleta
-        if (targetPoint == null || ingredientPrefabs == null || ingredientPrefabs.Length == 0)
-        {
-            return;
-        }
+        if (targetPoint == null || ingredientPrefabs == null || ingredientPrefabs.Length == 0) return;
+
+        // Só lança se o jogo já começou e não estiver finalizado
+        if (CollectIngredients.instance != null && CollectIngredients.instance.JogoEncerrado) return;
 
         int randomIndex = Random.Range(0, ingredientPrefabs.Length);
-
         GameObject prefabSorted = ingredientPrefabs[randomIndex];
-
-
         Vector2 spawnPos = CalculateSpawn();
 
         GameObject newIngredient = Instantiate(prefabSorted, spawnPos, Quaternion.identity);
 
-
         IngredientBehaviour ingredientBehaviour = newIngredient.GetComponent<IngredientBehaviour>();
-
         if (ingredientBehaviour)
         {
             ingredientBehaviour.targetPos = targetPoint.position;
         } 
     }
 
-
     Vector2 CalculateSpawn()
     {
-
-        // A ideia é, de algum canto, acima da mesa e do personagem, 
-        // vai ser TACADO no personagem um ingrediente, 
-
-        // esq = 0, topo = 1, dir = 2
         int ladoSorteado = Random.Range(0, 3);
-        
         Vector3 viewportPoint = Vector3.zero;
-
         float posicaoAleatoria = Random.Range(0f, 1f);
 
         switch (ladoSorteado)
         {
-            case 0: // esq, (x = 0, Y aleatorio)
-                viewportPoint = new Vector3(0f, posicaoAleatoria, 0f);
-                break;
-
-            case 1: // Topo (X = aleatório, Y = 1)
-                viewportPoint = new Vector3(posicaoAleatoria, 1f, 0f);
-                break;
-            case 2: // Direita (X = 1, Y = aleatório)
-                viewportPoint = new Vector3(1f, posicaoAleatoria, 0f);
-                break;
+            case 0: viewportPoint = new Vector3(0f, posicaoAleatoria, 0f); break;
+            case 1: viewportPoint = new Vector3(posicaoAleatoria, 1f, 0f); break;
+            case 2: viewportPoint = new Vector3(1f, posicaoAleatoria, 0f); break;
         }
 
-
-        // viewport: z distancia da camera para o background
-
         viewportPoint.z = Mathf.Abs(cam.transform.position.z);
-
         Vector3 worldPos = cam.ViewportToWorldPoint(viewportPoint);
 
         return new Vector2(worldPos.x, worldPos.y);

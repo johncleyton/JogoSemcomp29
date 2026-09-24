@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34afefe4050c3c89b7ff3a31a8ae06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flightDuration: 1.5
+  flightDuration: 2
   gotCaught: 0
   ingredientData: {fileID: 11400000, guid: edf526078ac616911b67a6e7d4c74303, type: 2}
   targetPos: {x: 0, y: 0, z: 0}
