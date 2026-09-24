@@ -62,7 +62,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Pesca.unity
     guid: 57661d1407da77c45aaa25c4f616e375
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Tapioca.unity
     guid: 9c7aa4ff74d3c774db0b0a1db9b3c737
   - enabled: 0
@@ -86,4 +86,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Espetinho.unity
     guid: e908da5b998685f4fa5e915bace272eb
+  - enabled: 1
+    path: Assets/Scenes/Ramon.unity
+    guid: 09b41975de912d1428fd3c650dc62b68
   m_configObjects: {}
