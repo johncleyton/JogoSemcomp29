@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChineloController : MinigameBase
 {
     private ChineloUISpawner chineloSpawner;
+
+    public GameObject EventSystem;
+
+    public GameObject Feedback;
+
+    public Sprite Win;
+    public Sprite Lose;
+
+    [Header("Configuração")]
+    public float tempoDeFeedback = 2f;
 
     void Start()
     {
@@ -17,13 +28,13 @@ public class ChineloController : MinigameBase
 
         if (chineloSpawner.VerificarFimDoJogo())
         {
-            Debug.Log("GANHOU no último milissegundo!");
-            Vencer();
+            MostrarFeedback(true);
+            VencerComAtraso(tempoDeFeedback);
         }
         else
         {
-            Debug.Log("PERDEU! Tempo esgotou com chinelo virado.");
-            Perder();
+            MostrarFeedback(false);
+            PerderComAtraso(tempoDeFeedback);
         }
     }
 
@@ -34,7 +45,16 @@ public class ChineloController : MinigameBase
         if (chineloSpawner.VerificarFimDoJogo())
         {
             Debug.Log("GANHOU ANTECIPADAMENTE! Jogador foi muito rápido!");
-            Vencer();
+            MostrarFeedback(true);
+            VencerComAtraso(tempoDeFeedback);
         }
+    }
+
+    private void MostrarFeedback(bool vitoria)
+    {
+        EventSystem.SetActive(false);
+
+        Feedback.GetComponent<Image>().sprite = vitoria ? Win : Lose;
+        Feedback.SetActive(true);
     }
 }

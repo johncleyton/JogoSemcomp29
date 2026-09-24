@@ -20,6 +20,7 @@ public class PescaManager : MinigameBase
     public Transform barraProgresso;
 
     public Animator anim;
+    public bool jogoRodando = true;
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
@@ -35,9 +36,12 @@ public class PescaManager : MinigameBase
     // Update is called once per frame
     void Update()
     {
-        MoverPeixe();
-        MoverGancho();
-        ChecarProgresso();
+        if (jogoRodando)
+        {
+            MoverPeixe();
+            MoverGancho();
+            ChecarProgresso();
+        }
     }
 
     public float ganchoFriccao = 0.95f;
@@ -99,7 +103,8 @@ public class PescaManager : MinigameBase
         if (ganchoProgresso >= 1f)
         {
             anim.SetTrigger("vencer");
-            Vencer();
+            jogoRodando = false;
+            VencerComAtraso(1.5f);
         }
 
         ganchoProgresso = Mathf.Clamp(ganchoProgresso, 0f, 1f);

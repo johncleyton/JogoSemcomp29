@@ -31,7 +31,7 @@ public class CollectIngredients : MinigameBase
     {
         // Aumenta a quantidade de pães de queijo necessários conforme a fase avança
         metaPaesDeQueijo = 2 + (faseAtual / 4);
-        return tempoGlobalSugerido;
+        return 30f;
     }
 
     public void AddIngredient(IngredientData data)
@@ -66,7 +66,8 @@ public class CollectIngredients : MinigameBase
             if ((i1 == "Pao" && i2 == "Queijo") || (i1 == "Queijo" && i2 == "Pao"))
             {
                 paesFeitos++;
-                Debug.Log($"Pão de Queijo Perfeito! ({paesFeitos}/{metaPaesDeQueijo})");
+                // MENSAGEM ATUALIZADA AQUI:
+                Debug.Log($"formou (fez) pao de queijo! ({paesFeitos}/{metaPaesDeQueijo})");
                 
                 if (paesFeitos >= metaPaesDeQueijo)
                 {
