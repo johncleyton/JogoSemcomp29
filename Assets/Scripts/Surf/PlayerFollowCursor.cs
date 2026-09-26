@@ -23,9 +23,11 @@ public class PlayerFollowCursorPhysics : MinigameBase
 
     [Header("Morte")]
     public float tempoAnimacaoMorte = 1.2f;
+    public string paramMorte = "Cair";
 
     [Header("Vitória")]
     public float tempoAnimacaoVitoria = 1f;
+    public string paramVitoria = "Vencer";
 
     [Header("Animator")]
     public string paramCima = "cima";
@@ -35,6 +37,7 @@ public class PlayerFollowCursorPhysics : MinigameBase
 
     private Camera mainCamera;
     private Rigidbody2D rb;
+    private Collider2D col;
     private float velocityY = 0f;
     private float currentForwardSpeed = 0f;
     private float lastTargetY = 0f;
@@ -75,6 +78,7 @@ public class PlayerFollowCursorPhysics : MinigameBase
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
         lastTargetY = transform.position.y;
@@ -197,16 +201,23 @@ public class PlayerFollowCursorPhysics : MinigameBase
 
     public void ApplyKnockback(float amount)
     {
+        if (isDead) return;
         knockbackVelocity -= Mathf.Abs(amount);
     }
 
     private void Die()
     {
-        if (jogoFinalizado) return;
+        if (isDead) return;
 
         isDead = true;
-        animator.SetTrigger("Cair");
+
         rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        if (col != null) col.enabled = false;
+
+        if (animator != null) animator.SetTrigger(paramMorte);
 
         StartCoroutine(RotinaMorteSlowMotion());
     }
@@ -228,9 +239,12 @@ public class PlayerFollowCursorPhysics : MinigameBase
 
     public override void TempoEsgotado()
     {
-        if (jogoFinalizado) return;
+        if (jogoFinalizado || isDead) return;
 
         isDead = true;
+
+        if (animator != null) animator.SetTrigger(paramVitoria);
+
         VencerComAtraso(tempoAnimacaoVitoria);
     }
 
@@ -242,6 +256,5 @@ public class PlayerFollowCursorPhysics : MinigameBase
     public void MorrerPorObstaculo()
     {
         Die();
-
     }
 }
