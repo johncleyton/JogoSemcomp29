@@ -7,9 +7,16 @@ public class Verificaderrota : MinigameBase
     
     private bool miss = true;
 
+    public Boiaserra2 boiaserra2;
+    private int jogoAcabou = 0;
+    public Animator anim;
+
+    public GameObject bg;
+    public GameObject voce;
+
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        float tempoFixo = 60f;
+        float tempoFixo = 10f;
 
         return tempoFixo;
     }
@@ -17,7 +24,24 @@ public class Verificaderrota : MinigameBase
     {
         if (jogoFinalizado)
             return;
-        Vencer();
+        jogoAcabou = 1;
+        //VitoriaDerrota();
+        VencerComAtraso(0f);
+    }
+
+    private void VitoriaDerrota()
+    {
+        boiaserra2.enabled = false;
+        bg.transform.position = new Vector3(-0.6652f, -0.6287f, -9.0f);
+        voce.SetActive(false);
+        if (jogoAcabou == 1)
+        {
+            anim.SetTrigger("vitoria");
+        }
+        else if (jogoAcabou == -1)
+        {
+            anim.SetTrigger("derrota");
+        }
     }
 
 
@@ -28,58 +52,64 @@ public class Verificaderrota : MinigameBase
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-    
-        //Janela em que a nota esta disponivel: Quando faltar 2 beatinterval.
-        //Clicar em espaco fora dos +-100ms de margem de erro e dentro dos 2 beatinterval, faz o jogador errar
-        //Antes dos 2 beatinterval, ele pode clicar a vontade que nao vai fazer nenhuma diferenca
-        if (Input.GetMouseButtonDown(0))
+        if (jogoAcabou == 0)
         {
-            //Debug.Log("clicou------------");
-            if (MapaBS.notes[0][0] <= 2)
+            //Janela em que a nota esta disponivel: Quando faltar 2 beatinterval.
+            //Clicar em espaco fora dos +-100ms de margem de erro e dentro dos 2 beatinterval, faz o jogador errar
+            //Antes dos 2 beatinterval, ele pode clicar a vontade que nao vai fazer nenhuma diferenca
+            if (Input.GetMouseButtonDown(0))
             {
-                if (MapaBS.notes[0][0] <= 1)
+                //Debug.Log("clicou------------");
+                if (MapaBS.notes[0][0] <= 2)
                 {
-                    //verifica para o erro de -100ms ate 0ms
-                    if (MapaBS.beatinterval - (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval) < 0.3f)
+                    if (MapaBS.notes[0][0] <= 1)
                     {
-                        print("deu certo1");
-                        miss = false;
+                        //verifica para o erro de -100ms ate 0ms
+                        if (MapaBS.beatinterval - (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval) < 0.3f)
+                        {
+                            print("deu certo1");
+                            miss = false;
+                        }
+                        //verifica para o erro de 0ms ate 100ms
+                        else if (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval < 0.3f)
+                        {
+                            print("deu certo2");
+                            miss = false;
+                        }
                     }
-                    //verifica para o erro de 0ms ate 100ms
-                    else if (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval < 0.3f)
+                    if (miss == true)
                     {
-                        print("deu certo2");
-                        miss = false;
+                        print("FALHOUU");
+                        jogoAcabou = -1;
+                        //VitoriaDerrota();
+                        PerderComAtraso(0f);
                     }
-                }
-                if (miss == true)
-                {
-                    print("FALHOUU");
-                    Perder();
                 }
             }
-        }
 
-        if (MapaBS.verificacao == true)
-        {
-            if (MapaBS.missable == true)
+            if (MapaBS.verificacao == true)
             {
-                //Caso o jogador nao tenha clicado na janela em que a nota estava disponivel, ele erra
-                //e perde
-                //Caso o jogador tenha acertado, miss se torna false, e entao aqui ele volta a ser true
-                if (miss)
+                if (MapaBS.missable == true)
                 {
-                    Debug.Log("Nao clicou");
-                    Perder();
+                    //Caso o jogador nao tenha clicado na janela em que a nota estava disponivel, ele erra
+                    //e perde
+                    //Caso o jogador tenha acertado, miss se torna false, e entao aqui ele volta a ser true
+                    if (miss)
+                    {
+                        Debug.Log("Nao clicou");
+                        jogoAcabou = -1;
+                        //VitoriaDerrota();
+                        PerderComAtraso(0f);
+                    }
+                    else
+                    {
+                        miss = true;
+                    }
                 }
-                else
-                {
-                    miss = true;
-                }
+                MapaBS.verificacao = false;
             }
-            MapaBS.verificacao = false;
         }
     }
 }

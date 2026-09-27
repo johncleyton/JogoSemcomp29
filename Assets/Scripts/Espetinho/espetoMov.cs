@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class espetoMov : MinigameBase
@@ -11,6 +12,8 @@ public class espetoMov : MinigameBase
     private bool isClicked = false;
 
     [SerializeField] GameObject espetinho;
+    public int jogoAcabado = 0;
+    public Animator anim;
 
     private Transform[] comidas;
     private int contagem = 0;
@@ -20,11 +23,29 @@ public class espetoMov : MinigameBase
     [SerializeField] Collider2D esseCol;
     //Rigidbody2D rb;
 
+    private void VitoriaDerrota()
+    {
+        esseCol.enabled = false;
+        esseCol = GetComponent<Collider2D>();
+        esseCol.enabled = false;
+
+        /*
+        Debug.Log(espetinho.GetComponent<Espetinho>().spawnedComida);
+        if (espetinho.GetComponent<Espetinho>().spawnedComida != comidas[contagem-1])
+        {
+            Destroy(espetinho.GetComponent<Espetinho>().spawnedComida);
+        }
+        */
+    }
+
     public override void TempoEsgotado()
     {
         if (jogoFinalizado)
             return;
-        Vencer();
+        jogoAcabado = 1;
+        VitoriaDerrota();
+        anim.SetTrigger("vitoria");
+        VencerComAtraso(2.0f);
     }
     void Start()
     {
@@ -45,6 +66,13 @@ public class espetoMov : MinigameBase
     // Update is called once per frame
     void Update()
     {
+        if (jogoAcabado == -1)
+        {
+            VitoriaDerrota();
+            anim.SetTrigger("derrota");
+            PerderComAtraso(2.0f);
+        }
+
         //rb.velocity = Vector3.zero;
         //espRb.velocity = Vector3.zero;
 
@@ -73,7 +101,7 @@ public class espetoMov : MinigameBase
                 if (comidas[i] != null)
                 {
                     mouseWorldPos.y -= 0.9f;
-                    Debug.Log("comida " + i + " e " + mouseWorldPos.y);
+                    //Debug.Log("comida " + i + " e " + mouseWorldPos.y);
                     if (mouseWorldPos.y < -4.8f)
                     {
                         //o i aqui eh sempre 0 e so acontece quando tem

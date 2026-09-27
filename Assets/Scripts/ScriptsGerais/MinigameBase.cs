@@ -79,15 +79,15 @@ public abstract class MinigameBase : MonoBehaviour
             return;
         jogoFinalizado = true;
 
-        GameManagerRework.Instance.timerCongelado = true; 
+        GameManagerRework.Instance.timerCongelado = true;
         StartCoroutine(RotinaFimDeJogo(false, tempoDeEspera));
     }
 
     private IEnumerator RotinaFimDeJogo(bool vitoria, float tempo)
     {
         // Aguarda a duração da animacao
-        yield return new WaitForSeconds(tempo); 
-        
+        yield return new WaitForSeconds(tempo);
+
         // Depois de esperar, chama a função correta
         if (vitoria)
         {

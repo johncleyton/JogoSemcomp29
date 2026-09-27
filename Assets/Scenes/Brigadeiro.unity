@@ -250,20 +250,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7499565556ce064ca2ea0002034e91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  qtdBrigadeiro: 0
   brigadeiro: {fileID: 2658137228961058948, guid: 283f5c114e65ecc47b16b0a1592c52ae, type: 3}
-  spawn1: {fileID: 780430554}
-  spawn2: {fileID: 2026028576}
-  spawn3: {fileID: 2087737393}
-  spawn4: {fileID: 588933699}
-  spawn5: {fileID: 1060976047}
-  spawn6: {fileID: 1716277072}
-  spawn7: {fileID: 925696770}
-  spawn8: {fileID: 967091176}
-  spawn9: {fileID: 568266488}
-  spawn10: {fileID: 1159893581}
-  spawn11: {fileID: 671400046}
-  spawn12: {fileID: 451953249}
+  spawn:
+  - {fileID: 780430554}
+  - {fileID: 2026028576}
+  - {fileID: 2087737393}
+  - {fileID: 588933699}
+  - {fileID: 1060976047}
+  - {fileID: 1716277072}
+  - {fileID: 925696770}
+  - {fileID: 967091176}
+  - {fileID: 568266488}
+  - {fileID: 1159893581}
+  - {fileID: 671400046}
+  - {fileID: 451953249}
+  spawned:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  qtdBrigadeiro: 0
 --- !u!1 &555023417
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +789,7 @@ Transform:
   m_GameObject: {fileID: 1063602464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.67, y: 5.28, z: 0}
+  m_LocalPosition: {x: -10.45, y: 5.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -824,7 +838,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.72, y: 12.43}
+  m_Size: {x: 3.72, y: 35.52}
   m_EdgeRadius: 0
 --- !u!1 &1087530613
 GameObject:
@@ -852,7 +866,7 @@ Transform:
   m_GameObject: {fileID: 1087530613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.27, y: 5.28, z: 0}
+  m_LocalPosition: {x: 11.05, y: 5.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -901,7 +915,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.72, y: 12.43}
+  m_Size: {x: 3.72, y: 59.9}
   m_EdgeRadius: 0
 --- !u!1 &1129234374
 GameObject:

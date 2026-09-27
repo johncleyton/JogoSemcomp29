@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class DragDropGrav : MinigameBase
+public class DragDropGrav : MonoBehaviour
 {
     private Brigadeiros brigadeiro;
+    public bool colisao_chao = false;
     private bool isClicked = false;
     Rigidbody2D rb;
     List<Vector3> ponto_momento = new List<Vector3>();
@@ -75,7 +76,7 @@ public class DragDropGrav : MinigameBase
         }
         else if (collision.gameObject.layer == 7)
         {
-            Perder();
+            colisao_chao = true;
         }
     }
 }
