@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoverPostes : MonoBehaviour
 {
 
-    public float velocidade = 3.4f;
+    public float velocidade = 5f;
     public float limiteEsquerdo = -30f;
     
     // Update is called once per frame

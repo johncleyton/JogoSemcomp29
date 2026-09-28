@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
-public class DragDropGrav : MonoBehaviour
+public class DragDropGrav : MinigameBase
 {
-    private GameManager gameManager;
+    private Brigadeiros brigadeiro;
     private bool isClicked = false;
     Rigidbody2D rb;
     List<Vector3> ponto_momento = new List<Vector3>();
+    [SerializeField] Sprite[] sprite;
 
     private void Awake()
     {
-        gameManager = Object.FindFirstObjectByType<GameManager>();
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprite[Random.Range(0, sprite.Length)];
+        brigadeiro = Object.FindFirstObjectByType<Brigadeiros>();
         ponto_momento.Add(Vector3.zero);
         ponto_momento.Add(Vector3.zero);
         rb = GetComponent<Rigidbody2D>();
@@ -63,15 +66,16 @@ public class DragDropGrav : MonoBehaviour
         rb.AddForce(120 * (ponto_momento[1] - ponto_momento[0]), ForceMode2D.Impulse);
     }
 
-
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        //Layer 4 eh "mouth"
         if (collision.gameObject.layer == 4)
         {
             Destroy(gameObject);
-            gameManager.qtdBrigadeiro -= 1;
-            //Debug.Log(GameManager.qtdBrigadeiro);
+            brigadeiro.qtdBrigadeiro -= 1;
+        }
+        else if (collision.gameObject.layer == 7)
+        {
+            Perder();
         }
     }
 }

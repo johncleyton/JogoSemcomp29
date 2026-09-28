@@ -3,30 +3,24 @@ using UnityEngine.UI;
 
 public class ShakeController : MonoBehaviour
 {
-
     private float shakeThreshold = 2.0f;
-
     private float progressionMultiplier = 5f;
     private float decayRate = 1.5f;
 
-    private Slider liberationSlider;
+    // Transformei em public para você linkar a barrinha no Inspector
+    public Slider liberationSlider;
 
     private float currentProgress = 0f;
-
     private Vector3 lowPassValue = Vector3.zero;
     private float lowPassFilter = 0.1f;
     private bool isGameOver = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         lowPassValue = Input.acceleration;
-
         if(liberationSlider != null) liberationSlider.value = 0;
-        
     }
 
-    // Update is called once per frame
     void Update()
     {   
         if(isGameOver) return;
@@ -44,7 +38,9 @@ public class ShakeController : MonoBehaviour
         {
             currentProgress -= decayRate * Time.deltaTime;
         }
+
         currentProgress = Mathf.Clamp(currentProgress, 0f, 100f);
+        
         if(liberationSlider != null) liberationSlider.value = currentProgress / 100f;
 
         if (currentProgress >= 100f)
@@ -63,7 +59,12 @@ public class ShakeController : MonoBehaviour
     {
         isGameOver = true;
         Debug.Log("Uva Salva! Fuja do uveiro!");
-        // Chamar GameManager para disparar animação de vitória e transição de cena
+        
+        // --- CONEXAO O REWORK CORE ---
+        if (UvinhaManager.Instance != null)
+        {
+            UvinhaManager.Instance.UvaEscapou();
+        }
     }
 
     public void TriggerLose()

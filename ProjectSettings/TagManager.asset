@@ -7,7 +7,12 @@ TagManager:
   - Cursor
   - Enemy
   - Pontuacao
+  - Bocha
+  - La
+  - Bolim
   - Buraco
+  - marcador
+  - sumidouro
   layers:
   - Default
   - TransparentFX

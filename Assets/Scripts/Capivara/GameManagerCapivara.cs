@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameManagerCapivara : MonoBehaviour
+public class GameManagerCapivara : MinigameBase
 {
     public static GameManagerCapivara Instance;
 
@@ -17,10 +14,8 @@ public class GameManagerCapivara : MonoBehaviour
     public GameObject painelDerrota;
     public GameObject telaVermelha;
 
-    // CORRIGIDO: sem essa flag, o jogador conseguia continuar clicando
-    // (e até vencer ou perder de novo) depois que a fase já tinha terminado.
-    private bool jogoEncerrado = false;
-    public bool JogoEncerrado => jogoEncerrado;
+    // Mantemos essa propriedade pública para que o CameraPanMobile.cs continue funcionando
+    public bool JogoEncerrado => jogoFinalizado;
 
     void Awake()
     {
@@ -30,11 +25,15 @@ public class GameManagerCapivara : MonoBehaviour
         }
     }
 
+    // --- INTEGRAÇÃO COM O NOVO CORE ---
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        // O tempo já diminui sozinho na base do GameManagerRework
+        return tempoGlobalSugerido;
+    }
+
     void Start()
     {
-        // CORRIGIDO: se o total não foi definido manualmente no Inspector,
-        // conta automaticamente quantas capivaras existem na fase.
-        // Evita o jogo nunca terminar (ou terminar errado) por esquecimento.
         if (totalCapivaras <= 0)
         {
             ClickableObject[] objetos = FindObjectsOfType<ClickableObject>();
@@ -49,7 +48,7 @@ public class GameManagerCapivara : MonoBehaviour
 
     public void CapivaraEncontrada()
     {
-        if (jogoEncerrado) return; // CORRIGIDO: ignora se a fase já acabou
+        if (jogoFinalizado) return; 
 
         capivarasEncontradas++;
         Debug.Log("Capivara encontrada! Total: " + capivarasEncontradas + "/" + totalCapivaras);
@@ -62,42 +61,31 @@ public class GameManagerCapivara : MonoBehaviour
 
     public void GameOver()
     {
-        if (jogoEncerrado) return; // CORRIGIDO: ignora se já tinha vencido/perdido antes
+        if (jogoFinalizado) return; 
 
-        jogoEncerrado = true;
+        if (telaVermelha != null) telaVermelha.SetActive(true);
+        if (painelDerrota != null) painelDerrota.SetActive(true);
 
-        if (telaVermelha != null)
-        {
-            telaVermelha.SetActive(true);
-        }
-
-        if (painelDerrota != null)
-        {
-            painelDerrota.SetActive(true);
-        }
-
-        // CORRIGIDO: congela o jogo de fato ao perder, em vez de só mostrar o painel
-        Time.timeScale = 0f;
+        Perder(); // Avisa o núcleo global que o jogador clicou errado
     }
 
     private void FaseConcluida()
     {
-        if (jogoEncerrado) return;
-
-        jogoEncerrado = true;
+        if (jogoFinalizado) return;
 
         Debug.Log("Venceu a fase!");
         if (painelVitoria != null) painelVitoria.SetActive(true);
 
-        // CORRIGIDO: congela o jogo também na vitória
-        Time.timeScale = 0f;
+        Vencer(); // Avisa o núcleo global que o jogador encontrou todas
     }
 
-    public void ReiniciarFase()
+    public override void TempoEsgotado()
     {
-        // CORRIGIDO: se não voltar o timeScale para 1, a cena recarregada
-        // nasceria pausada e nada se moveria.
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (jogoFinalizado) return;
+        
+        if (telaVermelha != null) telaVermelha.SetActive(true);
+        if (painelDerrota != null) painelDerrota.SetActive(true);
+
+        base.TempoEsgotado();
     }
 }

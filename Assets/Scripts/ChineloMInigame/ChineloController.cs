@@ -1,47 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ChineloController : MonoBehaviour
+public class ChineloController : MinigameBase
 {
-    private GameManager gameManager;
     private ChineloUISpawner chineloSpawner;
-    private bool resultadoAvaliado = false;
+
+    public GameObject EventSystem;
+
+    public GameObject Feedback;
+
+    public Sprite Win;
+    public Sprite Lose;
+
+    [Header("Configuração")]
+    public float tempoDeFeedback = 2f;
 
     void Start()
     {
-        gameManager = Object.FindFirstObjectByType<GameManager>();
         chineloSpawner = Object.FindAnyObjectByType<ChineloUISpawner>();
     }
 
-    void Update()
+    public override void TempoEsgotado()
     {
-        if (gameManager == null || chineloSpawner == null || resultadoAvaliado) return;
-
-        if (gameManager.timer <= 0.05f)
-        {
-            resultadoAvaliado = true;
-            if (chineloSpawner.VerificarFimDoJogo())
-            {
-                Debug.Log("GANHOU no último milissegundo!");
-            }
-            else
-            {
-                Debug.Log("PERDEU! Tempo esgotou com chinelo virado.");
-            }
-        }
-    }
-    public void AvisarChineloDesvirado()
-    {
-        if (resultadoAvaliado) return;
+        if (jogoFinalizado) return;
 
         if (chineloSpawner.VerificarFimDoJogo())
         {
-            resultadoAvaliado = true;
-            Debug.Log("GANHOU ANTECIPADAMENTE! Jogador foi muito rápido!");
-
-            GlobalVariables.timer += 1f;
-            gameManager.timer = 0.1f;
+            MostrarFeedback(true);
+            VencerComAtraso(tempoDeFeedback);
         }
+        else
+        {
+            MostrarFeedback(false);
+            PerderComAtraso(tempoDeFeedback);
+        }
+    }
+
+    public void AvisarChineloDesvirado()
+    {
+        if (jogoFinalizado) return;
+
+        if (chineloSpawner.VerificarFimDoJogo())
+        {
+            Debug.Log("GANHOU ANTECIPADAMENTE! Jogador foi muito rápido!");
+            MostrarFeedback(true);
+            VencerComAtraso(tempoDeFeedback);
+        }
+    }
+
+    private void MostrarFeedback(bool vitoria)
+    {
+        EventSystem.SetActive(false);
+
+        Feedback.GetComponent<Image>().sprite = vitoria ? Win : Lose;
+        Feedback.SetActive(true);
     }
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Data_Pao
   m_EditorClassIdentifier: 
   nameIngredient: Pao
-  iconUI: {fileID: 0}
-  prefabModel: {fileID: 0}
+  iconUI: {fileID: 21300000, guid: 30aaf8b4e1a64a75cbf1dc3df6ca5cab, type: 3}
+  prefabModel: {fileID: 2253423632965602626, guid: 083c4d56ea8ce7663b9f764e651f59b0, type: 3}
