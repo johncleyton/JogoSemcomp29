@@ -12,9 +12,18 @@ public class Mosquito : MonoBehaviour
     private Transform centerTarget;
     private Vector2 pushVelocity;       
 
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public void Initialize(Transform target)
     {
         centerTarget = target;
+        bool leftSide = transform.position.x < target.position.x;
+        spriteRenderer.flipX = !leftSide;
     }
 
     void Update()

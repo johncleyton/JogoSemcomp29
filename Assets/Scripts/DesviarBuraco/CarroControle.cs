@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class CarroControle : MinigameBase
 {
-    public float laneDistance = 6f;
+    public Animator animator;
+    public float laneDistance = 3f;
     public float moveSpeed = 10f;
 
     private int currentLane = 1; 
 
    void Update()
    {
+        if (jogoFinalizado) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             float mouseX = Input.mousePosition.x;
@@ -27,7 +30,7 @@ public class CarroControle : MinigameBase
             currentLane = Mathf.Clamp(currentLane, 0, 2);
         }
 
-        float targetX = (currentLane - 1) * laneDistance - laneDistance;
+        float targetX = (currentLane - 1) * laneDistance;
 
         Vector3 targetPosition = new Vector3(
             targetX,
@@ -46,7 +49,8 @@ public class CarroControle : MinigameBase
     {
         if (other.CompareTag("Buraco") || other.GetComponent<Buraco>() != null)
         {
-            Perder();
+            animator.SetTrigger("explodir");
+            PerderComAtraso(2f);
         }
     }
 
@@ -54,6 +58,6 @@ public class CarroControle : MinigameBase
     {
         if (jogoFinalizado) 
             return;
-        Vencer();
+        VencerComAtraso(2f);
     }
 }

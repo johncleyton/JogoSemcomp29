@@ -8,11 +8,20 @@ public class VirarCarne : MinigameBase
     public RectTransform indicator;
     public RectTransform hitzone;
 
-    public float speed = 100f;
+    public float baseSpeed = 80f;
+    private float currentSpeed;
     private bool movingUp = true;
+
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        currentSpeed = baseSpeed + faseAtual * 5;
+        return tempoGlobalSugerido;
+    }
 
     void Update()
     {
+        if (jogoFinalizado) return;
+
         MoveIndicator();
 
         if (Input.GetMouseButtonDown(0))
@@ -29,7 +38,7 @@ public class VirarCarne : MinigameBase
         Vector2 pos = indicator.anchoredPosition;
         float dir = movingUp ? 1f : -1f;
 
-        pos.y += speed * dir * Time.deltaTime;
+        pos.y += currentSpeed * dir * Time.deltaTime;
         
         if (pos.y >= topLimit)
         {
@@ -54,11 +63,11 @@ public class VirarCarne : MinigameBase
 
         if (yIndicator >= min && yIndicator <= max)
         {
-            Vencer();
+            VencerComAtraso(2f);
         }
         else
         {
-            Perder();
+            PerderComAtraso(2f);
         }
     }
 }

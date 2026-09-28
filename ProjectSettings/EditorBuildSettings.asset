@@ -23,14 +23,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MinigameVirarCarne.unity
     guid: 3d4fcbd8478b6c7499b709d66267648d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TesteMic.unity
     guid: 1a2f738764999834ab34c1984157e732
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Cena 1.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    guid: fef4235604ec2cefd87f242d2412478d
+    path: Assets/Scenes/MinigameApagao.unity
+    guid: d2d2c51296f7b9e4395db653b49a5a3f
   - enabled: 0
     path: Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
@@ -61,7 +62,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PulaFogueira.unity
     guid: 22b3ac1ac6644664d8df7aef67f0f8e0
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Pesca.unity
     guid: 57661d1407da77c45aaa25c4f616e375
   - enabled: 1
@@ -79,13 +80,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WhackaCroc.unity
     guid: 3bace07e48c4e504faf4a65dbaa670bf
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MangaeLeite.unity
     guid: 4e6e3946591aa1f4aa973a6931290c0b
   - enabled: 1
     path: Assets/Scenes/ArtesanatoPiacava.unity
     guid: b2b75b671a6c49749951ba3dae7f2f49
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/AcendeFogueira.unity
     guid: ef2376e4968915d7d88126cda6013f22
   - enabled: 1
@@ -103,6 +104,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Parintins.unity
     guid: 9a3de69990876374ea16daecb877e124
-    path: Assets/Scenes/BotoVisualNovel.unity
-    guid: 694990d7877acd4e28e04049044ef81e
+  - enabled: 1
+    path: Assets/Scenes/EspantarMosquitos.unity
+    guid: 0df076e4acba16f49b5ed9c1e4fddf04
   m_configObjects: {}

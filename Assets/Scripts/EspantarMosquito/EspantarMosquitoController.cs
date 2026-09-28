@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 
 public class EspantarMosquitos : MinigameBase
 {
+    public SpriteRenderer playerSpriteRenderer; 
+    public Sprite spriteVitoria;                
+    public Sprite spriteDerrota;
+
     public GameObject mosquitoPrefab;
     public Transform centerTransform; 
-    public float spawnRadius = 16f;   
+    public float spawnRadius = 8f;   
 
     public int baseMosquitoCount = 4;
 
@@ -25,8 +28,9 @@ public class EspantarMosquitos : MinigameBase
     {
         for (int i = 0; i < quantidade; i++)
         {
-            float angle = Random.Range(0f, Mathf.PI);
-            Vector3 spawnPos = centerTransform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * spawnRadius;
+            Debug.Log("SPWANEI");
+            float angle = UnityEngine.Random.Range(0f, Mathf.PI);
+            Vector3 spawnPos = centerTransform.position + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), -1f) * spawnRadius;
 
             GameObject mosquitoObj = Instantiate(mosquitoPrefab, spawnPos, Quaternion.identity);
             Mosquito mosquitoScript = mosquitoObj.GetComponent<Mosquito>();
@@ -40,13 +44,26 @@ public class EspantarMosquitos : MinigameBase
 
     public void PerdeuJogo()
     {
-        Perder(); 
+        playerSpriteRenderer.sprite = spriteDerrota;
+        DestruirMosquitos();
+        PerderComAtraso(2f); 
     }
 
     public override void TempoEsgotado()
     {
         if (jogoFinalizado) return;
-                jogoFinalizado = true;
-        Vencer();
+        playerSpriteRenderer.sprite = spriteVitoria;
+        DestruirMosquitos();
+        VencerComAtraso(2f);
+    }
+
+    private void DestruirMosquitos()
+    {
+        Mosquito[] mosquitos = FindObjectsByType<Mosquito>(FindObjectsSortMode.None);
+
+        foreach (Mosquito m in mosquitos)
+        {
+            Destroy(m.gameObject);
+        }
     }
 }

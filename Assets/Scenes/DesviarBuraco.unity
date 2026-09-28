@@ -147,8 +147,8 @@ Transform:
   m_GameObject: {fileID: 127680333}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -6, z: 1.7690428}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0, y: 1, z: 1.7690428}
+  m_LocalScale: {x: 0.6, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1122969247}
@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 888400979}
   - component: {fileID: 888400982}
   - component: {fileID: 888400983}
+  - component: {fileID: 888400984}
   m_Layer: 0
   m_Name: Carro
   m_TagString: Untagged
@@ -305,7 +306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc2d44e2a66eba408a86fe2712f495c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laneDistance: 6
+  animator: {fileID: 888400984}
+  laneDistance: 3
   moveSpeed: 10
 --- !u!212 &888400980
 SpriteRenderer:
@@ -368,8 +370,8 @@ Transform:
   m_GameObject: {fileID: 888400978}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.14, y: -10.92, z: 0}
-  m_LocalScale: {x: 1.5, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: -2.49, z: 0}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -446,6 +448,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &888400984
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888400978}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 42fadfc947230954c9a4ce14ba4c5a08, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1024829450
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,11 +513,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tempoDoMinigameAtual: 7
   faseAtual: 0
+  canvasHUD: {fileID: 0}
+  barraTempo: {fileID: 0}
   tempoMinimo: 3
   decrementoDeTempo: 0.1
-  txtFase: {fileID: 0}
+  timerCongelado: 0
+  listaDeMinigames: []
+  txtInstrucao: {fileID: 0}
+  txtPontuacao: {fileID: 0}
   canvaIntervalo: {fileID: 0}
   eventos: {fileID: 0}
+  pontuacaoJogador: 0
+  vidasIniciais: 3
+  spritesVidas: []
 --- !u!4 &1024829453
 Transform:
   m_ObjectHideFlags: 0
@@ -572,7 +603,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.53
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -597,7 +628,7 @@ Transform:
   m_GameObject: {fileID: 1026202713}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.76, y: -7.81, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -909,8 +940,8 @@ Transform:
   m_GameObject: {fileID: 1580554004}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.4364, y: -13.9935, z: 0}
-  m_LocalScale: {x: 32.596054, y: 18.944103, z: 1}
+  m_LocalPosition: {x: 1.2863, y: -6.0273, z: 0}
+  m_LocalScale: {x: 19.65906, y: 10.217421, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 417124184}
@@ -997,8 +1028,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabBuraco: {fileID: 7268573701360736500, guid: 09657d3e9c930e7498477d6a2aa28b6f, type: 3}
-  laneDistance: 6
-  spawnY: 3
+  laneDistance: 3
+  spawnY: 6
   spawnTime: 1
   buracoSpeed: 8
 --- !u!4 &1643408707
