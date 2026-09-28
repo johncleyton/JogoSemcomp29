@@ -65,7 +65,8 @@ public class GameManagerRework : MonoBehaviour
         {
             Debug.LogError("Erro UGS: " + e.Message);
         }
-
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
         txtPontuacao.text = "Pontuação: " + pontuacaoJogador;
 
         vidasAtuais = vidasIniciais;

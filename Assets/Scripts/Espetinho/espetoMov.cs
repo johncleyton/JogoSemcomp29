@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class espetoMov : MinigameBase
@@ -11,6 +12,8 @@ public class espetoMov : MinigameBase
     private bool isClicked = false;
 
     [SerializeField] GameObject espetinho;
+    public int jogoAcabado = 0;
+    public Animator anim;
 
     private Transform[] comidas;
     private int contagem = 0;
@@ -20,11 +23,29 @@ public class espetoMov : MinigameBase
     [SerializeField] Collider2D esseCol;
     //Rigidbody2D rb;
 
+    private void VitoriaDerrota()
+    {
+        esseCol.enabled = false;
+        esseCol = GetComponent<Collider2D>();
+        esseCol.enabled = false;
+
+        /*
+        Debug.Log(espetinho.GetComponent<Espetinho>().spawnedComida);
+        if (espetinho.GetComponent<Espetinho>().spawnedComida != comidas[contagem-1])
+        {
+            Destroy(espetinho.GetComponent<Espetinho>().spawnedComida);
+        }
+        */
+    }
+
     public override void TempoEsgotado()
     {
         if (jogoFinalizado)
             return;
-        Vencer();
+        jogoAcabado = 1;
+        VitoriaDerrota();
+        anim.SetTrigger("vitoria");
+        VencerComAtraso(2.0f);
     }
     void Start()
     {
@@ -45,13 +66,20 @@ public class espetoMov : MinigameBase
     // Update is called once per frame
     void Update()
     {
+        if (jogoAcabado == -1)
+        {
+            VitoriaDerrota();
+            anim.SetTrigger("derrota");
+            PerderComAtraso(2.0f);
+        }
+
         //rb.velocity = Vector3.zero;
         //espRb.velocity = Vector3.zero;
 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         mouseWorldPos.z = -5f;
-        mouseWorldPos.y = -3.76f;
+        mouseWorldPos.y = -3.17f;
 
         if (isClicked)
         {
@@ -66,13 +94,15 @@ public class espetoMov : MinigameBase
             //vao uma posicao para baixo.
             //Existem 5 posicoes possiveis (sendo a ultima quase invisivel
             //para o jogador). Vao de -2.4f ate -5.2f com distancia de -0.7f
-            mouseWorldPos.y = -1.7f;
+            mouseWorldPos.z = -6f;
+            mouseWorldPos.y = -0.2f;
             for (int i = 5; i > -1; i--)
             {
                 if (comidas[i] != null)
                 {
-                    mouseWorldPos.y -= 0.7f;
-                    if (mouseWorldPos.y < -5.2f)
+                    mouseWorldPos.y -= 0.9f;
+                    //Debug.Log("comida " + i + " e " + mouseWorldPos.y);
+                    if (mouseWorldPos.y < -4.8f)
                     {
                         //o i aqui eh sempre 0 e so acontece quando tem
                         //6 Transforms no vetor

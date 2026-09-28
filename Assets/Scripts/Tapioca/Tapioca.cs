@@ -3,22 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Tapioca : MinigameBase
+public class Tapioca : MonoBehaviour
 {
     //Tapioca vindo: 0.1 - 0.2s
     //Tapioca saindo: 0.1 - 0.2s
     public Animator[] animator;
+
+    public int jogoAcabou = 0;
     private float cooldown;
     private float tempo = 0f;
     private bool vindo, frito;
     private float erro;
-
-    public override void TempoEsgotado()
-    {
-        if (jogoFinalizado)
-            return;
-        Vencer();
-    }
 
 
     void Start()
@@ -39,7 +34,7 @@ public class Tapioca : MinigameBase
         if (tempo > cooldown && tempo < cooldown + erro) {
             if (!frito)
             {
-                animator[2].SetTrigger("Fritou");
+                animator[1].SetTrigger("Fritou");
                 Debug.Log("CLIQUE!");
                 frito = true;
             }
@@ -55,12 +50,12 @@ public class Tapioca : MinigameBase
             if (Input.GetMouseButtonDown(0))
             {
                 //perdeu
-                Perder();
+                jogoAcabou = -1;
             }
         }
         else if (tempo > cooldown + erro)
         {
-            Perder();
+            jogoAcabou = -1;
         }
     }
 
@@ -79,7 +74,6 @@ public class Tapioca : MinigameBase
     {
         vindo = false;
         animator[0].SetBool("Fritado", true);
-        animator[1].SetTrigger("Fritado");
         Debug.Log("Esperando");
         yield return new WaitForSeconds(0.55f);
         Debug.Log("Esperado");

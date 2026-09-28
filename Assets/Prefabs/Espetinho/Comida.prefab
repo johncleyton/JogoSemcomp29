@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.45, y: 2.75, z: -10.032553}
-  m_LocalScale: {x: 1.8884641, y: 2.0428076, z: 2.3002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,9 +100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 0b09019d5519fc84882e04d6f5b9f150, type: 3}
-  - {fileID: 21300000, guid: e7a8c4edbb3cf7645a239b428e3bbd74, type: 3}
-  - {fileID: 21300000, guid: 69d742a1d10da89479793e60b3eac7c1, type: 3}
+  - {fileID: 21300000, guid: 7fc0236cbc7a2b44db869997a280a073, type: 3}
+  - {fileID: 21300000, guid: 89b8a2ccc0439c4428436a1db2d16a87, type: 3}
+  - {fileID: 21300000, guid: e4ce246ab4e74824d85bb18b6c5bdc72, type: 3}
+  - {fileID: 21300000, guid: 7fc0236cbc7a2b44db869997a280a073, type: 3}
+  - {fileID: 21300000, guid: 30bf5e0aeccd21544bbff594fde891d9, type: 3}
 --- !u!50 &-6014733799780880070
 Rigidbody2D:
   serializedVersion: 4
@@ -173,5 +175,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.005, y: 0.91}
+  m_Size: {x: 1.66, y: 1.55}
   m_EdgeRadius: 0

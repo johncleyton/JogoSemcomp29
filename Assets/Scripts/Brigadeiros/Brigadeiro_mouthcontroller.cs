@@ -11,6 +11,15 @@ public class Brigadeiro_mouthcontroller : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void Vitoria()
+    {
+        animator.SetTrigger("Feliz");
+    }
+    public void Derrota()
+    {
+        animator.SetTrigger("Triste");
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         //Layer 1 eh "brigadeiro"

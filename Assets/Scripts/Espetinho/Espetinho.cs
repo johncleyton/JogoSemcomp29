@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Espetinho : MinigameBase
+public class Espetinho : MonoBehaviour
 {
 
     [SerializeField] GameObject comida;
+    public GameObject spawnedComida;
+    [SerializeField] espetoMov espMov;
     private float distVert;
-    private float espTimer = 0;
+    public float espTimer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,15 +27,15 @@ public class Espetinho : MinigameBase
     {
         espTimer += Time.deltaTime;
 
-        if (espTimer >= distVert)
+        if (espTimer >= distVert && espMov.jogoAcabado == 0)
         {
             //Debug.Log("INSTANCIOU A COMIDA");
             espTimer = 0f;
 
             //existem 6 posicoes possiveis para a comida nascer. As posicoes sao diferentes
             //apenas no eixo x. 
-            Vector3 posicao = new Vector3((float)(-9 + 2.25 * Random.Range(0, 7)), 7f, -6f);
-            Instantiate(comida, posicao, Quaternion.identity);
+            Vector3 posicao = new Vector3((float)(-7 + 2.8 * Random.Range(0, 5)), 7f, -6f);
+            spawnedComida = Instantiate(comida, posicao, Quaternion.identity);
         }
     }
 
@@ -42,9 +44,9 @@ public class Espetinho : MinigameBase
         //o gameObject (EspetoManager) tem um boxcollider que fica embaixo da camera 
         //e detecta quando o jogador "deixa cair a comida"
         //layer 7 eh a layer do prefab da comida
-        if (collision.gameObject.layer == 7)
+        if (collision.gameObject.layer == 7 && espMov.jogoAcabado == 0)
         {
-            Perder();
+            espMov.jogoAcabado = -1;
         }
     }
 }
