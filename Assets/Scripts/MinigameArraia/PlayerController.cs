@@ -4,20 +4,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movimento")]
-    public float moveSpeed = 8f; // quanto maior, mais rápido anda de uma célula pra outra
+    public float moveSpeed = 8f; 
 
     private Vector2Int gridPos;
     private bool isMoving = false;
 
     private void Start()
     {
-        // descobre em qual célula o player está no momento em que nasce
         gridPos = GridManager.Instance.WorldToGrid(transform.position);
     }
 
     private void Update()
     {
-        if (isMoving) return; // não aceita novo input enquanto ainda está andando
+        if (isMoving) return;
 
         Vector2Int direction = Vector2Int.zero;
 
