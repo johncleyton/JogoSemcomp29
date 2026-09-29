@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NotaManager : MonoBehaviour
 {
-    public float velocidade = 20f;
+    public float velocidade = 12f;
     public bool estaNaZonaDeAcerto = false;
 
     void Update()
@@ -30,6 +30,6 @@ public class NotaManager : MonoBehaviour
     public void Acertar()
     {
         GetComponent<SpriteRenderer>().color = Color.green;
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 0.2f);
     }
 }
