@@ -11,7 +11,7 @@ public class Verificaderrota : MinigameBase
     private int jogoAcabou = 0;
     public Animator anim;
 
-    public GameObject bg;
+    //public GameObject bg;
     public GameObject voce;
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
@@ -25,14 +25,15 @@ public class Verificaderrota : MinigameBase
         if (jogoFinalizado)
             return;
         jogoAcabou = 1;
-        //VitoriaDerrota();
-        VencerComAtraso(0f);
+        VitoriaDerrota();
+        VencerComAtraso(2.0f);
     }
 
     private void VitoriaDerrota()
     {
         boiaserra2.enabled = false;
-        bg.transform.position = new Vector3(-0.6652f, -0.6287f, -9.0f);
+        //bg.transform.position = new Vector3(-0.6652f, -0.6287f, -9.0f);
+        //bg.transform.localScale = new Vector3(3.3f, 3.3f, 3.3f) * 1f;
         voce.SetActive(false);
         if (jogoAcabou == 1)
         {
@@ -48,7 +49,7 @@ public class Verificaderrota : MinigameBase
     // Start is called before the first frame update
     void Start()
     {
-        
+        MapaBS.missNaoClicou = false;
     }
 
     // Update is called once per frame
@@ -66,14 +67,14 @@ public class Verificaderrota : MinigameBase
                 {
                     if (MapaBS.notes[0][0] <= 1)
                     {
-                        //verifica para o erro de -100ms ate 0ms
-                        if (MapaBS.beatinterval - (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval) < 0.3f)
+                        //verifica para o erro de -150ms ate 0ms
+                        if (MapaBS.beatinterval - (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval) < 0.15f)
                         {
                             print("deu certo1");
                             miss = false;
                         }
-                        //verifica para o erro de 0ms ate 100ms
-                        else if (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval < 0.3f)
+                        //verifica para o erro de 0ms ate 150ms
+                        else if (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval < 0.15f && MapaBS.notes[0][0] == 0)
                         {
                             print("deu certo2");
                             miss = false;
@@ -83,32 +84,29 @@ public class Verificaderrota : MinigameBase
                     {
                         print("FALHOUU");
                         jogoAcabou = -1;
-                        //VitoriaDerrota();
-                        PerderComAtraso(0f);
+                        VitoriaDerrota();
+                        PerderComAtraso(2.0f);
                     }
                 }
             }
 
-            if (MapaBS.verificacao == true)
+            if (MapaBS.missNaoClicou == true)
             {
-                if (MapaBS.missable == true)
+                //Caso o jogador nao tenha clicado na janela em que a nota estava disponivel, ele erra
+                //e perde
+                //Caso o jogador tenha acertado, miss se torna false, e entao aqui ele volta a ser true
+                if (miss)
                 {
-                    //Caso o jogador nao tenha clicado na janela em que a nota estava disponivel, ele erra
-                    //e perde
-                    //Caso o jogador tenha acertado, miss se torna false, e entao aqui ele volta a ser true
-                    if (miss)
-                    {
-                        Debug.Log("Nao clicou");
-                        jogoAcabou = -1;
-                        //VitoriaDerrota();
-                        PerderComAtraso(0f);
-                    }
-                    else
-                    {
-                        miss = true;
-                    }
+                    Debug.Log("Nao clicou");
+                    jogoAcabou = -1;
+                    VitoriaDerrota();
+                    PerderComAtraso(2.0f);
                 }
-                MapaBS.verificacao = false;
+                else
+                {
+                    miss = true;
+                    MapaBS.missNaoClicou = false;
+                }
             }
         }
     }

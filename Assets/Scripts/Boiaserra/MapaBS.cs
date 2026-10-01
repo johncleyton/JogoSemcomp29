@@ -12,9 +12,8 @@ public class MapaBS : MonoBehaviour
     public static int lastbeat = 0;
     public static float beatCount = 0;
 
-    public static bool missable = false;
+    public static bool missNaoClicou = false;
     public static bool anim = false;
-    public static bool verificacao = false;
 
     // Start is called before the first frame update
     void Start()
@@ -30,12 +29,9 @@ public class MapaBS : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         if (Mathf.FloorToInt(_audio.time / beatinterval) != lastbeat)
         {
-            missable = false;
             anim = true;
-            verificacao = true;
 
             lastbeat = Mathf.FloorToInt(_audio.time / beatinterval);
 
@@ -58,7 +54,7 @@ public class MapaBS : MonoBehaviour
                 }
                 //remove a ultima nota para diminuir o count e o for de cima continuar dando certo
                 notes.RemoveAt(notes.Count - 1);
-                missable = true;
+                missNaoClicou = true;
             }
 
             for (int i = 0; i < notes.Count; i++)

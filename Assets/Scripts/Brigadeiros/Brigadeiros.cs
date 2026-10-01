@@ -40,7 +40,7 @@ public class Brigadeiros : MinigameBase
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         charac = Object.FindFirstObjectByType<Brigadeiro_mouthcontroller>();
         dragDrop = new DragDropGrav[12];

@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -65,8 +66,10 @@ public class GameManagerRework : MonoBehaviour
         {
             Debug.LogError("Erro UGS: " + e.Message);
         }
+
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+
         txtPontuacao.text = "Pontuação: " + pontuacaoJogador;
 
         vidasAtuais = vidasIniciais;

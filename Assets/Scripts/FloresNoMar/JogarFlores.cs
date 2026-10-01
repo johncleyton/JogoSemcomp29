@@ -22,19 +22,21 @@ public class JogarFlores : MinigameBase
     public TextMeshProUGUI textQtdFlor;
 
     public int jogoAcabou = 0;
+    private bool delay = false;
 
     // Start is called before the first frame update
     void Start()
     {
         coord = new Vector3(0f, -7f, -5f);
-        spawnedFlor = new GameObject[50];
+        spawnedFlor = new GameObject[120];
         textQtdFlor.text = qtd.ToString();
+        StartCoroutine(delayInicial());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && delay)
         {
             StartCoroutine(jogarFlor());
         }
@@ -45,6 +47,13 @@ public class JogarFlores : MinigameBase
             VencerComAtraso(2.0f);
         }
     }
+
+    IEnumerator delayInicial()
+    {
+        yield return new WaitForSeconds(0.1f);
+        delay = true;
+    }
+
 
     IEnumerator jogarFlor()
     {
