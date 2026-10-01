@@ -23,6 +23,10 @@ public class GridManager : MinigameBase
     public GameObject boxPrefab;
     public GameObject popEffectPrefab;
 
+    [Header("Vitória")]
+    [Tooltip("Tempo que o balão fica flutuando no centro antes de encerrar o minigame")]
+    public float tempoFlutuando = 1.5f;
+
     private Dictionary<Vector2Int, CellType> grid = new();
 
     private Dictionary<Vector2Int, BoxController> boxLookup = new();
@@ -137,7 +141,31 @@ public class GridManager : MinigameBase
                 return;
             }
         }
-        Vencer();
+
+        // Já finalizou (ganhou ou perdeu), não dispara de novo
+        if (jogoFinalizado) return;
+
+        BalaoVitoria anim = null;
+        float duracao = 0f;
+
+        if (box != null)
+        {
+            // Trava o controle do balão durante a animação
+            box.enabled = false;
+
+            anim = box.GetComponent<BalaoVitoria>();
+            if (anim == null)
+                anim = box.gameObject.AddComponent<BalaoVitoria>();
+
+            duracao = anim.tempoIda + tempoFlutuando;
+        }
+
+        // Congela o timer e agenda a vitória (usa a rotina da MinigameBase)
+        VencerComAtraso(duracao);
+
+        // A animação roda no próprio balão, em paralelo à espera
+        if (anim != null)
+            anim.Iniciar();
     }
 
     public bool IsWalkable(Vector2Int pos)
@@ -150,7 +178,10 @@ public class GridManager : MinigameBase
     {
         Vector3 popPos = box != null ? box.transform.position : transform.position;
         Instantiate(popEffectPrefab, popPos, Quaternion.identity);
-        Destroy(box.gameObject);
+
+        if (box != null)
+            Destroy(box.gameObject);
+
         PerderComAtraso(1f);
     }
 
