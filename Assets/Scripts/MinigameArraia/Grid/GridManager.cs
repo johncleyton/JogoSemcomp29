@@ -21,6 +21,7 @@ public class GridManager : MinigameBase
 
     [Header("Prefabs")]
     public GameObject boxPrefab;
+    public GameObject popEffectPrefab;
 
     private Dictionary<Vector2Int, CellType> grid = new();
 
@@ -29,10 +30,11 @@ public class GridManager : MinigameBase
     public void UnregisterBox(Vector2Int pos) => boxLookup.Remove(pos);
     public BoxController GetBoxAt(Vector2Int pos) => boxLookup.TryGetValue(pos, out var b) ? b : null;
 
-    // Tilemap usado como referência de coordenadas (todos devem estar no mesmo Grid)
+    // Referência da caixa (balão) instanciada
+    private BoxController box;
+
     private Tilemap RefTilemap => groundTilemap != null ? groundTilemap : wallsTilemap;
 
-    // Fator de escala aplicado à fase (1 = tamanho original)
     public float WorldScale => RefTilemap != null ? RefTilemap.transform.lossyScale.x : 1f;
 
     private void Awake()
@@ -51,7 +53,6 @@ public class GridManager : MinigameBase
     {
         grid.Clear();
 
-        // Se não houver ground, cai no comportamento antigo (bounds das paredes)
         Tilemap area = groundTilemap != null ? groundTilemap : wallsTilemap;
         BoundsInt bounds = area.cellBounds;
 
@@ -62,7 +63,6 @@ public class GridManager : MinigameBase
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
                 Vector2Int gridPos = new Vector2Int(x, y);
 
-                // Sem chão = célula não existe (GetCell retorna Wall)
                 if (groundTilemap != null && !groundTilemap.HasTile(cellPos))
                     continue;
 
@@ -103,7 +103,12 @@ public class GridManager : MinigameBase
                 if (tile == boxSpawnTile)
                 {
                     Vector3 worldPos = GridToWorld(gridPos);
-                    Instantiate(boxPrefab, worldPos, Quaternion.identity, transform);
+                    GameObject boxObj = Instantiate(boxPrefab, worldPos, Quaternion.identity, transform);
+
+                    box = boxObj.GetComponent<BoxController>();
+                    if (box != null)
+                        RegisterBox(gridPos, box);
+
                     SetCell(gridPos, CellType.Box);
                 }
             }
@@ -141,6 +146,14 @@ public class GridManager : MinigameBase
         return type == CellType.Empty || type == CellType.Target;
     }
 
+    public void BalaoPop()
+    {
+        Vector3 popPos = box != null ? box.transform.position : transform.position;
+        Instantiate(popEffectPrefab, popPos, Quaternion.identity);
+        Destroy(box.gameObject);
+        PerderComAtraso(1f);
+    }
+
     public bool IsBox(Vector2Int pos)
     {
         CellType type = GetCell(pos);
@@ -161,6 +174,13 @@ public class GridManager : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        return 30f;
+        return 25f;
+    }
+
+    public override void TempoEsgotado()
+    {
+        if (jogoFinalizado)
+            return;
+        BalaoPop();
     }
 }

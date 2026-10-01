@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &141168747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   - {fileID: 8601913700315258875, guid: e65820f779c0b2c4cb4daae2ae4c5370, type: 3}
   framePrefab: {fileID: 3116116052497633210, guid: b0300464e9d19a54cb32cfb7551f68b5, type: 3}
   innerPadding: 0.25
-  frameSortingOrder: -100
+  frameSortingOrder: -1
   targetCamera: {fileID: 0}
   fitTarget: 1
   marginX: 0.045
@@ -413,7 +413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1039186871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fda46cb17e997f47833c1187356b4b2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a66dc525facada04c899f4c7e2baa67f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

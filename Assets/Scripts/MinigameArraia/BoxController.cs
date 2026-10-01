@@ -49,8 +49,10 @@ public class BoxController : MonoBehaviour
     {
         Vector2Int targetPos = GridPos + direction;
 
-        if (!GridManager.Instance.IsWalkable(targetPos) || GridManager.Instance.IsBox(targetPos))
-            return;
+        if (!GridManager.Instance.IsWalkable(targetPos) || GridManager.Instance.IsBox(targetPos)){
+            GridManager.Instance.BalaoPop();
+        }
+            
 
         MoveTo(targetPos);
     }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ArrumarArria
   m_EditorClassIdentifier: 
   nomeDoJogo: "Arrumar Arrai\xE1"
-  instrucao: "Empurre o barril para arrumar o arrai\xE1"
+  instrucao: "Leve o bal\xE3o de S\xE3o Jo\xE3o at\xE9 o lugar correto"
   nomeDaCena: MinigameArraia
   tipoJogo: 0

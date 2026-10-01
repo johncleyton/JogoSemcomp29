@@ -143,4 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435a8980bea74a3448b58c58695db979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
+  moveSpeed: 15
+  popEffectPrefab: {fileID: 2786946939817419756, guid: 5a4fc70edfc4f8d479ab203022084901, type: 3}
