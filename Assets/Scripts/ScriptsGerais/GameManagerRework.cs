@@ -48,6 +48,10 @@ public class GameManagerRework : MonoBehaviour
     private int vidasAtuais;
     public Image[] spritesVidas;
 
+    [Header("Pause")]
+    public GameObject pausemenu;
+    public AudioSource _audio;
+
     async void Awake()
     {
         if (Instance != null && Instance != this)
@@ -253,5 +257,60 @@ public class GameManagerRework : MonoBehaviour
                 scaler.matchWidthOrHeight = 0f; 
             }
         }
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        _audio.Pause();
+        Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);
+        GameObject[] objetosRaiz = cenaCarregada.GetRootGameObjects();
+        foreach (GameObject obj in objetosRaiz)
+        {
+
+            MonoBehaviour[] mb = obj.GetComponentsInChildren<MonoBehaviour>(true);
+            foreach (MonoBehaviour scripts in mb)
+            {
+                if (scripts != null)
+                {
+                    if (scripts.GetType() != typeof(TMPro.TextMeshProUGUI) && scripts.GetType() != typeof(CanvasScaler))
+                    {
+                        scripts.enabled = false;
+                    }
+                }
+            }
+        }
+
+        pausemenu.SetActive(true);
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        _audio.Play();
+        Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);
+        GameObject[] objetosRaiz = cenaCarregada.GetRootGameObjects();
+        foreach (GameObject obj in objetosRaiz)
+        {
+            MonoBehaviour[] mb = obj.GetComponentsInChildren<MonoBehaviour>(true);
+            foreach (MonoBehaviour scripts in mb)
+            {
+                if (scripts != null)
+                {
+                    if (scripts.GetType() != typeof(TMPro.TextMeshProUGUI) && scripts.GetType() != typeof(CanvasScaler))
+                    {
+                        scripts.enabled = true;
+                    }
+                }
+            }
+        }
+
+        pausemenu.SetActive(false);
+    }
+
+    public void VoltarMenu()
+    {
+        ResumeGame();
+        vidasAtuais = 0;
+        SemVidas();
     }
 }
