@@ -164,7 +164,6 @@ GameObject:
   m_Component:
   - component: {fileID: 298912644}
   - component: {fileID: 298912645}
-  - component: {fileID: 298912646}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -202,28 +201,6 @@ MonoBehaviour:
   texturaCursor: {fileID: 0}
   cursor: {fileID: 0}
   objetoCursor: {fileID: 0}
---- !u!114 &298912646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298912642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ba47e441159b314a9204a4b50f23f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tempoDoMinigameAtual: 7
-  faseAtual: 0
-  canvasHUD: {fileID: 0}
-  barraTempo: {fileID: 0}
-  tempoMinimo: 3
-  decrementoDeTempo: 0.1
-  timerCongelado: 0
-  txtFase: {fileID: 0}
-  canvaIntervalo: {fileID: 0}
-  eventos: {fileID: 0}
 --- !u!1 &353150989
 GameObject:
   m_ObjectHideFlags: 0

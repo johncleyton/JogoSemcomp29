@@ -105,13 +105,13 @@ public class QTECircle : MinigameBase
 
         if(currentScale <= minScale && currentScale >= maxScale)
         {
-            Vencer();
             animator.SetTrigger("acerto");
+            VencerComAtraso(2f);
         }
         else
         {
-            Perder();
             animator.SetTrigger("erro");
+            PerderComAtraso(2f);
         }
 
         active = false;

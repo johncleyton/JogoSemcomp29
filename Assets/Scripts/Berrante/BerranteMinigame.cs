@@ -1,24 +1,25 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BerranteMinigame : MinigameBase
 {
-    [Header("Referências")]
+    [Header("Referï¿½ncias")]
     public DetectorAudio detector;
     public RectTransform barra;
     public RectTransform indicador;
 
-    [Header("Configuração de áudio")]
+    [Header("Configuraï¿½ï¿½o de ï¿½udio")]
     public float audioSens = 5f;
     public float threshold = 0.15f;
 
-    [Header("Configuração do minigame")]
+    [Header("Configuraï¿½ï¿½o do minigame")]
     public float requiredFill = 1f;
     public float fillSpeed = 0.5f;
     public float drainSpeed = 0.3f;
     public float timeLimit = 4f;
 
-    [Header("Configuração da barra (visual)")]
+    [Header("Configuraï¿½ï¿½o da barra (visual)")]
     public float paddingEsquerda = 10f;
     public float paddingDireita = 10f;
 
@@ -31,7 +32,7 @@ public class BerranteMinigame : MinigameBase
     public Animator player;
     public Animator vacas;
 
-    [Header("Timers de animação")]
+    [Header("Timers de animaï¿½ï¿½o")]
     public float delayAnimacaoLose = 1f;
     public float delayAnimacaoWin = 1f;
 
@@ -49,7 +50,13 @@ public class BerranteMinigame : MinigameBase
 
         AtualizarIndicador(0f);
 
-        usandoFallback = forcarFallback || detector == null || Microphone.devices.Length == 0;
+        bool temMic = true;
+
+        #if !UNITY_WEBGL || UNITY_EDITOR
+            temMic = Microphone.devices.Length > 0;
+        #endif
+
+        usandoFallback = forcarFallback || detector == null || !temMic;
     }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
