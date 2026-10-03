@@ -7,7 +7,9 @@ using UnityEngine.SceneManagement;
 public class MapaBS : MonoBehaviour
 {
     public static AudioSource _audio;
-    public static List<Vector3Int> notes;
+    public static List<Vector2Int> notes;
+
+    private float bpm = 210f;
     public static float beatinterval;
     public static int lastbeat = 0;
     public static float beatCount = 0;
@@ -21,8 +23,8 @@ public class MapaBS : MonoBehaviour
         _audio = GetComponent<AudioSource>();
         //StartCoroutine(delayMusica());
         Debug.Log("Contagem comecada!");
-        beatinterval = 60f / 154f;
-        notes = new List<Vector3Int>();
+        beatinterval = 60f / bpm;
+        notes = new List<Vector2Int>();
         Mapeamento();
     }
     
@@ -61,12 +63,12 @@ public class MapaBS : MonoBehaviour
             {
                 if (notes[i][1] == 1 && beatCount % 2 == 1)
                 {
-                    notes[i] = notes[i] - new Vector3Int(1, 0, 0);
+                    notes[i] = notes[i] - new Vector2Int(1, 0);
                     //Debug.Log(notes[i]);
                 }
                 else if (notes[i][1] == 2)
                 {
-                    notes[i] = notes[i] - new Vector3Int(1, 0, 0);
+                    notes[i] = notes[i] - new Vector2Int(1, 0);
                     //Debug.Log(notes[i]);
                 }
             }
@@ -76,15 +78,41 @@ public class MapaBS : MonoBehaviour
 
     private void Mapeamento()
     {
+        if (GameManagerRework.Instance.tempoDoMinigameAtual > 5f)
+        {
+            //mapa facil
+            //7*6 + (3+3)*6 = 78 sec
+            Facil();
+        }
+        else if (GameManagerRework.Instance.tempoDoMinigameAtual > 3f)
+        {
+            //mapa medio
+            //5*6 + (3+3)*6 = 63 sec
+            Medio();
+        }
+        else
+        {
+            //mapa dificil ultra insane extra GUIRTU's boyuhull
+            //3*6 + (3+3)*6 = 54 sec
+            Guirtusboyuhull();
+        }
+    }
 
-        notes.Add(new Vector3Int(8, 1, 1));
-        notes.Add(new Vector3Int(28, 2, 2));
-        notes.Add(new Vector3Int(24, 1, 1));
-        notes.Add(new Vector3Int(52, 2, 1));
-        notes.Add(new Vector3Int(32, 1, 1));
-        notes.Add(new Vector3Int(34, 1, 1));
-        notes.Add(new Vector3Int(36, 1, 1));
-        notes.Add(new Vector3Int(70, 1, 1));
-        notes.Add(new Vector3Int(80, 1, 1));
+    private void Facil()
+    {
+        notes.Add(new Vector2Int(8, 1));
+        notes.Add(new Vector2Int(10, 1));
+        notes.Add(new Vector2Int(22, 2));
+        notes.Add(new Vector2Int(14, 1));
+        notes.Add(new Vector2Int(273, 1));
+        notes.Add(new Vector2Int(274, 1));
+    }
+    private void Medio()
+    {
+
+    }
+    private void Guirtusboyuhull()
+    {
+
     }
 }
