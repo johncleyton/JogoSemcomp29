@@ -17,6 +17,16 @@ public class CachorroController : SpawnableObjects
             _comida = GameObject.FindWithTag("Player");
         SetSpawnPosition();
         SetSpriteFacingComida();
+        StartCoroutine(AtacarAposDelay());
+    }
+
+    // O cachorro fica parado, olhando para a comida, até o jogador ter tempo de perceber a cena
+    private IEnumerator AtacarAposDelay()
+    {
+        CachorroGameManager gameManager = Object.FindFirstObjectByType<CachorroGameManager>();
+        yield return new WaitForSeconds(gameManager.DelayAntesDoAtaque);
+
+        SetSpriteFacingComida();
         SetDirectionToComida();
     }
 
