@@ -538,7 +538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &519420029
 AudioListener:
   m_ObjectHideFlags: 0
@@ -731,7 +731,6 @@ GameObject:
   m_Component:
   - component: {fileID: 846113819}
   - component: {fileID: 846113818}
-  - component: {fileID: 846113820}
   m_Layer: 0
   m_Name: CachorroGameManager
   m_TagString: Untagged
@@ -766,28 +765,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &846113820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 846113817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ba47e441159b314a9204a4b50f23f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tempoDoMinigameAtual: 7
-  faseAtual: 0
-  canvasHUD: {fileID: 0}
-  barraTempo: {fileID: 0}
-  tempoMinimo: 3
-  decrementoDeTempo: 0.1
-  timerCongelado: 0
-  txtFase: {fileID: 0}
-  canvaIntervalo: {fileID: 0}
-  eventos: {fileID: 0}
 --- !u!1 &1100781195
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3359db9539441c44b94acfac1c50d726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _difficulty: 4
+  _fasesPorNivel: 3
   _maxNumberOfCachorros: 5
   _minNumberOfCachorros: 1
   _minCachorroSpeed: 1.5
