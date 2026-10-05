@@ -11,7 +11,7 @@ public class comida : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+       rb = GetComponent<Rigidbody2D>();
         //quando tempoatual eh 3, a gravidade sera 3.37
         //quando tempoatual eh 7, eh 1.3554^0=1
         rb.gravityScale = Mathf.Pow(1.3554f,(7 - GameManagerRework.Instance.tempoDoMinigameAtual));

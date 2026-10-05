@@ -499,6 +499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdd3a6449ce2b2498482d6c27330316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  texturaCursor: {fileID: 0}
+  cursor: {fileID: 0}
+  objetoCursor: {fileID: 0}
 --- !u!114 &1024829452
 MonoBehaviour:
   m_ObjectHideFlags: 0

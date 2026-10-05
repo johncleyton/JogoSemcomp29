@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class espetoMov : MinigameBase
@@ -11,6 +12,8 @@ public class espetoMov : MinigameBase
     private bool isClicked = false;
 
     [SerializeField] GameObject espetinho;
+    public int jogoAcabado = 0;
+    public Animator anim;
 
     private Transform[] comidas;
     private int contagem = 0;
@@ -20,11 +23,29 @@ public class espetoMov : MinigameBase
     [SerializeField] Collider2D esseCol;
     //Rigidbody2D rb;
 
+    private void VitoriaDerrota()
+    {
+        esseCol.enabled = false;
+        esseCol = GetComponent<Collider2D>();
+        esseCol.enabled = false;
+
+        /*
+        Debug.Log(espetinho.GetComponent<Espetinho>().spawnedComida);
+        if (espetinho.GetComponent<Espetinho>().spawnedComida != comidas[contagem-1])
+        {
+            Destroy(espetinho.GetComponent<Espetinho>().spawnedComida);
+        }
+        */
+    }
+
     public override void TempoEsgotado()
     {
         if (jogoFinalizado)
             return;
-        Vencer();
+        jogoAcabado = 1;
+        VitoriaDerrota();
+        anim.SetTrigger("vitoria");
+        VencerComAtraso(2.0f);
     }
     void Start()
     {
@@ -45,50 +66,55 @@ public class espetoMov : MinigameBase
     // Update is called once per frame
     void Update()
     {
+        if (jogoAcabado == -1)
+        {
+            VitoriaDerrota();
+            anim.SetTrigger("derrota");
+            PerderComAtraso(2.0f);
+        }
+
         //rb.velocity = Vector3.zero;
         //espRb.velocity = Vector3.zero;
 
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        mouseWorldPos.z = -5f;
-        mouseWorldPos.y = -3.76f;
+        float mousex = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
 
         if (isClicked)
         {
             //move tanto o espetinho quanto o collider_movimento para 
             //onde o mouse/dedo esta na tela quando clicado
-            espetinho.transform.position = mouseWorldPos;
-            transform.position = mouseWorldPos;
+            espetinho.transform.position = new Vector3(mousex,-3.17f,-5f);
+            transform.position = new Vector3(mousex, -3.17f, -5f);
             //Debug.Log(mouseWorldPos);
+        }
+        //aqui eh sobre as posicoes das comidas depois de espetadas
+        //cada vez que uma comida nova eh espetada, todas as outras
+        //vao uma posicao para baixo.
+        //Existem 5 posicoes possiveis (sendo a ultima quase invisivel
+        //para o jogador). Vao de -2.4f ate -5.2f com distancia de -0.7f
 
-            //aqui eh sobre as posicoes das comidas depois de espetadas
-            //cada vez que uma comida nova eh espetada, todas as outras
-            //vao uma posicao para baixo.
-            //Existem 5 posicoes possiveis (sendo a ultima quase invisivel
-            //para o jogador). Vao de -2.4f ate -5.2f com distancia de -0.7f
-            mouseWorldPos.y = -1.7f;
-            for (int i = 5; i > -1; i--)
+        float mousey = -0.2f;
+        for (int i = 5; i > -1; i--)
+        {
+            if (comidas[i] != null)
             {
-                if (comidas[i] != null)
+                mousey -= 0.9f;
+                //Debug.Log("comida " + i + " e " + mouseWorldPos.y);
+                if (mousey < -4.8f)//mouseWorldPos.y < -4.8f)
                 {
-                    mouseWorldPos.y -= 0.7f;
-                    if (mouseWorldPos.y < -5.2f)
+                    //o i aqui eh sempre 0 e so acontece quando tem
+                    //6 Transforms no vetor
+                    Destroy(comidas[i].gameObject);
+                    for (int j = 0; j < 5; j++)
                     {
-                        //o i aqui eh sempre 0 e so acontece quando tem
-                        //6 Transforms no vetor
-                        Destroy(comidas[i].gameObject);
-                        for (int j = 0; j < 5; j++)
-                        {
-                            comidas[j] = comidas[j + 1];
-                        }
-                        //deixar o vetor com 5 Transforms. Se nao, tudo desaparece!
-                        comidas[5] = null;
+                        comidas[j] = comidas[j + 1];
                     }
-                    else
-                    {
-                        //move as comidas para onde o mouse/dedo esta quando clicado
-                        comidas[i].transform.position = mouseWorldPos;
-                    }
+                    //deixar o vetor com 5 Transforms. Se nao, tudo desaparece!
+                    comidas[5] = null;
+                }
+                else
+                {
+                    //move as comidas para onde o mouse/dedo esta quando clicado
+                    comidas[i].transform.position = new Vector3(transform.position.x, mousey, -6f);
                 }
             }
         }

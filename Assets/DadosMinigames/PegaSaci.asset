@@ -15,4 +15,4 @@ MonoBehaviour:
   nomeDoJogo: PegaSaci
   instrucao: Pegue o Saci quando ele ficar vermelho!
   nomeDaCena: PegaSaci
-  tipoJogo: 0
+  tipoJogo: 1

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: VirarCarne
   m_EditorClassIdentifier: 
   nomeDoJogo: VirarCarne
-  instrucao: Vire a carne no tempo certo!
+  instrucao: "Vire a carne no momento exato para n\xE3o virar carv\xE3o!"
   nomeDaCena: MinigameVirarCarne
   tipoJogo: 0

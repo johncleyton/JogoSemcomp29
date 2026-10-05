@@ -424,7 +424,6 @@ MonoBehaviour:
   outerRing: {fileID: 1416947732}
   centerButton: {fileID: 1831341523}
   circle: {fileID: 993408431}
-  canvas: {fileID: 314548829}
   instructionText: {fileID: 1042261977}
   startScale: 3
   endScale: 0.5
@@ -461,6 +460,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdd3a6449ce2b2498482d6c27330316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  texturaCursor: {fileID: 0}
+  cursor: {fileID: 0}
+  objetoCursor: {fileID: 0}
 --- !u!114 &1024829452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,14 +482,9 @@ MonoBehaviour:
   tempoMinimo: 3
   decrementoDeTempo: 0.1
   timerCongelado: 0
-  listaDeMinigames: []
-  txtInstrucao: {fileID: 0}
-  txtPontuacao: {fileID: 0}
+  txtFase: {fileID: 0}
   canvaIntervalo: {fileID: 0}
   eventos: {fileID: 0}
-  pontuacaoJogador: 0
-  vidasIniciais: 3
-  spritesVidas: []
 --- !u!4 &1024829453
 Transform:
   m_ObjectHideFlags: 0

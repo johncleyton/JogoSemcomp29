@@ -24,7 +24,7 @@ public class PescaManager : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        return 20f;
+        return 15f;
     }
 
     // Start is called before the first frame update

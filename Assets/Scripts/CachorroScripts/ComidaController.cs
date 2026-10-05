@@ -14,9 +14,6 @@ public class ComidaController : SpawnableObjects
 
     public float velocityMultiplier = 1f;
 
-    [HideInInspector] public bool IsEaten = false;
-    private bool _isTimeOut = false;
-
     private void Awake()
     {
         _cam = Camera.main;
@@ -25,20 +22,8 @@ public class ComidaController : SpawnableObjects
         SetSpawnPosition();
     }
 
-    private float _timeLeft = 5f;
-
     void Update()
     {
-        if (_timeLeft > 0)
-        {
-            _timeLeft -= Time.deltaTime;
-        }
-        else
-        {
-            _timeLeft = 0;
-            _isTimeOut = true;
-        }
-
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -53,19 +38,6 @@ public class ComidaController : SpawnableObjects
 
         if (Input.GetMouseButtonUp(0))
             HandleInput(Input.mousePosition, TouchPhase.Ended);
-
-
-        CheckWin();
-    }
-
-    private void CheckWin()
-    {
-        if (!IsEaten && _isTimeOut)
-        {
-            Debug.Log("Jogo do Cachorro: Você ganhou!");
-            Object.FindFirstObjectByType<CachorroGameManager>().Vencer();
-            // Aqui você pode adicionar lógica para o que acon
-        }
     }
 
     private void HandleInput(Vector2 screenPos, TouchPhase phase)

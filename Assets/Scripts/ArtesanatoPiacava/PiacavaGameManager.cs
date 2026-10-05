@@ -4,13 +4,13 @@ using UnityEngine;
 // Controlador principal do minigame "Artesanato com Piaçava".
 // Monta a trama da bolsa, sorteia os fios faltando de acordo com a dificuldade
 // e decide o que fazer com os arrastes reportados pelo PiacavaDragInput.
+// O tempo, a barra de tempo, a vitória/derrota e as vidas ficam com o GameManagerRework.
 [RequireComponent(typeof(PiacavaDragInput))]
 public class PiacavaGameManager : MinigameBase
 {
     [Header("Referências")]
     public PiacavaGridBuilder gridBuilder;
     public GameObject prefabNo;
-    public PiacavaTimerUI timerUI;
     public PiacavaHandGuide guiaDeMao;
     public PiacavaDragInput dragInput;
 
@@ -27,50 +27,27 @@ public class PiacavaGameManager : MinigameBase
     private readonly List<ThreadSlot> _furosPendentes = new List<ThreadSlot>();
     private readonly Dictionary<Vector2Int, PiacavaThreadNode> _nosAtivos = new Dictionary<Vector2Int, PiacavaThreadNode>();
 
-    private bool _jogoIniciado;
-    private bool _jogoAtivo;
-    private float _tempoTotal;
-    private float _tempoRestante;
-
     private PiacavaThreadNode _noDeOrigem;
 
-    private void Start()
-    {
-        if (dragInput == null)
-            dragInput = GetComponent<PiacavaDragInput>();
-        dragInput.AoTentarIniciar = TentarIniciarArraste;
-        dragInput.ArrasteFinalizado += FinalizarArraste;
-
-        // Permite jogar a cena sozinha (sem o GameManagerRework) durante o desenvolvimento
-        if (GameManagerRework.Instance == null)
-            IniciarJogo(furosMinimos, tempoBase);
-    }
-
+    // Chamado pelo GameManagerRework logo após a cena ser carregada: monta a trama e sorteia
+    // os furos conforme a fase. O valor retornado é o tempo da fase, controlado pelo GameManagerRework.
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
         int furos = Mathf.Clamp(
             furosMinimos + (faseAtual / Mathf.Max(furosPorFase, 1)) - 1,
             furosMinimos,
             furosMaximos);
-        float tempo = tempoBase > 0f ? tempoBase : tempoGlobalSugerido;
 
-        IniciarJogo(furos, tempo);
-        return tempo;
-    }
-
-    private void IniciarJogo(int quantidadeDeFuros, float tempo)
-    {
-        if (_jogoIniciado) return;
-        _jogoIniciado = true;
+        if (dragInput == null)
+            dragInput = GetComponent<PiacavaDragInput>();
+        dragInput.AoTentarIniciar = TentarIniciarArraste;
+        dragInput.ArrasteFinalizado += FinalizarArraste;
 
         _todosOsSlots = gridBuilder.ConstruirGrade();
-        SortearFuros(quantidadeDeFuros);
-
-        _tempoTotal = tempo;
-        _tempoRestante = tempo;
-        _jogoAtivo = true;
-
+        SortearFuros(furos);
         AtualizarGuiaDeMao();
+
+        return tempoBase > 0f ? tempoBase : tempoGlobalSugerido;
     }
 
     private void SortearFuros(int quantidade)
@@ -115,26 +92,6 @@ public class PiacavaGameManager : MinigameBase
         return no;
     }
 
-    private void Update()
-    {
-        if (jogoFinalizado || !_jogoAtivo) return;
-
-        AtualizarTempo();
-    }
-
-    private void AtualizarTempo()
-    {
-        _tempoRestante -= Time.deltaTime;
-        if (timerUI != null)
-            timerUI.DefinirProgresso(_tempoTotal > 0f ? _tempoRestante / _tempoTotal : 0f);
-
-        if (_tempoRestante <= 0f)
-        {
-            _jogoAtivo = false;
-            Perder();
-        }
-    }
-
     private PiacavaThreadNode EncontrarNoProximo(Vector3 posicaoMundo, PiacavaThreadNode ignorar)
     {
         PiacavaThreadNode maisProximo = null;
@@ -159,6 +116,8 @@ public class PiacavaGameManager : MinigameBase
     // e devolve a posição do nó pra linha nascer encaixada nele.
     private Vector3? TentarIniciarArraste(Vector3 posicaoMundo)
     {
+        if (jogoFinalizado) return null;
+
         PiacavaThreadNode no = EncontrarNoProximo(posicaoMundo, null);
         if (no == null) return null;
 
