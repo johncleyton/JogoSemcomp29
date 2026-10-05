@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2055272589524413877}
   - component: {fileID: 2668529177616475403}
   - component: {fileID: 1646760352544866187}
+  - component: {fileID: 8003583638715933813}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -143,4 +144,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435a8980bea74a3448b58c58695db979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
+  moveSpeed: 15
+--- !u!114 &8003583638715933813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4845227374289741978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630b02e01ee5c7b43aa2a1fa714a4a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tempoIda: 0.8
+  escalaFinal: 2.5
+  amplitude: 0.2
+  velocidade: 2
+  balancoRotacao: 5
