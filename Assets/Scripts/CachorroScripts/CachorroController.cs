@@ -8,11 +8,13 @@ public class CachorroController : SpawnableObjects
     [Range(1f, 10f)]
     [SerializeField] private float _speed;
 
-    // Os desenhos dos cachorros olham para baixo (-Y) com a rotação zerada
-    private const float SPRITE_FACING_OFFSET = 90f;
-    // Proporção do sprite ocupada pelo colisor, para o cachorro não "comer" a comida de longe
-    private const float COLLIDER_WIDTH_RATIO = 0.7f;
-    private const float COLLIDER_HEIGHT_RATIO = 0.9f;
+    // O desenho do cachorro (visto de lado) olha para a esquerda (-X) com a rotação zerada
+    private const float SPRITE_FACING_OFFSET = 180f;
+    // Proporção do sprite ocupada pelo colisor (corpo, sem o rabo e as patas), para o cachorro não "comer" a comida de longe
+    private const float COLLIDER_WIDTH_RATIO = 0.85f;
+    private const float COLLIDER_HEIGHT_RATIO = 0.7f;
+
+    private SpriteRenderer _spriteRenderer;
 
     private const float X_CACHORRO_AIM_ERROR_THRESHOLD = 4f;
     private const float Y_CACHORRO_AIM_ERROR_THRESHOLD = 2f;
@@ -21,6 +23,7 @@ public class CachorroController : SpawnableObjects
     {
         if (_comida == null)
             _comida = GameObject.FindWithTag("Player");
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         SetSpawnPosition();
         FitColliderToSprite();
         SetSpriteFacingComida();
@@ -42,25 +45,20 @@ public class CachorroController : SpawnableObjects
         _speed = speed;
     }
 
-    public void SetSprite(Sprite sprite)
-    {
-        GetComponent<SpriteRenderer>().sprite = sprite;
-    }
-
     public void SetComida(GameObject comida)
     {
         _comida = comida;
     }
 
-    // Cada cachorro tem um desenho de tamanho diferente, então o colisor acompanha o sprite
+    // O colisor acompanha o tamanho do sprite
     private void FitColliderToSprite()
     {
-        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+        Sprite sprite = _spriteRenderer.sprite;
         if (sprite == null || !(_collider is CapsuleCollider2D capsule))
             return;
 
         Vector2 size = sprite.bounds.size;
-        capsule.direction = CapsuleDirection2D.Vertical;
+        capsule.direction = CapsuleDirection2D.Horizontal;
         capsule.offset = Vector2.zero;
         capsule.size = new Vector2(size.x * COLLIDER_WIDTH_RATIO, size.y * COLLIDER_HEIGHT_RATIO);
     }
@@ -70,7 +68,11 @@ public class CachorroController : SpawnableObjects
         Vector2 direction = _comida.transform.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        this.transform.rotation = Quaternion.Euler(0f, 0f, angle + SPRITE_FACING_OFFSET);
+        // Ao ir para a direita o sprite é espelhado em vez de girado 180°, para o cachorro não ficar de cabeça para baixo
+        bool olhandoParaDireita = direction.x > 0f;
+        _spriteRenderer.flipX = olhandoParaDireita;
+        float rotation = olhandoParaDireita ? angle : angle + SPRITE_FACING_OFFSET;
+        this.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
     }
 
     private void SetDirectionToComida()
