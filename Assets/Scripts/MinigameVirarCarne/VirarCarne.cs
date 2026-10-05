@@ -8,9 +8,22 @@ public class VirarCarne : MinigameBase
     public RectTransform indicator;
     public RectTransform hitzone;
 
+    public SpriteRenderer carneRenderer; 
+    public Sprite spriteCrua;
+    public Sprite spriteAssada;
+    public Sprite spriteQueimada;
+
     public float baseSpeed = 80f;
     private float currentSpeed;
     private bool movingUp = true;
+
+    void Start()
+    {
+        if (currentSpeed == 0)
+        {
+            currentSpeed = baseSpeed; // Usa a velocidade base padrão
+        }
+    }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
@@ -63,10 +76,18 @@ public class VirarCarne : MinigameBase
 
         if (yIndicator >= min && yIndicator <= max)
         {
+            if (carneRenderer != null && spriteAssada != null)
+            {
+                carneRenderer.sprite = spriteAssada;
+            }
             VencerComAtraso(2f);
         }
         else
         {
+            if (carneRenderer != null && spriteQueimada != null)
+            {
+                carneRenderer.sprite = spriteQueimada;
+            }
             PerderComAtraso(2f);
         }
     }
