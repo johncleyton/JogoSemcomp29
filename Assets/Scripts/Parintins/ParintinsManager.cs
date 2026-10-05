@@ -12,12 +12,12 @@ public class ParintinsManager : MinigameBase
     float timer_total = 0f;
 
 
-    [Header("Configurações de Spawn")]
+    [Header("Configuraï¿½ï¿½es de Spawn")]
     public GameObject prefabCoracao;
     public GameObject prefabEstrela;
     public Transform[] spawnpoints;
 
-    [Header("Referências dos Bois")]
+    [Header("Referï¿½ncias dos Bois")]
     public GameObject boiGarantido;
     public GameObject boiCaprichoso;
 
@@ -83,7 +83,7 @@ public class ParintinsManager : MinigameBase
 
         timer += Time.deltaTime;
 
-        if (timer >= (float)cooldown)
+        if ((timer >= (float)cooldown) && (counter != 5))
         {
             SpawnObject();
             timer = 0f;
