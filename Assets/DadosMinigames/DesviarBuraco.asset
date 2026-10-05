@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b70cdce3198d0e4f917ae6d827762c1, type: 3}
-  m_Name: Quadrilha
+  m_Name: DesviarBuraco
   m_EditorClassIdentifier: 
-  nomeDoJogo: Quadrilha
-  instrucao: Cumprimente seu par!
-  nomeDaCena: MinigameQuadrilha
+  nomeDoJogo: DesviarBuraco
+  instrucao: Desvie dos buracos!
+  nomeDaCena: DesviarBuraco
   tipoJogo: 1
