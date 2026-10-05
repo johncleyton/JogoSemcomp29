@@ -285,8 +285,8 @@ Transform:
   m_GameObject: {fileID: 800000001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6.5, y: 8, z: 1}
+  m_LocalPosition: {x: -0.567, y: 0.178, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -332,8 +332,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.72156864, g: 0.5568628, b: 0.34901962, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 566cb460e8f3d5964a3ddcf6ab7853c5, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -368,7 +368,7 @@ Transform:
   m_GameObject: {fileID: 800000010}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.25, y: 3, z: 0}
+  m_LocalPosition: {x: -4.111, y: -0.022, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -422,9 +422,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   origem: {fileID: 800000011}
-  colunas: 6
-  linhas: 8
-  tamanhoCelula: 0.75
+  colunas: 10
+  linhas: 4
+  tamanhoCelula: 0.7
+  areaPermitida:
+  - {x: -4.233, y: 0.067}
+  - {x: -4.222, y: -0.067}
+  - {x: -4.211, y: -0.2}
+  - {x: -4.189, y: -0.333}
+  - {x: -4.178, y: -0.467}
+  - {x: -4.156, y: -0.6}
+  - {x: -4.144, y: -0.733}
+  - {x: -4.122, y: -0.867}
+  - {x: -4.111, y: -1.0}
+  - {x: -4.089, y: -1.133}
+  - {x: -4.067, y: -1.267}
+  - {x: -4.044, y: -1.4}
+  - {x: -4.022, y: -1.533}
+  - {x: -3.989, y: -1.667}
+  - {x: -3.967, y: -1.8}
+  - {x: -3.933, y: -1.933}
+  - {x: -3.911, y: -2.067}
+  - {x: -3.867, y: -2.2}
+  - {x: -3.811, y: -2.333}
+  - {x: -3.744, y: -2.467}
+  - {x: -3.656, y: -2.6}
+  - {x: -3.533, y: -2.733}
+  - {x: -3.367, y: -2.867}
+  - {x: -3.122, y: -2.978}
+  - {x: 1.844, y: -2.978}
+  - {x: 2.189, y: -2.867}
+  - {x: 2.356, y: -2.733}
+  - {x: 2.478, y: -2.6}
+  - {x: 2.567, y: -2.467}
+  - {x: 2.644, y: -2.333}
+  - {x: 2.711, y: -2.2}
+  - {x: 2.767, y: -2.067}
+  - {x: 2.811, y: -1.933}
+  - {x: 2.856, y: -1.8}
+  - {x: 2.889, y: -1.667}
+  - {x: 2.911, y: -1.533}
+  - {x: 2.944, y: -1.4}
+  - {x: 2.967, y: -1.267}
+  - {x: 2.989, y: -1.133}
+  - {x: 3.011, y: -1.0}
+  - {x: 3.033, y: -0.867}
+  - {x: 3.044, y: -0.733}
+  - {x: 3.056, y: -0.6}
+  - {x: 3.067, y: -0.467}
+  - {x: 3.078, y: -0.333}
+  - {x: 3.089, y: -0.2}
+  - {x: 3.1, y: -0.067}
+  - {x: 3.1, y: 0.067}
   prefabFioHorizontal: {fileID: 100000, guid: 611b959e06ac68412f076599d33d5f1b, type: 3}
   prefabFioVertical: {fileID: 100000, guid: aa72592c24b9ecdbc7b7435eb09303db, type: 3}
 --- !u!114 &800000023
@@ -447,7 +496,7 @@ MonoBehaviour:
   furosMaximos: 18
   furosPorFase: 1
   tempoBase: 15
-  raioDeSelecao: 0.45
+  raioDeSelecao: 0.4
 --- !u!120 &800000024
 LineRenderer:
   serializedVersion: 2
@@ -774,7 +823,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 30, y: 14, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -820,8 +869,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9372549, g: 0.8745098, b: 0.7529412, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 6bfbc3b5a4e2647652e82f1acf0f9a4c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
