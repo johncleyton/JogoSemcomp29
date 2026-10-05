@@ -8,6 +8,12 @@ public class CachorroController : SpawnableObjects
     [Range(1f, 10f)]
     [SerializeField] private float _speed;
 
+    // Os desenhos dos cachorros olham para baixo (-Y) com a rotação zerada
+    private const float SPRITE_FACING_OFFSET = 90f;
+    // Proporção do sprite ocupada pelo colisor, para o cachorro não "comer" a comida de longe
+    private const float COLLIDER_WIDTH_RATIO = 0.7f;
+    private const float COLLIDER_HEIGHT_RATIO = 0.9f;
+
     private const float X_CACHORRO_AIM_ERROR_THRESHOLD = 4f;
     private const float Y_CACHORRO_AIM_ERROR_THRESHOLD = 2f;
 
@@ -16,6 +22,7 @@ public class CachorroController : SpawnableObjects
         if (_comida == null)
             _comida = GameObject.FindWithTag("Player");
         SetSpawnPosition();
+        FitColliderToSprite();
         SetSpriteFacingComida();
         StartCoroutine(AtacarAposDelay());
     }
@@ -35,9 +42,27 @@ public class CachorroController : SpawnableObjects
         _speed = speed;
     }
 
+    public void SetSprite(Sprite sprite)
+    {
+        GetComponent<SpriteRenderer>().sprite = sprite;
+    }
+
     public void SetComida(GameObject comida)
     {
         _comida = comida;
+    }
+
+    // Cada cachorro tem um desenho de tamanho diferente, então o colisor acompanha o sprite
+    private void FitColliderToSprite()
+    {
+        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+        if (sprite == null || !(_collider is CapsuleCollider2D capsule))
+            return;
+
+        Vector2 size = sprite.bounds.size;
+        capsule.direction = CapsuleDirection2D.Vertical;
+        capsule.offset = Vector2.zero;
+        capsule.size = new Vector2(size.x * COLLIDER_WIDTH_RATIO, size.y * COLLIDER_HEIGHT_RATIO);
     }
 
     private void SetSpriteFacingComida()
@@ -45,7 +70,7 @@ public class CachorroController : SpawnableObjects
         Vector2 direction = _comida.transform.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        this.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f);       // MUDAR ANGULO PARA O CORRETO DE ACORDO COM A SPRITE DO CACHORRO, SE NECESSÁRIO
+        this.transform.rotation = Quaternion.Euler(0f, 0f, angle + SPRITE_FACING_OFFSET);
     }
 
     private void SetDirectionToComida()
