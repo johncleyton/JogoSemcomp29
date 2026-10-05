@@ -153,7 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notaPrefab: {fileID: 4924741388059970798, guid: d4f9288c3f998956f80e52d84b6d658d, type: 3}
   pontoSpawn: {fileID: 281019834}
-  intervaloSpawn: 3
+  intervaloSpawn: 2
+  notasGeradas: 0
 --- !u!4 &281019834
 Transform:
   m_ObjectHideFlags: 0
@@ -163,8 +164,8 @@ Transform:
   m_GameObject: {fileID: 281019832}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16, y: -8, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 9, y: -4, z: -10}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -315,7 +316,7 @@ Camera:
   far clip plane: 1000
   field of view: 2.3
   orthographic: 1
-  orthographic size: 10.751258
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -340,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 749445941}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
   m_LocalScale: {x: 15, y: 30, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -552,8 +553,8 @@ Transform:
   m_GameObject: {fileID: 1229945526}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.040567946, y: -8, z: -6}
-  m_LocalScale: {x: 50, y: 5, z: 1}
+  m_LocalPosition: {x: -0.040567946, y: -4, z: -6}
+  m_LocalScale: {x: 25, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -702,7 +703,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.040567946, y: 0.060851928, z: -5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1987941002}
@@ -942,7 +943,7 @@ Transform:
   m_GameObject: {fileID: 1776063742}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -8, z: -5}
+  m_LocalPosition: {x: -4, y: -4, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1195,7 +1196,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.040567946, y: 0.060851928, z: -5}
-  m_LocalScale: {x: 50, y: 50, z: 1}
+  m_LocalScale: {x: 25, y: 12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1230,7 +1231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pontoDeParada: {fileID: 1615653388}
-  velocidade: 20
+  velocidade: 5
 --- !u!4 &2075992939
 Transform:
   m_ObjectHideFlags: 0
@@ -1240,8 +1241,8 @@ Transform:
   m_GameObject: {fileID: 2075992937}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: 0.060851928, z: -7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -15, y: 0.060851928, z: -7}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1920573433}
