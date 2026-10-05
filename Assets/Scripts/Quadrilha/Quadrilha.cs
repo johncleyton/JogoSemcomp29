@@ -10,7 +10,10 @@ public class QTECircle : MinigameBase
     public RectTransform outerRing;
     public Button centerButton;
     public RectTransform circle;
+    public RectTransform canvas;
     public TMP_Text instructionText;
+    
+
     public float startScale = 2f;
     public float endScale = 0.4f;
 
@@ -21,13 +24,6 @@ public class QTECircle : MinigameBase
     private float timer;
     private bool active;
 
-    private string[] commands =
-    {
-        "CUMPRIMENTEM!!!!",
-        "É MENTIRA!!!!",
-        "TROCA DE PAR!!!!"
-    };
-
     private void Start()
     {
         centerButton.onClick.AddListener(OnClick);
@@ -36,9 +32,14 @@ public class QTECircle : MinigameBase
         StartCoroutine(QTELoop());
     }
 
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        duration = Mathf.Max(0.6f, 1.5f - (faseAtual * 0.05f));
+        return tempoGlobalSugerido;
+    }
+
     public void StartQTE()
     {
-        
         timer = 0f;
         active = true;
 
@@ -50,23 +51,14 @@ public class QTECircle : MinigameBase
 
     private IEnumerator QTELoop()
     {
-        string command = commands[Random.Range(0, commands.Length)];
         float waitTime = Random.Range(1.5f, 3f);
-
         yield return new WaitForSeconds(waitTime);
 
-        instructionText.text = command;
+        instructionText.text = "CUMPRIMENTEM!!!";
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.6f);
 
-        //instructionText.text = "";
-
-        StartQTE();
-
-        yield return new WaitUntil(() => !active);
-
-        yield return new WaitForSeconds(1f);
-        
+        StartQTE();   
     }
 
     private void Update()
@@ -84,16 +76,28 @@ public class QTECircle : MinigameBase
         if (t >= 1f)
         {
             active = false;
-            Perder();
+            qte.SetActive(false);
+            
+            animator.SetTrigger("erro");
+            PerderComAtraso(2f);
         }
     }
 
     private void RandomizePosition()
     {
-        float x = Random.Range(-450f, 410f);
-        float y = Random.Range(260f, -180f);
+        Vector2 containerSize = canvas.rect.size;
+        
+        Vector2 qteSize = circle.rect.size;
 
-        circle.anchoredPosition = new Vector2(x, y);
+        float minX = (-containerSize.x / 2f) + (qteSize.x / 2f);
+        float maxX = (containerSize.x / 2f) - (qteSize.x / 2f);
+        float minY = (-containerSize.y / 2f) + (qteSize.y / 2f);
+        float maxY = (containerSize.y / 2f) - (qteSize.y / 2f);
+
+        float randomX = Random.Range(minX, maxX);
+        float randomY = Random.Range(minY, maxY);
+
+        circle.anchoredPosition = new Vector2(randomX, randomY);
     }
 
     private void OnClick()
@@ -101,6 +105,7 @@ public class QTECircle : MinigameBase
         if (!active)
             return;
 
+        active = false;
         float currentScale = outerRing.localScale.x;
 
         if(currentScale <= minScale && currentScale >= maxScale)
@@ -114,6 +119,6 @@ public class QTECircle : MinigameBase
             PerderComAtraso(2f);
         }
 
-        active = false;
+        qte.SetActive(false);
     }
 }

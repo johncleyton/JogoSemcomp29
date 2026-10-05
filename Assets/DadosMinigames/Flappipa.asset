@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Flappipa
   m_EditorClassIdentifier: 
   nomeDoJogo: Flappipa
-  instrucao: "Aperte na tela e desvie dos pr\xE9dios!"
+  instrucao: Aperte na tela e desvie dos postes!
   nomeDaCena: Flappipa
   tipoJogo: 1

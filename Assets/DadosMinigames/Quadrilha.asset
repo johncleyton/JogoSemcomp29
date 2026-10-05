@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Quadrilha
   m_EditorClassIdentifier: 
   nomeDoJogo: Quadrilha
-  instrucao: "Acerte o timing da dan\xE7a e n\xE3o deixe seu par na m\xE3o!"
+  instrucao: Cumprimente seu par!
   nomeDaCena: MinigameQuadrilha
-  tipoJogo: 0
+  tipoJogo: 1

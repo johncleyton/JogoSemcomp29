@@ -7,7 +7,7 @@ public class CarretaManager : MinigameBase
 
     public Transform pontoDeParada;
 
-    public float velocidade = 5f;
+    public float velocidade = 1f;
 
     // Update is called once per frame
     void Update()
@@ -17,7 +17,7 @@ public class CarretaManager : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        float tempoFixo = 15f;
+        float tempoFixo = 5f;
         return tempoFixo;
     }
 
