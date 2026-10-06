@@ -24,6 +24,8 @@ public class ParintinsManager : MinigameBase
     private int boiEscolhido;
     public GameObject textoBoiGarantido;
     public GameObject textoBoiCaprichoso;
+    public GameObject boiCaprichosoVitoria;
+    public GameObject boiGarantidoVitoria;
     public TextMeshProUGUI contador;
     private bool start = false;
 
@@ -92,11 +94,32 @@ public class ParintinsManager : MinigameBase
         if (timer_total >= 10f)
         {
             TempoEsgotado();
+            if (boiEscolhido == 0)
+            {
+                boiGarantido.SetActive(false);
+                boiGarantidoVitoria.SetActive(true);
+            }
+            else
+            {
+                boiCaprichoso.SetActive(false);
+                boiCaprichosoVitoria.SetActive(true);
+            }
+
         }
 
         if (counter == 5)
         {
             Vencer();
+            if(boiEscolhido == 0)
+            {
+                boiCaprichoso.SetActive(false);
+                boiCaprichosoVitoria.SetActive(true);
+            }
+            else
+            {
+                boiGarantido.SetActive(false);
+                boiGarantidoVitoria.SetActive(true);
+            }
         }
     }
 
