@@ -119,4 +119,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PegaSaci.unity
     guid: 5a308f8a20457aab984d9abd57c61836
+  - enabled: 1
+    path: Assets/Scenes/Pixe.unity
+    guid: 6650b4eba0b45e84294bde7907130a64
   m_configObjects: {}
