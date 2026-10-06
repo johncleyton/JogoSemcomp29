@@ -768,6 +768,7 @@ MonoBehaviour:
   listaDeMinigames:
   - {fileID: 11400000, guid: ebcd021db88181f4e8854706809d9b19, type: 2}
   - {fileID: 11400000, guid: 42eec463792a2044a8a59c5f6be01307, type: 2}
+  - {fileID: 11400000, guid: 46ec1ddd678001944913fd5880288c57, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   canvaIntervalo: {fileID: 1155312265}
@@ -1047,6 +1048,10 @@ Camera:
     y: 0
     width: 0.9996922
     height: 1
+    x: 0
+    y: 0.0003389418
+    width: 1
+    height: 0.9993221
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TelaIntervalo.unity
     guid: ca141d4951ad7094bab0ced651ac5d40
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Croche.unity
     guid: 7b9bb1e3df08e884dbdd311e86609a90
   - enabled: 0
