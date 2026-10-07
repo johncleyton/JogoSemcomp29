@@ -320,6 +320,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 8601913700315258875, guid: e65820f779c0b2c4cb4daae2ae4c5370, type: 3}
+  - {fileID: 8601913700315258875, guid: a3939b27116ce2946b87e0b2a7595620, type: 3}
+  - {fileID: 8601913700315258875, guid: 8b57b170c52cff54ca409c8c726966f3, type: 3}
+  - {fileID: 8601913700315258875, guid: 1dce965d4c1d7b443b5a40b5f50abc18, type: 3}
   framePrefab: {fileID: 8533399966097645005, guid: 2b8eb846020ca8642a97825e58ffe977, type: 3}
   innerPadding: 0.1
   frameSortingOrder: -1
