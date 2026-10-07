@@ -236,9 +236,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.00006496906
+    y: 0.0001502335
     width: 1
-    height: 0.99987006
+    height: 0.99969953
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -320,12 +320,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 8601913700315258875, guid: e65820f779c0b2c4cb4daae2ae4c5370, type: 3}
-  framePrefab: {fileID: 3116116052497633210, guid: b0300464e9d19a54cb32cfb7551f68b5, type: 3}
-  innerPadding: 0.25
+  framePrefab: {fileID: 8533399966097645005, guid: 2b8eb846020ca8642a97825e58ffe977, type: 3}
+  innerPadding: 0.1
   frameSortingOrder: -1
   targetCamera: {fileID: 0}
   fitTarget: 1
-  marginX: 0.045
+  marginX: 0.02
   marginY: 0.05
 --- !u!1 &626043909
 GameObject:
