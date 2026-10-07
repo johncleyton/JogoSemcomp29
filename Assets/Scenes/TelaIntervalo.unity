@@ -766,7 +766,7 @@ MonoBehaviour:
   decrementoDeTempo: 0.1
   timerCongelado: 0
   listaDeMinigames:
-  - {fileID: 11400000, guid: 66669bb7b322ce94daac8c744af50172, type: 2}
+  - {fileID: 11400000, guid: 5573ac25237ce9f46b89184cc82c386d, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   canvaIntervalo: {fileID: 1155312265}
@@ -1043,9 +1043,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.0001502335
+    y: 0
     width: 1
-    height: 0.99969953
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

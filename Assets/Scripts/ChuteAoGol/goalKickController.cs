@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class goalKickController : MinigameBase
 {
@@ -12,6 +13,7 @@ public class goalKickController : MinigameBase
     [SerializeField] GameObject ball;
     [SerializeField] GameObject defense;
     [SerializeField] Collider2D goalCollider;
+    public GameObject textoGol;
 
     private Collider2D ballCollider;
     private Collider2D defenseCollider;
@@ -45,6 +47,7 @@ public class goalKickController : MinigameBase
             defenseScript.stopGoalKeeper();
             if(isGoal())
             {
+                textoGol.SetActive(true);
                 Vencer();
             } else
             {
