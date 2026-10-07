@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class JogarFlores : MinigameBase
 {
@@ -36,7 +37,7 @@ public class JogarFlores : MinigameBase
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && delay)
+        if (Input.GetMouseButtonDown(0) && delay && !PauseBase.mouseOver)
         {
             StartCoroutine(jogarFlor());
         }

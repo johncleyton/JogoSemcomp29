@@ -58,9 +58,9 @@ public class Verificaderrota : MinigameBase
         if (jogoAcabou == 0)
         {
             //Janela em que a nota esta disponivel: Quando faltar 2 beatinterval.
-            //Clicar em espaco fora dos +-100ms de margem de erro e dentro dos 2 beatinterval, faz o jogador errar
+            //Clicar em espaco fora dos +-150ms de margem de erro e dentro dos 2 beatinterval, faz o jogador errar
             //Antes dos 2 beatinterval, ele pode clicar a vontade que nao vai fazer nenhuma diferenca
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
             {
                 //Debug.Log("clicou------------");
                 if (MapaBS.notes[0][0] <= 2)
@@ -68,13 +68,13 @@ public class Verificaderrota : MinigameBase
                     if (MapaBS.notes[0][0] <= 1)
                     {
                         //verifica para o erro de -150ms ate 0ms
-                        if (MapaBS.beatinterval - (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval) < 0.15f)
+                        if (MapaBS.beatinterval - ((MapaBS._audio.time + (MapaBS.looping * MapaBS._audio.clip.length)) - MapaBS.lastbeat * MapaBS.beatinterval) < 0.13f)
                         {
                             print("deu certo1");
                             miss = false;
                         }
                         //verifica para o erro de 0ms ate 150ms
-                        else if (MapaBS._audio.time - MapaBS.lastbeat * MapaBS.beatinterval < 0.15f && MapaBS.notes[0][0] == 0)
+                        else if ((MapaBS._audio.time + (MapaBS.looping * MapaBS._audio.clip.length)) - MapaBS.lastbeat * MapaBS.beatinterval < 0.13f && MapaBS.notes[0][0] == 0)
                         {
                             print("deu certo2");
                             miss = false;

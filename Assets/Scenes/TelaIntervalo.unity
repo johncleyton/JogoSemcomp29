@@ -767,6 +767,10 @@ MonoBehaviour:
   timerCongelado: 0
   listaDeMinigames:
   - {fileID: 11400000, guid: 31f14368be4cb724aacd75615c6703bc, type: 2}
+  - {fileID: 11400000, guid: a411fbcd0b530db4fb299b115c2045ff, type: 2}
+  - {fileID: 11400000, guid: fa76a64ffa029e646ae517c3906939f1, type: 2}
+  - {fileID: 11400000, guid: 9c59b9aa2fcc85641b53f19298d534f9, type: 2}
+  - {fileID: 11400000, guid: 63730078ea233374ba725a01d8a28101, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   canvaIntervalo: {fileID: 1155312265}
@@ -1042,9 +1046,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00012597442
+    x: 0
     y: 0
-    width: 0.99974805
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -2146,8 +2150,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00024414062, y: 104.57001}
-  m_SizeDelta: {x: 270.153, y: 209.136}
+  m_AnchoredPosition: {x: -0.00024414062, y: 38}
+  m_SizeDelta: {x: 270, y: 77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1555967135
 MonoBehaviour:
@@ -2333,6 +2337,7 @@ GameObject:
   - component: {fileID: 1954462566}
   - component: {fileID: 1954462565}
   - component: {fileID: 1954462564}
+  - component: {fileID: 1954462567}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -2355,10 +2360,10 @@ RectTransform:
   - {fileID: 1555967134}
   m_Father: {fileID: 1520183589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.92800003, y: 0.887}
-  m_AnchorMax: {x: 0.98375005, y: 0.98}
-  m_AnchoredPosition: {x: -0.010009766, y: 0.14001465}
-  m_SizeDelta: {x: 1986.65, y: 1849.96}
+  m_AnchorMin: {x: 0.9373744, y: 0.89666677}
+  m_AnchorMax: {x: 0.9875, y: 0.9777778}
+  m_AnchoredPosition: {x: 0.35998535, y: 0.3499756}
+  m_SizeDelta: {x: 1772.09, y: 1657.28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1954462564
 MonoBehaviour:
@@ -2454,6 +2459,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954462562}
   m_CullTransparentMesh: 1
+--- !u!114 &1954462567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954462562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6847ce86376fb142a4e93eeda987372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2040264362
 GameObject:
   m_ObjectHideFlags: 0
