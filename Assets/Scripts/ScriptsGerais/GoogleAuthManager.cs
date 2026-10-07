@@ -33,6 +33,7 @@ public class GoogleAuthManager : MonoBehaviour
     public GameObject painelLogin;
     public GameObject painelCriarNick;
     public GameObject painelMenuPrincipal;
+    public GameObject painelLeaderBoard;
     public TMP_InputField campoInputNick;
     [Header("A Chave Mestra (Google Cloud Web Client)")]
     public string clientID_Web = "";
@@ -107,12 +108,12 @@ public class GoogleAuthManager : MonoBehaviour
             if (AuthenticationService.Instance.IsSignedIn)
             {
                 Debug.Log("Sessão recuperada. Entrando direto no jogo.");
-                MudarParaTela(painelMenuPrincipal);
+                //MudarParaTela(painelMenuPrincipal);
             }
             else
             {
                 // Inicia o jogo no Menu Principal padrão
-                MudarParaTela(painelMenuPrincipal);
+                //MudarParaTela(painelMenuPrincipal);
             }
         }
         catch (Exception e)
@@ -151,6 +152,16 @@ public class GoogleAuthManager : MonoBehaviour
         #endif
     }
 
+    public void AbrirTelaRanking()
+    {
+        MudarParaTela(painelLeaderBoard);
+    }
+
+    public void FecharTelaLeaderboard()
+    {
+        MudarParaTela(painelMenuPrincipal);
+    }
+
     // Função auxiliar para garantir que apenas uma tela fique ativa por vez
     private void MudarParaTela(GameObject telaAtiva)
     {
@@ -160,6 +171,8 @@ public class GoogleAuthManager : MonoBehaviour
             painelLogin.SetActive(painelLogin == telaAtiva);
         if (painelCriarNick != null) 
             painelCriarNick.SetActive(painelCriarNick == telaAtiva);
+        if (painelLeaderBoard != null)
+            painelLeaderBoard.SetActive(painelLeaderBoard == telaAtiva);
     }
 
     public void FazerLoginNativo()

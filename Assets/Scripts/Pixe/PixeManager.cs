@@ -1,9 +1,12 @@
 using System;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PixeManager : MinigameBase
 {
-
+    public TMP_Text textoPorcentagem;
+    [SerializeField] private float porcentagemVitoria;
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
         return Mathf.Min(15f - (faseAtual/10), 10f);
@@ -22,9 +25,9 @@ public class PixeManager : MinigameBase
     // Chamada toda vez que atualiza a parte pintada
     private void HandlePaintUpdate(float currentPercentage)
     {
-        Debug.Log($"Porcentagem: {currentPercentage * 100f}%");
+        textoPorcentagem.text = $"{Mathf.Floor(currentPercentage * 100f)}% / {porcentagemVitoria * 100f}%";
 
-        if(currentPercentage >= 0.5)
+        if(currentPercentage >= porcentagemVitoria)
         {
             Vencer();
         }
