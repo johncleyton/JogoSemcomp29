@@ -11,13 +11,13 @@ public class GridSpawner : MonoBehaviour
     [Header("Moldura")]
     [Tooltip("Prefab com SpriteRenderer. O sprite precisa ter Mesh Type = Full Rect")]
     public SpriteRenderer framePrefab;
-    [Tooltip("Folga entre o chão e a moldura (unidades de mundo, antes do resize)")]
+    [Tooltip("Folga entre o chï¿½o e a moldura (unidades de mundo, antes do resize)")]
     public float innerPadding = 0.1f;
     public int frameSortingOrder = -100;
 
-    [Header("Enquadramento na câmera")]
+    [Header("Enquadramento na cï¿½mera")]
     public Camera targetCamera;
-    [Tooltip("Ground = a área jogável ocupa o máximo possível (moldura pode sair da tela). Frame = a moldura inteira cabe na tela.")]
+    [Tooltip("Ground = a ï¿½rea jogï¿½vel ocupa o mï¿½ximo possï¿½vel (moldura pode sair da tela). Frame = a moldura inteira cabe na tela.")]
     public FitTarget fitTarget = FitTarget.Ground;
     [Range(0f, 0.4f)] public float marginX = 0.02f;
     [Range(0f, 0.4f)] public float marginY = 0.05f;
@@ -45,7 +45,7 @@ public class GridSpawner : MonoBehaviour
 
         TilemapRenderer areaRenderer = area.GetComponent<TilemapRenderer>();
 
-        // 1) Bounds da área jogável (escala original)
+        // 1) Bounds da ï¿½rea jogï¿½vel (escala original)
         area.CompressBounds();
         Bounds inner = areaRenderer.bounds;
 
@@ -72,7 +72,7 @@ public class GridSpawner : MonoBehaviour
             );
         }
 
-        // 3) Escala a fase pra caber na câmera
+        // 3) Escala a fase pra caber na cÃ¢mera
         bool useFrame = fitTarget == FitTarget.Frame && frame != null;
         Bounds fitBounds = useFrame ? frame.bounds : inner;
 
@@ -82,14 +82,19 @@ public class GridSpawner : MonoBehaviour
         float availH = viewH * (1f - marginY * 2f);
 
         float scale = Mathf.Min(availW / fitBounds.size.x, availH / fitBounds.size.y);
+
+        Vector3 localCenter = level.transform.InverseTransformPoint(fitBounds.center);
+
+        // Aplica a escala (os bounds do Unity nÃ£o vÃ£o atualizar a tempo para a prÃ³xima linha)
         level.transform.localScale *= scale;
 
-        // 4) Centraliza na câmera (recalcula depois de escalar)
-        fitBounds = useFrame ? frame.bounds : areaRenderer.bounds;
+        // 4) Centraliza na cÃ¢mera usando cÃ¡lculo de matriz direto, ignorando bounds defasados
+        Vector3 newWorldCenter = level.transform.TransformPoint(localCenter);
         Vector3 camCenter = targetCamera.transform.position;
+        
         level.transform.position += new Vector3(
-            camCenter.x - fitBounds.center.x,
-            camCenter.y - fitBounds.center.y,
+            camCenter.x - newWorldCenter.x,
+            camCenter.y - newWorldCenter.y,
             0f
         );
     }
