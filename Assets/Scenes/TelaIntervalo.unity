@@ -771,6 +771,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa76a64ffa029e646ae517c3906939f1, type: 2}
   - {fileID: 11400000, guid: 9c59b9aa2fcc85641b53f19298d534f9, type: 2}
   - {fileID: 11400000, guid: 63730078ea233374ba725a01d8a28101, type: 2}
+  - {fileID: 11400000, guid: 249adc660242c33408f411a4e7f57e49, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   canvaIntervalo: {fileID: 1155312265}
