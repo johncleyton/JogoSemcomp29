@@ -15,4 +15,4 @@ MonoBehaviour:
   nomeDoJogo: Pula Fogueira
   instrucao: Pule a Fogueira
   nomeDaCena: PulaFogueira
-  tipoJogo: 0
+  tipoJogo: 1
