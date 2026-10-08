@@ -274,7 +274,10 @@ public class GameManagerRework : MonoBehaviour
                 {
                     if (scripts.GetType() != typeof(TMPro.TextMeshProUGUI) && scripts.GetType() != typeof(CanvasScaler))
                     {
-                        scripts.enabled = false;
+                        if (scripts.GetType() != typeof(Image))
+                        {
+                            scripts.enabled = false;
+                        }
                     }
                 }
             }
@@ -297,7 +300,10 @@ public class GameManagerRework : MonoBehaviour
                 {
                     if (scripts.GetType() != typeof(TMPro.TextMeshProUGUI) && scripts.GetType() != typeof(CanvasScaler))
                     {
-                        scripts.enabled = true;
+                        if (scripts.GetType() != typeof(Image))
+                        {
+                            scripts.enabled = true;
+                        }
                     }
                 }
             }

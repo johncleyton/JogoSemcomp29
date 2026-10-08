@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 
 public class Tapioca : MonoBehaviour
@@ -38,7 +39,7 @@ public class Tapioca : MonoBehaviour
                 Debug.Log("CLIQUE!");
                 frito = true;
             }
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
             {
                 //ganhou
                 Debug.Log("Clicou a tempo!");
@@ -47,7 +48,7 @@ public class Tapioca : MonoBehaviour
         }
         else if (tempo > cooldown - erro && tempo < cooldown)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
             {
                 //perdeu
                 jogoAcabou = -1;
