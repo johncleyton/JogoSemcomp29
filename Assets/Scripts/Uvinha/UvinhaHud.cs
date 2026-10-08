@@ -59,7 +59,7 @@ public class UvinhaHUD : MonoBehaviour
 
         var scaler = cgo.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.referenceResolution = new Vector2(800f, 600f); // ESCALADO PARA 800x600
         scaler.matchWidthOrHeight = 0.5f;
 
         Transform raiz = cgo.transform;
@@ -69,7 +69,7 @@ public class UvinhaHUD : MonoBehaviour
         vinheta.sprite = CriarSpriteVinheta();
 
         // Aviso de perigo (topo)
-        txtPerigo = CriarTexto("Perigo", raiz, 72f, new Color(1f, 0.25f, 0.2f), new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(1400f, 120f));
+        txtPerigo = CriarTexto("Perigo", raiz, 32f, new Color(1f, 0.25f, 0.2f), new Vector2(0.5f, 1f), new Vector2(0f, -60f), new Vector2(600f, 60f));
         txtPerigo.text = avisoPerigo;
         txtPerigo.alpha = 0f;
 
@@ -79,20 +79,20 @@ public class UvinhaHUD : MonoBehaviour
         var rtBarra = (RectTransform)barra.transform;
         rtBarra.anchorMin = rtBarra.anchorMax = new Vector2(0.5f, 0f);
         rtBarra.pivot = new Vector2(0.5f, 0.5f);
-        rtBarra.anchoredPosition = new Vector2(0f, 110f);
-        rtBarra.sizeDelta = new Vector2(900f, 64f);
+        rtBarra.anchoredPosition = new Vector2(0f, 60f);
+        rtBarra.sizeDelta = new Vector2(400f, 36f);
 
         CriarImagem("Borda", barra.transform, new Color(0f, 0f, 0f, 0.9f), Vector2.zero, Vector2.one);
         var fundo = CriarImagem("Fundo", barra.transform, new Color(0.15f, 0.12f, 0.2f, 1f), Vector2.zero, Vector2.one);
-        fundo.rectTransform.offsetMin = new Vector2(6f, 6f);
-        fundo.rectTransform.offsetMax = new Vector2(-6f, -6f);
+        fundo.rectTransform.offsetMin = new Vector2(3f, 3f);
+        fundo.rectTransform.offsetMax = new Vector2(-3f, -3f);
         barraFill = CriarImagem("Fill", fundo.transform, new Color(1f, 0.55f, 0.1f), Vector2.zero, new Vector2(0f, 1f));
 
-        txtBarra = CriarTexto("TextoBarra", barra.transform, 36f, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(900f, 64f));
+        txtBarra = CriarTexto("TextoBarra", barra.transform, 16f, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(400f, 36f));
         txtBarra.text = "LIBERDADE 0%";
 
         // Dica pulsante (acima da barra)
-        txtDica = CriarTexto("Dica", raiz, 64f, Color.white, new Vector2(0.5f, 0f), new Vector2(0f, 215f), new Vector2(1600f, 110f));
+        txtDica = CriarTexto("Dica", raiz, 30f, Color.white, new Vector2(0.5f, 0f), new Vector2(0f, 120f), new Vector2(700f, 60f));
         rtDica = txtDica.rectTransform;
 
         // Intro (centro)
@@ -100,18 +100,18 @@ public class UvinhaHUD : MonoBehaviour
         intro.transform.SetParent(raiz, false);
         rtIntro = (RectTransform)intro.transform;
         rtIntro.anchorMin = rtIntro.anchorMax = new Vector2(0.5f, 0.5f);
-        rtIntro.sizeDelta = new Vector2(1700f, 400f);
-        rtIntro.anchoredPosition = new Vector2(0f, 90f);
+        rtIntro.sizeDelta = new Vector2(750f, 220f);
+        rtIntro.anchoredPosition = new Vector2(0f, 50f);
         grupoIntro = intro.GetComponent<CanvasGroup>();
         grupoIntro.blocksRaycasts = false;
 
-        txtIntro = CriarTexto("Titulo", intro.transform, 130f, new Color(1f, 0.9f, 0.3f), new Vector2(0.5f, 0.5f), new Vector2(0f, 50f), new Vector2(1700f, 180f));
+        txtIntro = CriarTexto("Titulo", intro.transform, 60f, new Color(1f, 0.9f, 0.3f), new Vector2(0.5f, 0.5f), new Vector2(0f, 30f), new Vector2(750f, 90f));
         txtIntro.text = tituloIntro;
-        txtSub = CriarTexto("Subtitulo", intro.transform, 54f, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, -80f), new Vector2(1700f, 100f));
+        txtSub = CriarTexto("Subtitulo", intro.transform, 24f, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, -45f), new Vector2(750f, 55f));
         txtSub.text = subtituloIntro;
 
         // Resultado (centro)
-        txtResultado = CriarTexto("Resultado", raiz, 200f, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 60f), new Vector2(1700f, 300f));
+        txtResultado = CriarTexto("Resultado", raiz, 90f, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 30f), new Vector2(750f, 160f));
         rtResultado = txtResultado.rectTransform;
         txtResultado.gameObject.SetActive(false);
     }

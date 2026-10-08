@@ -471,7 +471,7 @@ public class TosquieManager : MinigameBase
         rt.sizeDelta = new Vector2(1500f, 90f);
 
         t.alignment = TextAlignmentOptions.Center;
-        t.fontSize = 44;
+        t.fontSize = 30;
         t.fontStyle = FontStyles.Bold;
         t.raycastTarget = false;
         t.outlineWidth = 0.25f;
@@ -507,7 +507,7 @@ public class TosquieManager : MinigameBase
 
         t.alignment = TextAlignmentOptions.MidlineRight;
         t.enableWordWrapping = false;
-        t.fontSize = 38;
+        t.fontSize = 22;
         t.fontStyle = FontStyles.Bold;
         t.color = Color.white;
         t.raycastTarget = false;

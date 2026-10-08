@@ -64,15 +64,40 @@ public class OvelhaController : MonoBehaviour
         foreach (Transform filho in transform)
             if (filho.CompareTag("La")) faixas.Add(filho);
 
-        // Cria as faixas que faltam: filho com tag 'La' + BoxCollider2D trigger 1x1 (sem sprite)
+        // Cria as faixas que faltam: filho com tag 'La' + BoxCollider2D trigger 1x1 + LineRenderer
         for (int i = faixas.Count; i < quantidadeFaixas; i++)
         {
             GameObject go = new GameObject("FaixaLa" + (i + 1));
             go.transform.SetParent(transform, false);
             go.tag = "La";
+            
             BoxCollider2D col = go.AddComponent<BoxCollider2D>();
             col.isTrigger = true;
             col.size = Vector2.one;
+
+            // --- NOVO CÓDIGO: Adicionar LineRenderer para desenhar o contorno ---
+            LineRenderer lr = go.AddComponent<LineRenderer>();
+            lr.useWorldSpace = false; // Permite que o contorno acompanhe a escala e posição do objeto localmente
+            lr.positionCount = 5;     // 4 cantos + 1 vértice final para fechar o retângulo
+            lr.startWidth = 0.04f;    // Espessura da linha
+            lr.endWidth = 0.04f;
+            lr.sortingOrder = 5;      // Garante que a linha é desenhada à frente do corpo da ovelha
+
+            // Configura um material básico para evitar a textura cor-de-rosa de erro
+            lr.material = new Material(Shader.Find("Sprites/Default"));
+            lr.startColor = Color.black; // Cor do contorno (pode alterar para outra cor, se preferir)
+            lr.endColor = Color.black;
+
+            // Define os vértices geométricos exatos do BoxCollider2D (que tem tamanho 1x1 centrado no 0,0)
+            lr.SetPositions(new Vector3[] {
+                new Vector3(-0.5f, -0.5f, 0f), // Canto inferior esquerdo
+                new Vector3(-0.5f, 0.5f, 0f),  // Canto superior esquerdo
+                new Vector3(0.5f, 0.5f, 0f),   // Canto superior direito
+                new Vector3(0.5f, -0.5f, 0f),  // Canto inferior direito
+                new Vector3(-0.5f, -0.5f, 0f)  // Volta ao início para fechar a figura
+            });
+            // ------------------------------------------------------------------
+
             faixas.Add(go.transform);
         }
 
@@ -94,8 +119,13 @@ public class OvelhaController : MonoBehaviour
         foreach (Transform filho in transform)
         {
             if (!filho.CompareTag("La")) continue;
+            
             SpriteRenderer sr = filho.GetComponent<SpriteRenderer>();
             if (sr != null) sr.enabled = false;
+
+            // NOVO: Esconder também o contorno
+            LineRenderer lr = filho.GetComponent<LineRenderer>();
+            if (lr != null) lr.enabled = false;
         }
     }
 

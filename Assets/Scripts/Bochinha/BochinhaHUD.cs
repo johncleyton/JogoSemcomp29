@@ -138,7 +138,7 @@ public class BochinhaHUD : MonoBehaviour
 
         var scaler = cgo.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.referenceResolution = new Vector2(800f, 600f); // ESCALADO PARA 800x600
         scaler.matchWidthOrHeight = 0.5f;
 
         Transform raiz = cgo.transform;
@@ -147,62 +147,62 @@ public class BochinhaHUD : MonoBehaviour
         vinheta = CriarImagem("Vinheta", raiz, new Color(1f, 0f, 0f, 0f), Vector2.zero, Vector2.one);
         vinheta.sprite = CriarSpriteVinheta();
 
-        // Turno (topo)
-        CriarImagemFixa("FundoTurno", raiz, null, new Color(0f, 0f, 0f, 0.45f), new Vector2(0.5f, 1f), new Vector2(0f, -85f), new Vector2(1100f, 100f));
-        txtTurno = CriarTexto("Turno", raiz, 72f, Color.white, new Vector2(0.5f, 1f), new Vector2(0f, -85f), new Vector2(1100f, 100f), TextAlignmentOptions.Center);
+        // Turno (topo) - Reduzido pos, tam e fonte
+        CriarImagemFixa("FundoTurno", raiz, null, new Color(0f, 0f, 0f, 0.45f), new Vector2(0.5f, 1f), new Vector2(0f, -40f), new Vector2(500f, 45f));
+        txtTurno = CriarTexto("Turno", raiz, 32f, Color.white, new Vector2(0.5f, 1f), new Vector2(0f, -40f), new Vector2(500f, 45f), TextAlignmentOptions.Center);
         rtTurno = txtTurno.rectTransform;
 
-        // Aviso de tempo (logo abaixo do turno)
-        txtTempo = CriarTexto("Tempo", raiz, 64f, new Color(1f, 0.25f, 0.2f), new Vector2(0.5f, 1f), new Vector2(0f, -185f), new Vector2(1200f, 100f), TextAlignmentOptions.Center);
+        // Aviso de tempo (logo abaixo do turno) - Reduzido pos, tam e fonte
+        txtTempo = CriarTexto("Tempo", raiz, 28f, new Color(1f, 0.25f, 0.2f), new Vector2(0.5f, 1f), new Vector2(0f, -85f), new Vector2(550f, 45f), TextAlignmentOptions.Center);
         txtTempo.text = avisoTempo;
         txtTempo.alpha = 0f;
 
-        // Rótulos dos contadores (pontos são criados em AtualizarContagem)
-        var rotJ = CriarTexto("RotuloJogador", raiz, 40f, corJogador, new Vector2(0f, 0f), new Vector2(50f, 140f), new Vector2(400f, 60f), TextAlignmentOptions.Left);
+        // Rótulos dos contadores - Reduzido pos, tam e fonte
+        var rotJ = CriarTexto("RotuloJogador", raiz, 18f, corJogador, new Vector2(0f, 0f), new Vector2(25f, 65f), new Vector2(180f, 28f), TextAlignmentOptions.Left);
         rotJ.text = "VOCE";
-        var rotA = CriarTexto("RotuloAdversario", raiz, 40f, corAdversario, new Vector2(1f, 0f), new Vector2(-50f, 140f), new Vector2(400f, 60f), TextAlignmentOptions.Right);
+        var rotA = CriarTexto("RotuloAdversario", raiz, 18f, corAdversario, new Vector2(1f, 0f), new Vector2(-25f, 65f), new Vector2(180f, 28f), TextAlignmentOptions.Right);
         rotA.text = "ADVERSARIO";
 
-        // Dica (embaixo, centro)
-        txtDica = CriarTexto("Dica", raiz, 56f, Color.white, new Vector2(0.5f, 0f), new Vector2(0f, 150f), new Vector2(1700f, 100f), TextAlignmentOptions.Center);
+        // Dica (embaixo, centro) - Reduzido pos, tam e fonte
+        txtDica = CriarTexto("Dica", raiz, 26f, Color.white, new Vector2(0.5f, 0f), new Vector2(0f, 70f), new Vector2(750f, 45f), TextAlignmentOptions.Center);
         rtDica = txtDica.rectTransform;
         txtDica.alpha = 0f;
 
-        // Barra de força (aparece só durante o arraste)
+        // Barra de força (aparece só durante o arraste) - Reduzido pos, tam e fonte
         var barra = new GameObject("BarraForca", typeof(RectTransform));
         barra.transform.SetParent(raiz, false);
         var rtBarra = (RectTransform)barra.transform;
         rtBarra.anchorMin = rtBarra.anchorMax = new Vector2(0.5f, 0f);
         rtBarra.pivot = new Vector2(0.5f, 0.5f);
-        rtBarra.anchoredPosition = new Vector2(0f, 90f);
-        rtBarra.sizeDelta = new Vector2(800f, 60f);
+        rtBarra.anchoredPosition = new Vector2(0f, 40f);
+        rtBarra.sizeDelta = new Vector2(360f, 28f);
         grupoForca = barra;
 
         CriarImagem("Borda", barra.transform, new Color(0f, 0f, 0f, 0.9f), Vector2.zero, Vector2.one);
         var fundo = CriarImagem("Fundo", barra.transform, new Color(0.15f, 0.12f, 0.2f, 1f), Vector2.zero, Vector2.one);
-        fundo.rectTransform.offsetMin = new Vector2(6f, 6f);
-        fundo.rectTransform.offsetMax = new Vector2(-6f, -6f);
+        fundo.rectTransform.offsetMin = new Vector2(3f, 3f);
+        fundo.rectTransform.offsetMax = new Vector2(-3f, -3f);
         forcaFill = CriarImagem("Fill", fundo.transform, new Color(0.35f, 0.9f, 0.3f), Vector2.zero, new Vector2(0f, 1f));
-        txtForca = CriarTexto("TextoForca", barra.transform, 34f, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(800f, 60f), TextAlignmentOptions.Center);
+        txtForca = CriarTexto("TextoForca", barra.transform, 16f, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(360f, 28f), TextAlignmentOptions.Center);
         barra.SetActive(false);
 
-        // Intro (centro)
+        // Intro (centro) - Reduzido pos, tam e fonte
         var intro = new GameObject("Intro", typeof(RectTransform), typeof(CanvasGroup));
         intro.transform.SetParent(raiz, false);
         rtIntro = (RectTransform)intro.transform;
         rtIntro.anchorMin = rtIntro.anchorMax = new Vector2(0.5f, 0.5f);
-        rtIntro.sizeDelta = new Vector2(1700f, 400f);
-        rtIntro.anchoredPosition = new Vector2(0f, 60f);
+        rtIntro.sizeDelta = new Vector2(750f, 180f);
+        rtIntro.anchoredPosition = new Vector2(0f, 25f);
         grupoIntro = intro.GetComponent<CanvasGroup>();
         grupoIntro.blocksRaycasts = false;
 
-        txtIntro = CriarTexto("Titulo", intro.transform, 140f, new Color(1f, 0.9f, 0.3f), new Vector2(0.5f, 0.5f), new Vector2(0f, 50f), new Vector2(1700f, 190f), TextAlignmentOptions.Center);
+        txtIntro = CriarTexto("Titulo", intro.transform, 64f, new Color(1f, 0.9f, 0.3f), new Vector2(0.5f, 0.5f), new Vector2(0f, 20f), new Vector2(750f, 85f), TextAlignmentOptions.Center);
         txtIntro.text = tituloIntro;
-        txtSub = CriarTexto("Subtitulo", intro.transform, 54f, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, -80f), new Vector2(1700f, 100f), TextAlignmentOptions.Center);
+        txtSub = CriarTexto("Subtitulo", intro.transform, 24f, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, -35f), new Vector2(750f, 45f), TextAlignmentOptions.Center);
         txtSub.text = subtituloIntro;
 
-        // Resultado (parte de cima do centro, pra não cobrir as bolas)
-        txtResultado = CriarTexto("Resultado", raiz, 150f, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 330f), new Vector2(1800f, 220f), TextAlignmentOptions.Center);
+        // Resultado (parte de cima do centro, pra não cobrir as bolas) - Reduzido pos, tam e fonte
+        txtResultado = CriarTexto("Resultado", raiz, 68f, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 150f), new Vector2(800f, 100f), TextAlignmentOptions.Center);
         rtResultado = txtResultado.rectTransform;
         txtResultado.gameObject.SetActive(false);
     }
@@ -313,8 +313,9 @@ public class BochinhaHUD : MonoBehaviour
 
         for (int i = 0; i < total; i++)
         {
-            Vector2 pos = new Vector2(lado * (75f + i * 70f), 75f);
-            lista.Add(CriarImagemFixa(nome + i, canvas.transform, spriteCirculo, Color.white, ancora, pos, new Vector2(54f, 54f)));
+            // Diminuído o raio das bolas de vida e o espaçamento (75f/70f -> 35f/32f)
+            Vector2 pos = new Vector2(lado * (35f + i * 32f), 35f);
+            lista.Add(CriarImagemFixa(nome + i, canvas.transform, spriteCirculo, Color.white, ancora, pos, new Vector2(24f, 24f)));
         }
     }
 
