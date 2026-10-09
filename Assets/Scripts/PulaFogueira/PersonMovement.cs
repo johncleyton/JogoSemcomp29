@@ -15,8 +15,8 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] private float jumpSpeed = 8f;
 
     [Header("Arc Jump Settings")]
-    [SerializeField] private float jumpHeight = 3.5f;     // Altura Máxima
-    [SerializeField] private float jumpDistance = 6f;     // Distância horizontal
+    [SerializeField] private float jumpHeight = 3.5f;     // Altura Mï¿½xima
+    [SerializeField] private float jumpDistance = 6f;     // Distï¿½ncia horizontal
 
     [Header("Controller")]
     [SerializeField] private PulaFogueiraController gameController;
@@ -27,6 +27,8 @@ public class PersonMovement : MonoBehaviour
     private float verticalSpeed;
     private float calculatedGravity;
     private float calculatedJumpSpeed;
+
+    public Animator animator;
 
     void Start()
     {
@@ -63,13 +65,14 @@ public class PersonMovement : MonoBehaviour
 
     void Update()
     {
-        // Velocidaed vertical e checagem do chão
+        // Velocidaed vertical e checagem do chï¿½o
         if (!isGrounded)
         {
             verticalSpeed -= calculatedGravity * Time.deltaTime;
 
             if (transform.position.y < groundCoordinates)
             {
+                animator.SetBool("pulo", false);
                 isGrounded = true;
                 verticalSpeed = 0f;
                 transform.position = new Vector3(transform.position.x, groundCoordinates, 0f);
@@ -81,6 +84,7 @@ public class PersonMovement : MonoBehaviour
         // Checa o input
         if (Input.GetMouseButtonDown(0) && isGrounded)
         {
+            animator.SetBool("pulo", true);
             isGrounded = false;
             verticalSpeed = calculatedJumpSpeed;
         }

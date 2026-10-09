@@ -14,7 +14,8 @@ enum LevelDifficulty
 
 public class DifficultyController : MonoBehaviour
 {
-    [SerializeField] private LevelDifficulty _difficulty;
+    // Quantas fases do GameManagerRework são necessárias para subir um nível de dificuldade
+    [SerializeField] private int _fasesPorNivel = 3;
 
     [SerializeField] private int _maxNumberOfCachorros = 5;
     [SerializeField] private int _minNumberOfCachorros = 1;
@@ -31,13 +32,12 @@ public class DifficultyController : MonoBehaviour
         if (Instance != null)
             GameObject.Destroy(this);
         Instance = this;
-
-        // _difficulty = GetDifficulty(); COLOCAR AQUI O GETTER PARA PEGAR A DIFICULDADE DO JOGO
     }
 
-    void Start()
+    // Chamado pelo CachorroGameManager (via ConfigurarDificuldade) com a fase atual do GameManagerRework
+    public void SpawnarCachorros(int faseAtual)
     {
-        SetCachorroParameters();
+        SetCachorroParameters(GetDifficulty(faseAtual));
     }
 
     public int GetNumberOfCachorros()
@@ -45,19 +45,19 @@ public class DifficultyController : MonoBehaviour
         return _numberOfCachorros;
     }
 
-    private LevelDifficulty GetDifficulty()
+    private LevelDifficulty GetDifficulty(int faseAtual)
     {
-        // COLOCAR AQUI O GETTER PARA PEGAR A DIFICULDADE DO JOGO
-        // CONVERTER O VALOR PEGADO PARA O ENUM LevelDifficulty
-        return LevelDifficulty.Medium;
+        int nivel = (faseAtual - 1) / Mathf.Max(_fasesPorNivel, 1);
+        int maiorNivel = Enum.GetValues(typeof(LevelDifficulty)).Length - 1;
+        return (LevelDifficulty)Mathf.Clamp(nivel, 0, maiorNivel);
     }
 
-    private void SetCachorroParameters()
+    private void SetCachorroParameters(LevelDifficulty difficulty)
     {
         int numberOfCachorros = Mathf.RoundToInt(Mathf.Lerp(_minNumberOfCachorros, _maxNumberOfCachorros, 
-            (float)_difficulty / Enum.GetValues(typeof(LevelDifficulty)).Length));
+            (float)difficulty / Enum.GetValues(typeof(LevelDifficulty)).Length));
         int cachorroSpeed = Mathf.RoundToInt(Mathf.Lerp(_minCachorroSpeed, _maxCachorroSpeed, 
-            _speedCurve.Evaluate((float)_difficulty / Enum.GetValues(typeof(LevelDifficulty)).Length)));
+            _speedCurve.Evaluate((float)difficulty / Enum.GetValues(typeof(LevelDifficulty)).Length)));
         Debug.Log(numberOfCachorros);
         for (int i = 0; i < numberOfCachorros; i++)
         {

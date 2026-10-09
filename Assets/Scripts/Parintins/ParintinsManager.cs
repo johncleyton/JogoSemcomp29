@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 
 public class ParintinsManager : MinigameBase
@@ -11,16 +12,19 @@ public class ParintinsManager : MinigameBase
     float timer_total = 0f;
 
 
-    [Header("Configurações de Spawn")]
+    [Header("Configuraï¿½ï¿½es de Spawn")]
     public GameObject prefabCoracao;
     public GameObject prefabEstrela;
     public Transform[] spawnpoints;
 
-    [Header("Referências dos Bois")]
+    [Header("Referï¿½ncias dos Bois")]
     public GameObject boiGarantido;
     public GameObject boiCaprichoso;
 
     private int boiEscolhido;
+    public GameObject textoBoiGarantido;
+    public GameObject textoBoiCaprichoso;
+    public TextMeshProUGUI contador;
     private bool start = false;
 
     private float timer = 0f;
@@ -49,6 +53,13 @@ public class ParintinsManager : MinigameBase
         GameObject chosen = boiEscolhido == 0 ? boiCaprichoso : boiGarantido;
         GameObject notChosen = boiEscolhido == 0 ? boiGarantido : boiCaprichoso;
 
+        GameObject textoEscolhido = boiEscolhido == 0 ? textoBoiCaprichoso : textoBoiGarantido;
+
+        textoBoiGarantido.SetActive(false);
+        textoBoiCaprichoso.SetActive(false);
+
+        textoEscolhido.SetActive(true);
+
         notChosen.SetActive(false);
 
         for (int i = 0; i < 3; i++)
@@ -60,6 +71,8 @@ public class ParintinsManager : MinigameBase
         }
 
         notChosen.SetActive(true);
+        textoEscolhido.SetActive(false);
+        UpdateCounter();
         start = true;
     }
     // Update is called once per frame
@@ -70,7 +83,7 @@ public class ParintinsManager : MinigameBase
 
         timer += Time.deltaTime;
 
-        if (timer >= (float)cooldown)
+        if ((timer >= (float)cooldown) && (counter != 5))
         {
             SpawnObject();
             timer = 0f;
@@ -119,6 +132,20 @@ public class ParintinsManager : MinigameBase
         else
         {
             counter--;
+            if(counter < 0)
+            {
+                counter = 0;
+            }
+        }
+
+        UpdateCounter();
+    }
+
+    private void UpdateCounter()
+    {
+        if (contador != null)
+        {
+            contador.text = counter + "/5";
         }
     }
 }

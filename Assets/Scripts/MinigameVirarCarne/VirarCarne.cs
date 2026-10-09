@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class VirarCarne : MinigameBase
@@ -9,18 +8,33 @@ public class VirarCarne : MinigameBase
     public RectTransform indicator;
     public RectTransform hitzone;
 
-    public float speed = 100f;
+    public SpriteRenderer carneRenderer; 
+    public Sprite spriteCrua;
+    public Sprite spriteAssada;
+    public Sprite spriteQueimada;
+
+    public float baseSpeed = 80f;
+    private float currentSpeed;
     private bool movingUp = true;
 
+    void Start()
+    {
+        if (currentSpeed == 0)
+        {
+            currentSpeed = baseSpeed; // Usa a velocidade base padrão
+        }
+    }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        speed = Mathf.Min(speed + faseAtual*5, 300);
+        currentSpeed = baseSpeed + faseAtual * 5;
         return tempoGlobalSugerido;
     }
 
     void Update()
     {
+        if (jogoFinalizado) return;
+
         MoveIndicator();
 
         if (Input.GetMouseButtonDown(0))
@@ -37,7 +51,7 @@ public class VirarCarne : MinigameBase
         Vector2 pos = indicator.anchoredPosition;
         float dir = movingUp ? 1f : -1f;
 
-        pos.y += speed * dir * Time.deltaTime;
+        pos.y += currentSpeed * dir * Time.deltaTime;
         
         if (pos.y >= topLimit)
         {
@@ -62,11 +76,19 @@ public class VirarCarne : MinigameBase
 
         if (yIndicator >= min && yIndicator <= max)
         {
-            Vencer();
+            if (carneRenderer != null && spriteAssada != null)
+            {
+                carneRenderer.sprite = spriteAssada;
+            }
+            VencerComAtraso(2f);
         }
         else
         {
-            Perder();
+            if (carneRenderer != null && spriteQueimada != null)
+            {
+                carneRenderer.sprite = spriteQueimada;
+            }
+            PerderComAtraso(2f);
         }
     }
 }

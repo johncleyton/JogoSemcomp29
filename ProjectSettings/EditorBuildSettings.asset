@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TelaIntervalo.unity
     guid: ca141d4951ad7094bab0ced651ac5d40
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Croche.unity
     guid: 7b9bb1e3df08e884dbdd311e86609a90
   - enabled: 1
@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MinigameTruco.unity
     guid: c319439a4a249b6499cff89ecf9da56b
+  - enabled: 1
+    path: Assets/Scenes/MinigameVirarCarne.unity
+    guid: 3d4fcbd8478b6c7499b709d66267648d
   - enabled: 0
     path: Assets/Scenes/TesteMic.unity
     guid: 1a2f738764999834ab34c1984157e732
@@ -32,13 +35,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
   - enabled: 0
     path: Assets/Scenes/MinigameApagao.unity
     guid: d2d2c51296f7b9e4395db653b49a5a3f
   - enabled: 0
+    path: Assets/Scenes/MinigameApagao.unity
+    guid: d2d2c51296f7b9e4395db653b49a5a3f
+  - enabled: 0
+    path: Assets/Scenes/CachorroGame.unity
+    guid: 888530e680f266042b8a16e26d48a32e
+  - enabled: 1
     path: Assets/Scenes/CachorroGame.unity
     guid: 888530e680f266042b8a16e26d48a32e
   - enabled: 1
@@ -59,16 +68,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/CenaCapivara.unity
     guid: ce9d4aecd4bbae5d9ba914f409f24f6c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/PulaFogueira.unity
     guid: 22b3ac1ac6644664d8df7aef67f0f8e0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Pesca.unity
     guid: 57661d1407da77c45aaa25c4f616e375
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/DesviarBuraco.unity
     guid: e149d25b7f71bbd46ad8f3dc88aa21e4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MinigameArraia.unity
     guid: 3fb9d31ab1c721049a259906b7f4789c
   - enabled: 0
@@ -77,15 +86,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/WhackaCroc.unity
     guid: 3bace07e48c4e504faf4a65dbaa670bf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MangaeLeite.unity
     guid: 4e6e3946591aa1f4aa973a6931290c0b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ArtesanatoPiacava.unity
     guid: b2b75b671a6c49749951ba3dae7f2f49
   - enabled: 0
     path: Assets/Scenes/AcendeFogueira.unity
     guid: ef2376e4968915d7d88126cda6013f22
+  - enabled: 1
+    path: Assets/Scenes/PaodariaDeQueijo.unity
+    guid: b15e77e2b4307cea8b0d01de5eaeffa8
   - enabled: 0
     path: Assets/Scenes/PaodariaDeQueijo.unity
     guid: b15e77e2b4307cea8b0d01de5eaeffa8
@@ -93,9 +105,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MinigameBerrante.unity
     guid: d363f7f44e1d5db44ba6b3d7b26968d0
   - enabled: 1
+    path: Assets/Scenes/Parintins.unity
+    guid: 9a3de69990876374ea16daecb877e124
+  - enabled: 1
     path: Assets/Scenes/Boiaserra.unity
     guid: a43d6772339b6b2488ed8e860deec5d3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Brigadeiro.unity
     guid: 4a0ed0641815c964d8047185611291c7
   - enabled: 1
@@ -107,10 +122,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tapioca.unity
     guid: 9c7aa4ff74d3c774db0b0a1db9b3c737
+  - enabled: 1
+    path: Assets/Scenes/CarretaFuracao.unity
+    guid: a7cb4ba5d2589089dba66a86f79d9a70
+  - enabled: 1
+    path: Assets/Scenes/PegaSaci.unity
+    guid: 5a308f8a20457aab984d9abd57c61836
+  - enabled: 1
+    path: Assets/Scenes/Pixe.unity
+    guid: 6650b4eba0b45e84294bde7907130a64
+  - enabled: 1
+    path: Assets/Scenes/ChuteAoGol.unity
+    guid: dfb94333eced8b440b3133cc59ecb6d4
   - enabled: 0
     path: Assets/Scenes/PegaSaci.unity
     guid: 5a308f8a20457aab984d9abd57c61836
   - enabled: 1
     path: Assets/Scenes/Espetinho.unity
     guid: e908da5b998685f4fa5e915bace272eb
+  - enabled: 1
+    path: Assets/Scenes/Bochinha.unity
+    guid: 983c23c4495e821e8af57b3a36b5134b
+  - enabled: 1
+    path: Assets/Scenes/TosquieOvelha.unity
+    guid: 224cc5c107063c447b1e4dcec69d4615
+  - enabled: 1
+    path: Assets/Scenes/Uvinha.unity
+    guid: 7844c9f838a2d6e609f46c0834401b54
   m_configObjects: {}

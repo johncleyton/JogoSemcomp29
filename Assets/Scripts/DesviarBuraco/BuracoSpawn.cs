@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BuracoSpawn : MonoBehaviour
+public class BuracoSpawn : MinigameBase
 {
     public GameObject prefabBuraco; 
     
-    public float laneDistance = 6f; 
+    public float laneDistance = 3f; 
     
-    public float spawnY = 3f; 
+    public float spawnY = 12f; 
 
     [Header("Dificuldade")]
     public float spawnTime = .8f; 
@@ -33,6 +33,8 @@ public class BuracoSpawn : MonoBehaviour
 
     void Update()
     {
+        if (jogoFinalizado) return;
+
         timer += Time.deltaTime;
 
         if (timer >= currentSpawnTime)
@@ -55,7 +57,7 @@ public class BuracoSpawn : MonoBehaviour
         lastLane = lane;
 
 
-        float x = (lane - 1) * laneDistance - laneDistance;
+        float x = (lane - 1) * laneDistance;
         Vector3 spawnPosition = new Vector3(x, spawnY, 0f);
 
         GameObject buraco = Instantiate(prefabBuraco, spawnPosition, Quaternion.identity);

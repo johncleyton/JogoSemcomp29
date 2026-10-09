@@ -7,7 +7,7 @@ public class PulaFogueiraController : MinigameBase
 
     public void Start()
     {
-        minigameDuration = Random.Range(3, 13);
+        minigameDuration = Random.Range(4, 8);
     }
 
     public override void TempoEsgotado()
@@ -27,7 +27,7 @@ public class PulaFogueiraController : MinigameBase
     public void playerHit()
     {
         Debug.Log("Perdeu: bateu na fogueira");
-        Perder();
+        PerderComAtraso(0);
     }
 
     public float getMinigameDuration()

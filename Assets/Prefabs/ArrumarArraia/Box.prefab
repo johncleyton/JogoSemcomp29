@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2055272589524413877}
   - component: {fileID: 2668529177616475403}
   - component: {fileID: 1646760352544866187}
+  - component: {fileID: 8003583638715933813}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -75,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 680cae31310b1904187e1fe98bf9ee06, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ecec424d740dba46a6cd2de9badacd5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -122,8 +123,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -143,4 +144,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435a8980bea74a3448b58c58695db979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
+  moveSpeed: 15
+--- !u!114 &8003583638715933813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4845227374289741978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630b02e01ee5c7b43aa2a1fa714a4a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tempoIda: 0.8
+  escalaFinal: 2.5
+  amplitude: 0.2
+  velocidade: 2
+  balancoRotacao: 5

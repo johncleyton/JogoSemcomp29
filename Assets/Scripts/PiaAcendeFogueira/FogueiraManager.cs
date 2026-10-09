@@ -2,61 +2,93 @@ using UnityEngine;
 
 public class FogueiraManager : MinigameBase
 {
+    public static FogueiraManager Instance;
+
     [Header("Referências")]
     public MicInput micInput;
-    public Transform fogoSprite;
-    
-    [Header("Balanceamento Base")]
-    public float blowThreshold = 0.5f;
-    public float fireGrowthRate = 25f;
-    public float fireDecayRate = 10f; 
-    public float maxFireScale = 3f;
-    
-    private float currentFire = 0f;
+    public Transform fogoTransform; 
 
-    // --- INTEGRAÇÃO COM O NOVO CORE ---
-    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    [Header("Sprites de Fim de Jogo")]
+    public GameObject maoVitoria;
+    public GameObject maoDerrota;
+
+    private float fireScale = 0f;
+    public float maxFireScale = 3f; 
+    
+    [Header("Balanceamento")]
+    public float blowThreshold = 0.5f; // Volume mínimo para começar a crescer o fogo
+    public float crescimentoRate = 2f;
+    public float decaimentoRate = 1f;
+
+    void Awake()
     {
-        // Quanto mais avançada a fase, mais rápido a fogueira apaga sem sopro!
-        fireDecayRate = 10f + (faseAtual * 2f);
-        return tempoGlobalSugerido;
+        if (Instance == null) Instance = this;
     }
 
     void Start()
     {
-        if (fogoSprite != null)
-            fogoSprite.localScale = Vector3.one * 0.1f;
+        // Começa com o fogo invisível (escala 0) e as mãos escondidas
+        if (fogoTransform != null) fogoTransform.localScale = Vector3.zero;
+        if (maoVitoria != null) maoVitoria.SetActive(false);
+        if (maoDerrota != null) maoDerrota.SetActive(false);
+    }
+
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        // Aumenta a velocidade com que o fogo apaga nas fases mais difíceis
+        decaimentoRate = 1f + (faseAtual * 0.5f);
+        return tempoGlobalSugerido;
     }
 
     void Update()
     {
-        if (jogoFinalizado) return; // Trava de segurança
+        if (jogoFinalizado) return;
 
-        // Evita erros caso os objetos não tenham sido arrastados no Inspector
-        if (micInput == null || fogoSprite == null) return;
-
-        if (micInput.loudness > blowThreshold)
-            currentFire += fireGrowthRate * Time.deltaTime;
-        else
-            currentFire -= fireDecayRate * Time.deltaTime;
-
-        currentFire = Mathf.Clamp(currentFire, 0f, 100f);
+        float volumeAtual = 0f;
         
-        float mappedScale = Mathf.Lerp(0.1f, maxFireScale, currentFire / 100f);
-        fogoSprite.localScale = Vector3.one * mappedScale;
+        // Lê diretamente a variável de volume do seu MicInput
+        if (micInput != null) volumeAtual = micInput.loudness;
 
-        if (currentFire >= 100f)
+        // Se o microfone captar sopro/barulho acima do limite
+        if (volumeAtual > blowThreshold) 
         {
-            Debug.Log("Fogueira acesa! O pai tá orgulhoso!");
-            Vencer();
+            // O fogo cresce multiplicando o volume captado pela taxa de crescimento
+            fireScale += volumeAtual * crescimentoRate * Time.deltaTime;
         }
+        else 
+        {
+            // Se parar de soprar, o fogo diminui
+            fireScale -= decaimentoRate * Time.deltaTime;
+        }
+
+        // Limita o tamanho do fogo entre 0 e o tamanho máximo
+        fireScale = Mathf.Clamp(fireScale, 0f, maxFireScale);
+
+        if (fogoTransform != null)
+            fogoTransform.localScale = new Vector3(fireScale, fireScale, 1f);
+
+        // Se o fogo chegar no tamanho máximo, vence!
+        if (fireScale >= maxFireScale)
+        {
+            VencerFogueira();
+        }
+    }
+
+    private void VencerFogueira()
+    {
+        if (jogoFinalizado) return;
+        
+        // Liga a mão de Like
+        if (maoVitoria != null) maoVitoria.SetActive(true);
+        Vencer(); 
     }
 
     public override void TempoEsgotado()
     {
-        if (jogoFinalizado) return; // Trava de segurança
+        if (jogoFinalizado) return;
         
-        Debug.Log("Demorou demais, piá!");
-        base.TempoEsgotado(); 
+        // Liga a mão de Deslike
+        if (maoDerrota != null) maoDerrota.SetActive(true);
+        base.TempoEsgotado();
     }
 }
