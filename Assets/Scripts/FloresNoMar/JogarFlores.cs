@@ -19,7 +19,7 @@ public class JogarFlores : MinigameBase
     private int tam = 0;
     private float scale;
     public Vector3 coord;
-    private int qtd = Mathf.RoundToInt((200 / Mathf.Pow(1.38f, GameManagerRework.Instance.tempoDoMinigameAtual)));
+    private int qtd;
     public TextMeshProUGUI textQtdFlor;
 
     public int jogoAcabou = 0;
@@ -28,6 +28,7 @@ public class JogarFlores : MinigameBase
     // Start is called before the first frame update
     void Start()
     {
+        qtd = Mathf.RoundToInt((200 / Mathf.Pow(1.38f, GameManagerRework.Instance.tempoDoMinigameAtual)));
         coord = new Vector3(0f, -7f, -5f);
         spawnedFlor = new GameObject[120];
         textQtdFlor.text = qtd.ToString();
@@ -60,8 +61,8 @@ public class JogarFlores : MinigameBase
     {
         coord.x = Random.Range(-3f, 3f);
         spawnedFlor[tam] = Instantiate(flor, coord, Quaternion.identity);
-        scale = Random.Range(0.7f, 1.5f);
-        spawnedFlor[tam].transform.localScale = new Vector3(scale, scale, scale);
+        //scale = Random.Range(0.7f, 1.5f);
+        //spawnedFlor[tam].transform.localScale = new Vector3(scale, scale, scale);
         spawnedFlor[tam].GetComponent<Rigidbody2D>().drag = Random.Range(0.5f, 1.3f);
         spawnedFlor[tam].GetComponent<Rigidbody2D>().AddForce(new Vector3(Random.Range(-7f,7f),7f,0f), ForceMode2D.Impulse);
         qtd--;

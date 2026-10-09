@@ -14,6 +14,7 @@ TagManager:
   - marcador
   - sumidouro
   - Ingredientes
+  - Flor
   layers:
   - Default
   - TransparentFX

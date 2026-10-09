@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlorManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class FlorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (jogarflores.jogoAcabou == 1)
         {
             jogarflores.enabled = false;
