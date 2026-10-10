@@ -122,43 +122,28 @@ public class MapaBS : MonoBehaviour
 
     private void Facil()
     {
-        notes.Add(new Vector2Int(7, 1));
+        Debug.Log("mapa facil");
+        notes.Add(new Vector2Int(3, 1));
+        notes.Add(new Vector2Int(6, 1));
         notes.Add(new Vector2Int(9, 1));
-        notes.Add(new Vector2Int(11, 1));
-        notes.Add(new Vector2Int(13, 1));
-        notes.Add(new Vector2Int(15, 1));
-        notes.Add(new Vector2Int(17, 1));
-        notes.Add(new Vector2Int(18, 1));
-        notes.Add(new Vector2Int(19, 1));
-        notes.Add(new Vector2Int(20, 1));
-        notes.Add(new Vector2Int(43, 2));
-        notes.Add(new Vector2Int(47, 2));
-        notes.Add(new Vector2Int(49, 2));
-        notes.Add(new Vector2Int(52, 2));
-        notes.Add(new Vector2Int(56, 2));
-        notes.Add(new Vector2Int(57, 2));
+        notes.Add(new Vector2Int(12, 1));
+        notes.Add(new Vector2Int(40, 2));
+        notes.Add(new Vector2Int(45, 2));
+        notes.Add(new Vector2Int(50, 2));
         notes.Add(new Vector2Int(30, 1));
-        notes.Add(new Vector2Int(32, 1));
-        notes.Add(new Vector2Int(34, 1));
+        notes.Add(new Vector2Int(33, 1));
         notes.Add(new Vector2Int(36, 1));
-        notes.Add(new Vector2Int(37, 1));
-        notes.Add(new Vector2Int(80, 2));
+        notes.Add(new Vector2Int(39, 1));
         notes.Add(new Vector2Int(42, 1));
-        notes.Add(new Vector2Int(44, 1));
-        notes.Add(new Vector2Int(91, 2));
         notes.Add(new Vector2Int(93, 2));
-        notes.Add(new Vector2Int(96, 2));
-        notes.Add(new Vector2Int(99, 2));
-        notes.Add(new Vector2Int(52, 1));
-        notes.Add(new Vector2Int(54, 1));
+        notes.Add(new Vector2Int(98, 2));
+        notes.Add(new Vector2Int(53, 1));
         notes.Add(new Vector2Int(56, 1));
         notes.Add(new Vector2Int(59, 1));
-        notes.Add(new Vector2Int(61, 1));
+        notes.Add(new Vector2Int(62, 1));
         notes.Add(new Vector2Int(65, 1));
-        notes.Add(new Vector2Int(67, 1));
-        notes.Add(new Vector2Int(69, 1));
-        notes.Add(new Vector2Int(70, 1));
-        
+
+
         //garante que nao vai dar problema de index 
         notes.Add(new Vector2Int(273, 1));
         notes.Add(new Vector2Int(274, 1));
@@ -169,10 +154,145 @@ public class MapaBS : MonoBehaviour
     }
     private void Medio()
     {
+        Debug.Log("mapa medio");
+        notes.Add(new Vector2Int(5, 1));
+        notes.Add(new Vector2Int(7, 1));
+        notes.Add(new Vector2Int(9, 1));
+        notes.Add(new Vector2Int(11, 1));
+        notes.Add(new Vector2Int(13, 1));
+        notes.Add(new Vector2Int(15, 1));
+        notes.Add(new Vector2Int(17, 1));
+        notes.Add(new Vector2Int(19, 1));
+        notes.Add(new Vector2Int(41, 2));
+        notes.Add(new Vector2Int(45, 2));
+        notes.Add(new Vector2Int(48, 2));
+        notes.Add(new Vector2Int(28, 1));
+        notes.Add(new Vector2Int(30, 1));
+        notes.Add(new Vector2Int(32, 1));
+        notes.Add(new Vector2Int(34, 1));
+        notes.Add(new Vector2Int(36, 1));
+        notes.Add(new Vector2Int(75, 2));
+        notes.Add(new Vector2Int(40, 1));
+        notes.Add(new Vector2Int(42, 1));
+        notes.Add(new Vector2Int(89, 2));
+        notes.Add(new Vector2Int(93, 2));
+        notes.Add(new Vector2Int(97, 2));
+        notes.Add(new Vector2Int(52, 1));
+        notes.Add(new Vector2Int(54, 1));
+        notes.Add(new Vector2Int(56, 1));
+        notes.Add(new Vector2Int(58, 1));
+        notes.Add(new Vector2Int(60, 1));
+        notes.Add(new Vector2Int(62, 1));
+        notes.Add(new Vector2Int(64, 1));
+        notes.Add(new Vector2Int(131, 2));
+        notes.Add(new Vector2Int(135, 2));
+        notes.Add(new Vector2Int(140, 2));
+        notes.Add(new Vector2Int(142, 2));
 
+
+        //garante que nao vai dar problema de index 
+        notes.Add(new Vector2Int(273, 1));
+        notes.Add(new Vector2Int(274, 1));
+        notes.Add(new Vector2Int(275, 1));
+        notes.Add(new Vector2Int(276, 1));
+        notes.Add(new Vector2Int(277, 1));
+        notes.Add(new Vector2Int(278, 1));
     }
     private void Guirtusboyuhull()
     {
+        Debug.Log("guirtus diff");
+        notes.Add(new Vector2Int(6, 2));
+        notes.Add(new Vector2Int(7, 2));
+        notes.Add(new Vector2Int(9, 2));
+        notes.Add(new Vector2Int(12, 2));
+        notes.Add(new Vector2Int(13, 2));
+        notes.Add(new Vector2Int(14, 2));
+        notes.Add(new Vector2Int(15, 2));
+        notes.Add(new Vector2Int(18, 2));
+        notes.Add(new Vector2Int(19, 2));
+        notes.Add(new Vector2Int(20, 2));
+        notes.Add(new Vector2Int(21, 2));
+        notes.Add(new Vector2Int(24, 2));
+        notes.Add(new Vector2Int(25, 2));
+        notes.Add(new Vector2Int(26, 2));
+        notes.Add(new Vector2Int(27, 2));
+        notes.Add(new Vector2Int(30, 2));
+        notes.Add(new Vector2Int(31, 2));
+        notes.Add(new Vector2Int(32, 2));
+        notes.Add(new Vector2Int(33, 2));
+        notes.Add(new Vector2Int(36, 2));
+        notes.Add(new Vector2Int(37, 2));
+        notes.Add(new Vector2Int(38, 2));
+        notes.Add(new Vector2Int(39, 2));
+        notes.Add(new Vector2Int(42, 2));
+        notes.Add(new Vector2Int(43, 2));
+        notes.Add(new Vector2Int(45, 2));
+        notes.Add(new Vector2Int(46, 2));
+        notes.Add(new Vector2Int(48, 2));
+        notes.Add(new Vector2Int(49, 2));
+        notes.Add(new Vector2Int(50, 2));
+        notes.Add(new Vector2Int(51, 2));
+        notes.Add(new Vector2Int(54, 2));
+        notes.Add(new Vector2Int(55, 2));
+        notes.Add(new Vector2Int(56, 2));
+        notes.Add(new Vector2Int(57, 2));
+        notes.Add(new Vector2Int(60, 2));
+        notes.Add(new Vector2Int(61, 2));
+        notes.Add(new Vector2Int(62, 2));
+        notes.Add(new Vector2Int(63, 2));
+        notes.Add(new Vector2Int(66, 2));
+        notes.Add(new Vector2Int(67, 2));
+        notes.Add(new Vector2Int(68, 2));
+        notes.Add(new Vector2Int(69, 2));
+        notes.Add(new Vector2Int(72, 2));
+        notes.Add(new Vector2Int(73, 2));
+        notes.Add(new Vector2Int(74, 2));
+        notes.Add(new Vector2Int(75, 2));
+        notes.Add(new Vector2Int(78, 2));
+        notes.Add(new Vector2Int(79, 2));
+        notes.Add(new Vector2Int(80, 2));
+        notes.Add(new Vector2Int(81, 2));
+        notes.Add(new Vector2Int(84, 2));
+        notes.Add(new Vector2Int(85, 2));
+        notes.Add(new Vector2Int(89, 2));
+        notes.Add(new Vector2Int(90, 2));
+        notes.Add(new Vector2Int(92, 2));
+        notes.Add(new Vector2Int(93, 2));
+        notes.Add(new Vector2Int(96, 2));
+        notes.Add(new Vector2Int(97, 2));
+        notes.Add(new Vector2Int(98, 2));
+        notes.Add(new Vector2Int(99, 2));
+        notes.Add(new Vector2Int(101, 2));
+        notes.Add(new Vector2Int(103, 2));
+        notes.Add(new Vector2Int(104, 2));
+        notes.Add(new Vector2Int(108, 2));
+        notes.Add(new Vector2Int(109, 2));
+        notes.Add(new Vector2Int(110, 2));
+        notes.Add(new Vector2Int(113, 2));
+        notes.Add(new Vector2Int(114, 2));
+        notes.Add(new Vector2Int(116, 2));
+        notes.Add(new Vector2Int(120, 2));
+        notes.Add(new Vector2Int(121, 2));
+        notes.Add(new Vector2Int(122, 2));
+        notes.Add(new Vector2Int(125, 2));
+        notes.Add(new Vector2Int(126, 2));
+        notes.Add(new Vector2Int(127, 2));
+        notes.Add(new Vector2Int(128, 2));
+        notes.Add(new Vector2Int(131, 2));
+        notes.Add(new Vector2Int(132, 2));
+        notes.Add(new Vector2Int(135, 2));
+        notes.Add(new Vector2Int(136, 2));
+        notes.Add(new Vector2Int(140, 2));
+        notes.Add(new Vector2Int(141, 2));
+        notes.Add(new Vector2Int(143, 2));
 
+
+        //garante que nao vai dar problema de index 
+        notes.Add(new Vector2Int(273, 1));
+        notes.Add(new Vector2Int(274, 1));
+        notes.Add(new Vector2Int(275, 1));
+        notes.Add(new Vector2Int(276, 1));
+        notes.Add(new Vector2Int(277, 1));
+        notes.Add(new Vector2Int(278, 1));
     }
 }

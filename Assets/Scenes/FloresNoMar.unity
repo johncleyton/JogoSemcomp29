@@ -1625,6 +1625,7 @@ MonoBehaviour:
   jogarflores: {fileID: 1038798254}
   anim: {fileID: 1697573564}
   onda: {fileID: 3427257660865007383, guid: 0f08c16292d9a8340b7f8e10d886319f, type: 3}
+  tipodaOnda2: -1
 --- !u!1 &1697573563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,7 +1711,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 20, y: 9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -1725,8 +1726,8 @@ Transform:
   m_GameObject: {fileID: 1697573563}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.28, y: -0.79, z: -9.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -5.0375, y: -1.1309, z: -9.5}
+  m_LocalScale: {x: 0.9242, y: 0.9242, z: 0.9242}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}

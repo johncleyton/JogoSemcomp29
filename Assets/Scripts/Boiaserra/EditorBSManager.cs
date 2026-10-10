@@ -106,17 +106,36 @@ public class EditorBSManager : MonoBehaviour
                 {
                     if (beatnota == notasColocadas[tamanhoNotas - 1][0])
                     {
+                        Debug.Log("Nota nao colocada: notas iguais");
                         return;
                     }
                 }
                 else
                 {
-                    if (beatnota == Mathf.FloorToInt(notasColocadas[tamanhoNotas - 1][0] / 2))
+                    if (notasColocadas[tamanhoNotas - 1][0]%2 != 1 && beatnota == (notasColocadas[tamanhoNotas - 1][0] / 2))
                     {
+                        Debug.Log("Nota nao colocada: notas iguais");
                         return;
                     }
                 }
             }
+
+            for (int i = tamanhoNotas >= 5 ? tamanhoNotas - 5 : 0; i < tamanhoNotas; i++)
+            {
+                if (notasColocadas[i][1] == 2)
+                {
+                    int k = notasColocadas[i][0] % 2 == 1 ? (notasColocadas[i][0] - 1) / 2 : notasColocadas[i][0] / 2;
+                    for (int j = 1; j < 3; j++)
+                    {
+                            if (beatnota - j - Mathf.FloorToInt(j/2) == k - j + 1)
+                            {
+                            Debug.Log("Nota nao colocada: mesmo boi fazendo duas animacoes ao mesmo tempo");
+                            return;
+                            }
+                    }
+                }
+            }
+
         }
         else
         {
@@ -137,6 +156,7 @@ public class EditorBSManager : MonoBehaviour
                 {
                     if (beatnota == notasColocadas[tamanhoNotas - 1][0])
                     {
+                        Debug.Log("Nota nao colocada: notas iguais");
                         return;
                     }
                 }
@@ -144,10 +164,28 @@ public class EditorBSManager : MonoBehaviour
                 {
                     if (beatnota == notasColocadas[tamanhoNotas - 1][0] * 2)
                     {
+                        Debug.Log("Nota nao colocada: notas iguais");
                         return;
                     }
                 }
             }
+            /*
+            for (int i = tamanhoNotas >= 5 ? tamanhoNotas - 5 : 0; i < tamanhoNotas; i++)
+            {
+                if (notasColocadas[i][1] == 1)
+                {
+                    int k = beatnota % 2 == 1 ? (beatnota - 1) / 2 : beatnota / 2;
+                    for (int j = 1; j < 4; j++)
+                    {
+                            if (k - j + 1 == notasColocadas[i][0] - j)
+                            {
+                                Debug.Log("nota nao colocada2");
+                                return;
+                            }
+                    }
+                }
+            }
+            */
         }
         
 

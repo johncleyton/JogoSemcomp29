@@ -9,9 +9,12 @@ public class OndaFlor : MonoBehaviour
     private float velocidade;
     private FlorManager florManager;
 
+    public ParticleSystem particlesys;
+
     // Start is called before the first frame update
     void Start()
     {
+
         florManager = (FlorManager)FindFirstObjectByType(typeof(FlorManager));
         tipodaOnda = Random.Range(0, ondas.Length);
         while (tipodaOnda == florManager.GetComponent<FlorManager>().tipodaOnda2)
@@ -20,6 +23,11 @@ public class OndaFlor : MonoBehaviour
         }
         GetComponent<SpriteRenderer>().sprite = ondas[tipodaOnda];
         velocidade = Random.Range(2.5f, 3.5f);
+
+        ParticleSystem ps = particlesys.GetComponent<ParticleSystem>();
+        var shape = ps.shape;
+        shape.sprite = ondas[tipodaOnda];
+
         Debug.Log(tipodaOnda);
     }
 
@@ -31,8 +39,9 @@ public class OndaFlor : MonoBehaviour
             Destroy(this);
             //transform.position = new Vector3(transform.position.x, 7f,transform.position.z);
         }
-        transform.position = new Vector3(transform.position.x, transform.position.y - 0.0166f*velocidade, transform.position.z);
-
+        //0.01666*velocidade
+        transform.position = new Vector3(transform.position.x, transform.position.y - 0.05f, transform.position.z);
+        particlesys.transform.position = new Vector3(transform.position.x, (transform.position.y - 0.05f)+0.19f, transform.position.z);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

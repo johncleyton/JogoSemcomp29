@@ -767,6 +767,7 @@ MonoBehaviour:
   timerCongelado: 0
   listaDeMinigames:
   - {fileID: 11400000, guid: 63730078ea233374ba725a01d8a28101, type: 2}
+  - {fileID: 11400000, guid: 31f14368be4cb724aacd75615c6703bc, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   canvaIntervalo: {fileID: 1155312265}
