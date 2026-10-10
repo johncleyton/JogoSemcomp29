@@ -9,7 +9,7 @@ public class MapaBS : MonoBehaviour
     public static AudioSource _audio;
     public static List<Vector2Int> notes;
 
-    private float bpm = 210f;
+    private float bpm = 210f;  //bpm real eh 105
     public static float beatinterval;
     public static int lastbeat = 0;
     public static float beatCount = 0;
@@ -30,6 +30,7 @@ public class MapaBS : MonoBehaviour
         beatinterval = 60f / bpm;
         notes = new List<Vector2Int>();
         Mapeamento();
+        
     }
     
     // Update is called once per frame
@@ -37,8 +38,11 @@ public class MapaBS : MonoBehaviour
     {
         if (_audio.time < lastAudioTime)
         {
+            //loop = 71 beatintervals  (sertanejo)
             looping++;
             lastAudioTime = _audio.time;
+            notes.Clear();
+            Mapeamento();
         }
 
         if ((_audio.time + (looping * _audio.clip.length)) - lastbeat * beatinterval > 0.13f && notes[0][0] == 0 && naoDu)
@@ -118,7 +122,6 @@ public class MapaBS : MonoBehaviour
 
     private void Facil()
     {
-        notes.Add(new Vector2Int(12, 2));
         notes.Add(new Vector2Int(7, 1));
         notes.Add(new Vector2Int(9, 1));
         notes.Add(new Vector2Int(11, 1));
@@ -155,15 +158,8 @@ public class MapaBS : MonoBehaviour
         notes.Add(new Vector2Int(67, 1));
         notes.Add(new Vector2Int(69, 1));
         notes.Add(new Vector2Int(70, 1));
-        notes.Add(new Vector2Int(143, 2));
-        notes.Add(new Vector2Int(147, 2));
-        notes.Add(new Vector2Int(149, 2));
-        notes.Add(new Vector2Int(153, 2));
-        notes.Add(new Vector2Int(157, 2));
-        notes.Add(new Vector2Int(81, 1));
-        notes.Add(new Vector2Int(83, 1));
-        notes.Add(new Vector2Int(86, 1));
-        notes.Add(new Vector2Int(89, 1));
+        
+        //garante que nao vai dar problema de index 
         notes.Add(new Vector2Int(273, 1));
         notes.Add(new Vector2Int(274, 1));
         notes.Add(new Vector2Int(275, 1));

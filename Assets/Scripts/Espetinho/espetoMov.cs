@@ -45,7 +45,7 @@ public class espetoMov : MinigameBase
         jogoAcabado = 1;
         VitoriaDerrota();
         anim.SetTrigger("vitoria");
-        VencerComAtraso(2.0f);
+        Vencer();
     }
     void Start()
     {
@@ -70,7 +70,7 @@ public class espetoMov : MinigameBase
         {
             VitoriaDerrota();
             anim.SetTrigger("derrota");
-            PerderComAtraso(2.0f);
+            Perder();
         }
 
         //rb.velocity = Vector3.zero;

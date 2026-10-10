@@ -26,7 +26,7 @@ public class Verificaderrota : MinigameBase
             return;
         jogoAcabou = 1;
         VitoriaDerrota();
-        VencerComAtraso(2.0f);
+        Vencer();
     }
 
     private void VitoriaDerrota()
@@ -85,7 +85,7 @@ public class Verificaderrota : MinigameBase
                         print("FALHOUU");
                         jogoAcabou = -1;
                         VitoriaDerrota();
-                        PerderComAtraso(2.0f);
+                        Perder();
                     }
                 }
             }
@@ -100,7 +100,7 @@ public class Verificaderrota : MinigameBase
                     Debug.Log("Nao clicou");
                     jogoAcabou = -1;
                     VitoriaDerrota();
-                    PerderComAtraso(2.0f);
+                    Perder();
                 }
                 else
                 {

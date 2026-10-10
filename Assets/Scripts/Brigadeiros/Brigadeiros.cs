@@ -26,7 +26,7 @@ public class Brigadeiros : MinigameBase
             i++;
         }
         charac.Derrota();
-        PerderComAtraso(2.0f);
+        Perder();
     }
 
 
@@ -60,7 +60,7 @@ public class Brigadeiros : MinigameBase
         {
             Debug.Log("GANHOU");
             charac.Vitoria();
-            VencerComAtraso(2.0f);
+            Vencer();
         }
         for (int i = 0; i< qtdBrigadeiro; i++)
         {
@@ -81,7 +81,7 @@ public class Brigadeiros : MinigameBase
                     j++;
                 }
                 charac.Derrota();
-                PerderComAtraso(2.0f);
+                Perder();
             }
         }
     }

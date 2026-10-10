@@ -11,7 +11,7 @@ public class JogarFlores : MinigameBase
         if (jogoFinalizado)
             return;
         jogoAcabou = -1;
-        PerderComAtraso(2.0f);
+        Perder();
     }
 
     [SerializeField] GameObject flor;
@@ -46,7 +46,7 @@ public class JogarFlores : MinigameBase
         if (tam == Mathf.RoundToInt((200 / Mathf.Pow(1.38f, GameManagerRework.Instance.tempoDoMinigameAtual))))
         {
             jogoAcabou = 1;
-            VencerComAtraso(2.0f);
+            Vencer();
         }
     }
 

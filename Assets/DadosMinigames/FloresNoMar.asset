@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FloresNoMar
   m_EditorClassIdentifier: 
   nomeDoJogo: Flores jogadas no Mar
-  instrucao: Jogue a quantia indicada de flores no mar
+  instrucao: Clique para jogar a quantia indicada de flores no mar
   nomeDaCena: FloresNoMar
   tipoJogo: 0
