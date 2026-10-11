@@ -14,7 +14,7 @@ public class TapManager : MinigameBase
             return;
         GetComponent<Tapioca>().enabled = false;
         anim.SetTrigger("Vitoria");
-        VencerComAtraso(2.0f);
+        Vencer();
     }
 
     // Start is called before the first frame update
@@ -31,7 +31,7 @@ public class TapManager : MinigameBase
             animTocando = true;
             GetComponent<Tapioca>().enabled = false;
             anim.SetTrigger("Derrota");
-            PerderComAtraso(2.0f);
+            Perder();
         }
     }
 }
