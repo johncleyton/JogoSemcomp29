@@ -24,6 +24,11 @@ public class ClickableObject : MonoBehaviour
 
         if (isCapivara)
         {
+            // 3. Proteção do GameManager
+            if (GameManagerCapivara.Instance != null)
+            {
+                GameManagerCapivara.Instance.CapivaraEncontrada();
+            }
             StartCoroutine(PopOutAnimation());
         }
         else
@@ -76,13 +81,7 @@ public class ClickableObject : MonoBehaviour
         transform.position = targetPos;
         transform.localScale = targetScale;
 
-        yield return new WaitForSeconds(1.5f);
-
-        // 3. Proteção do GameManager
-        if (GameManagerCapivara.Instance != null)
-        {
-            GameManagerCapivara.Instance.CapivaraEncontrada();
-        }
+        yield return new WaitForSeconds(1f);
         
         gameObject.SetActive(false);
     }
