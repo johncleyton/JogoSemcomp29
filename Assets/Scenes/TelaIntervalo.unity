@@ -766,11 +766,6 @@ MonoBehaviour:
   decrementoDeTempo: 0.1
   timerCongelado: 0
   listaDeMinigames:
-  - {fileID: 11400000, guid: 35849d175c19c524b92743b6e4dbaafc, type: 2}
-  - {fileID: 11400000, guid: 31f14368be4cb724aacd75615c6703bc, type: 2}
-  - {fileID: 11400000, guid: dc2d692838e23e84ca1531a8f695eeef, type: 2}
-  - {fileID: 11400000, guid: 60923338cf582761598c3308fa5a341c, type: 2}
-  - {fileID: 11400000, guid: 5285a3c9330871ad29f25d83ff6188bf, type: 2}
   - {fileID: 11400000, guid: 2993e0456b7c29dd5b077ead5cf16606, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
@@ -1047,13 +1042,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00021842122
-    y: 0
-    width: 0.99956316
-    x: 0.00008776784
-    y: 0
-    width: 0.99982446
-    height: 1
+    x: 0
+    y: 0.0002297759
+    width: 1
+    height: 0.99954045
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
