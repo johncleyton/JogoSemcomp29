@@ -40,7 +40,7 @@ public class CrochetController : MinigameBase
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
         nosMax = Mathf.Min(4 + faseAtual/10, 8);
-
+        textoProgresso.text = $"{nosAtuais} / {nosMax}";
         return 10f;
     }
 
@@ -54,7 +54,6 @@ public class CrochetController : MinigameBase
         string[] filePaths = Directory.GetFiles(Application.persistentDataPath, "*.xml");
         for (int i = 0; i < filePaths.Length; i++)
             trainingSet[i] = GestureIO.ReadGestureFromFile(filePaths[i]);
-        textoProgresso.text = $"{nosAtuais} / {nosMax}";
         lacoTutorial.SetActive(true);
     }
 
