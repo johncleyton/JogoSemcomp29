@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: Escolha um lado e chute a bola no gol!
   nomeDaCena: ChuteAoGol
   tipoJogo: 0
+  regiao: 5

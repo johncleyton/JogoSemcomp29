@@ -15,3 +15,5 @@ MonoBehaviour:
   nomeDoJogo: Brigadeiro
   instrucao: Coma todos os brigadeiros!
   nomeDaCena: Brigadeiro
+  tipoJogo: 0
+  regiao: 1

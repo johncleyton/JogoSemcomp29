@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: Clique para jogar a quantia indicada de flores no mar
   nomeDaCena: FloresNoMar
   tipoJogo: 0
+  regiao: 3

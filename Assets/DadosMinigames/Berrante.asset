@@ -15,3 +15,5 @@ MonoBehaviour:
   nomeDoJogo: MinigameBerrante
   instrucao: "Assopre o m\xE1ximo que puder seu berrante!"
   nomeDaCena: MinigameBerrante
+  tipoJogo: 0
+  regiao: 2

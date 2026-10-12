@@ -15,3 +15,5 @@ MonoBehaviour:
   nomeDoJogo: Pesca
   instrucao: Segure na tela e pegue o peixe!
   nomeDaCena: Pesca
+  tipoJogo: 0
+  regiao: 2

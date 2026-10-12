@@ -110,7 +110,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Boiaserra.unity
     guid: a43d6772339b6b2488ed8e860deec5d3
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Brigadeiro.unity
     guid: 4a0ed0641815c964d8047185611291c7
   - enabled: 0
@@ -155,4 +155,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Uvinha.unity
     guid: 7844c9f838a2d6e609f46c0834401b54
+  - enabled: 1
+    path: Assets/Scenes/EspantarMosquitos.unity
+    guid: 0df076e4acba16f49b5ed9c1e4fddf04
   m_configObjects: {}

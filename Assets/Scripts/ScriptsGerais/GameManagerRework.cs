@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
@@ -38,11 +39,9 @@ public class GameManagerRework : MonoBehaviour
     [Header("UI")]
     public TMP_Text txtInstrucao;
     public TMP_Text txtPontuacao;
+    public TMP_Text txtRegião;
     public GameObject canvaIntervalo, eventos;
-
     public int pontuacaoJogador = 0;
-
-
     public int vidasIniciais = 3;
     private int vidasAtuais;
     public Image[] spritesVidas;
@@ -50,7 +49,7 @@ public class GameManagerRework : MonoBehaviour
     [Header("Pause")]
     public GameObject pausemenu;
     public AudioSource _audio;
-
+    public GameObject aviaoMenu;
     async void Awake()
     {
         if (Instance != null && Instance != this)
@@ -103,7 +102,7 @@ public class GameManagerRework : MonoBehaviour
             MinigameData minigameEscolhido = listaDeMinigames[randomSorteio];
 
             Debug.Log($"Minigame Escolhido: {minigameEscolhido.nomeDoJogo}");
-
+            txtRegião.text = $"Região: {minigameEscolhido.NomeDaRegiaoFormatado}";
 
             // Estampa a instrução na tela
             if (txtInstrucao != null)
@@ -115,6 +114,7 @@ public class GameManagerRework : MonoBehaviour
             asyncLoad.allowSceneActivation = false; 
 
             System.GC.Collect();
+            yield return StartCoroutine(MoverAviao(minigameEscolhido.NomeDaRegiaoFormatado));
             yield return new WaitForSeconds(3f);
             
             canvaIntervalo.SetActive(false);
@@ -173,9 +173,10 @@ public class GameManagerRework : MonoBehaviour
             if (vidasAtuais == vidasInicio)
             {
                 int quantosPontos = 0;
-                if (minigameEscolhido.tipoJogo == 0)
+                int tipoJogo = (int)minigameEscolhido.tipoJogo;
+                if (tipoJogo == 0)
                     quantosPontos = Mathf.Max(1000, Mathf.RoundToInt(5000 * (timerInterno / tempoMaximoDaFase)));
-                else if (minigameEscolhido.tipoJogo == 1)
+                else if (tipoJogo == 1)
                     quantosPontos = 2000;
                 
                 pontuacaoJogador += quantosPontos;
@@ -317,5 +318,43 @@ public class GameManagerRework : MonoBehaviour
         ResumeGame();
         vidasAtuais = 0;
         SemVidas();
+    }
+
+    IEnumerator MoverAviao(string regiao)
+    {
+        txtInstrucao.gameObject.SetActive(false);
+        aviaoMenu.SetActive(true);
+        Aviaozinho[] regioes = aviaoMenu.GetComponentsInChildren<Aviaozinho>();
+        RectTransform aviao = aviaoMenu.GetComponentInChildren<Image>().gameObject.GetComponent<RectTransform>();
+        for (int i = 0; i < regioes.Length; i++)
+        {
+            if (regioes[i].regiao.ToLower() == regiao.ToLower())
+            {
+                Vector3 posInicial = aviao.position;
+                Vector3 posFinal = regioes[i].gameObject.transform.position;
+
+                Vector3 direcao = regioes[i].transform.position - aviao.position;
+                float angulo = Mathf.Atan2(direcao.y, direcao.x) * Mathf.Rad2Deg;
+                aviao.rotation = Quaternion.Euler(0, 0, angulo - 90f);
+                yield return new WaitForSeconds(0.5f);
+                float tempoDecorrido = 0;
+
+                while (tempoDecorrido < 1f)
+                {
+                    tempoDecorrido += Time.deltaTime;
+                    float progresso = tempoDecorrido / 1f;
+
+                    float curvaSuave = Mathf.SmoothStep(0f, 1f, progresso);
+
+                    aviao.position = Vector3.Lerp(posInicial, posFinal, curvaSuave);
+
+                    yield return null;
+                }
+                aviao.position = posFinal;
+            }
+        }
+        yield return new WaitForSeconds(0.5f);
+        aviaoMenu.SetActive(false);
+        txtInstrucao.gameObject.SetActive(true);
     }
 }
