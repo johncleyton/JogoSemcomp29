@@ -59,6 +59,9 @@ public class GameManagerRework : MonoBehaviour
     public GameObject pausemenu;
     public AudioSource _audio;
     public GameObject aviaoMenu;
+    private string[] regioes = {"Sul", "Sudeste", "Centro-Oeste", "Nordeste", "Norte", "Brasil"};
+    private Coroutine ciclar;
+    private string regiaoEscolhida;
     async void Awake()
     {
         if (Instance != null && Instance != this)
@@ -116,7 +119,7 @@ public class GameManagerRework : MonoBehaviour
             
             int randomSorteio = UnityEngine.Random.Range(0, listaDeMinigames.Length);
             MinigameData minigameEscolhido = listaDeMinigames[randomSorteio];
-
+            regiaoEscolhida = minigameEscolhido.NomeDaRegiaoFormatado;
             Debug.Log($"Minigame Escolhido: {minigameEscolhido.nomeDoJogo}");
             txtRegião.text = $"Região: {minigameEscolhido.NomeDaRegiaoFormatado}";
 
@@ -227,6 +230,7 @@ public class GameManagerRework : MonoBehaviour
             // Prepara o intervalo atrás da captura, ainda totalmente opaca.
             SceneManager.SetActiveScene(cenaIntervalo);
             canvaIntervalo.SetActive(true);
+            IniciarCiclo();
 
             if (!string.IsNullOrEmpty(cenaMinigameAtiva))
             {
@@ -237,7 +241,6 @@ public class GameManagerRework : MonoBehaviour
             }
 
             aviaoMenu.SetActive(true);
-
             // A captura encolhe e revela o intervalo que está por baixo.
             yield return transicaoIris.Fechar();
 
@@ -409,6 +412,7 @@ public class GameManagerRework : MonoBehaviour
     {
         txtInstrucao.gameObject.SetActive(false);
         aviaoMenu.SetActive(true);
+        IniciarCiclo();
         Aviaozinho[] regioes = aviaoMenu.GetComponentsInChildren<Aviaozinho>();
         RectTransform aviao = aviaoMenu.GetComponentInChildren<Image>().gameObject.GetComponent<RectTransform>();
         for (int i = 0; i < regioes.Length; i++)
@@ -438,8 +442,49 @@ public class GameManagerRework : MonoBehaviour
                 aviao.position = posFinal;
             }
         }
+        PararCiclo();
+        txtRegião.text = $"Região: {regiaoEscolhida}";
         yield return new WaitForSeconds(0.5f);
         aviaoMenu.SetActive(false);
         txtInstrucao.gameObject.SetActive(true);
+    }
+
+   private void IniciarCiclo()
+    {
+        if (txtRegião == null || regioes == null || regioes.Length == 0)
+            return;
+
+        txtRegião.gameObject.SetActive(true);
+
+        if (ciclar != null)
+            return;
+
+        ciclar = StartCoroutine(CiclarTextos());
+    }
+
+    IEnumerator CiclarTextos()
+    {
+        int indice = UnityEngine.Random.Range(0, regioes.Length);
+
+        while (true)
+        {
+            txtRegião.text = $"Região: {regioes[indice]}";
+
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            // Evita repetir o mesmo nome em trocas consecutivas.
+            if (regioes.Length > 1)
+                indice = (indice + UnityEngine.Random.Range(
+                    1, regioes.Length)) % regioes.Length;
+        }
+    }
+
+    public void PararCiclo()
+    {
+        if (ciclar == null)
+            return;
+
+        StopCoroutine(ciclar);
+        ciclar = null;
     }
 }
