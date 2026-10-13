@@ -703,6 +703,7 @@ MonoBehaviour:
   duracaoAbertura: 0.45
   duracaoFechamento: 0.4
   suavidade: 0.003
+  inverterCapturaVerticalmente: 1
 --- !u!1 &409582705
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,12 +940,7 @@ MonoBehaviour:
   transicaoIris: {fileID: 285201727}
   timerCongelado: 0
   listaDeMinigames:
-  - {fileID: 11400000, guid: fa76a64ffa029e646ae517c3906939f1, type: 2}
-  - {fileID: 11400000, guid: f8e9753eaba064947a4c18f13501a30c, type: 2}
-  - {fileID: 11400000, guid: 3345aa62ad95c294dbf920807b88e85a, type: 2}
-  - {fileID: 11400000, guid: 5573ac25237ce9f46b89184cc82c386d, type: 2}
-  - {fileID: 11400000, guid: 989c2e45811fb6a4494abedb73dc151c, type: 2}
-  - {fileID: 11400000, guid: dc2d692838e23e84ca1531a8f695eeef, type: 2}
+  - {fileID: 11400000, guid: bfed651f8d881d12095eb2df4a6c0999, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   "txtRegi\xE3o": {fileID: 1169498918}
@@ -1222,14 +1218,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0003630817
+    x: 0.00021842122
     y: 0
-    width: 0.99927384
+    width: 0.99956316
     height: 1
-    x: 0
-    y: 0.00016191602
-    width: 1
-    height: 0.99967617
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

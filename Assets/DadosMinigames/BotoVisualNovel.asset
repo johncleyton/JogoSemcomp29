@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: "Escolha as falas que a Potira vai gostar. Grosseria \xE9 fim de jogo!"
   nomeDaCena: BotoVisualNovel
   tipoJogo: 0
+  regiao: 4
