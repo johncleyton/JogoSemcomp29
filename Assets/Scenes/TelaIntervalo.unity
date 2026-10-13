@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4464090
 RectTransform:
   m_ObjectHideFlags: 0
@@ -655,6 +655,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564786fb8847f4648afbdf5ffdddf018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &285201725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 285201726}
+  - component: {fileID: 285201727}
+  m_Layer: 0
+  m_Name: TransicaoIris
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &285201726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285201725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.1956501, y: -0.93599916, z: -2.746994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &285201727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285201725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6b749c1931c0c4882873f606eedc9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialIris: {fileID: 2100000, guid: 3054871f1448b634f85fcc907647d87a, type: 2}
+  duracaoAbertura: 0.45
+  duracaoFechamento: 0.4
+  suavidade: 0.003
 --- !u!1 &409582705
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +936,7 @@ MonoBehaviour:
   barraTempo: {fileID: 2075195515}
   tempoMinimo: 3
   decrementoDeTempo: 0.1
+  transicaoIris: {fileID: 285201727}
   timerCongelado: 0
   listaDeMinigames:
   - {fileID: 11400000, guid: fa76a64ffa029e646ae517c3906939f1, type: 2}
@@ -1173,9 +1222,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00007969141
+    x: 0.0003630817
     y: 0
-    width: 0.9998406
+    width: 0.99927384
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -3264,3 +3313,4 @@ SceneRoots:
   - {fileID: 191912573}
   - {fileID: 489814458}
   - {fileID: 194822052}
+  - {fileID: 285201726}

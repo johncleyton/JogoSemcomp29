@@ -25,6 +25,15 @@ public class GameManagerRework : MonoBehaviour
     public float tempoMinimo = 3.0f;
     public float decrementoDeTempo = 0.1f;
     
+    [Header("Transição em íris")]
+    public TransicaoIris transicaoIris;
+    private Scene cenaIntervalo;
+
+    // Use esta propriedade nos scripts que leem mouse, teclado ou toque.
+    public bool PodeJogar => estaJogando && !isGameOver
+        && Time.timeScale > 0f
+        && (transicaoIris == null || !transicaoIris.EmTransicao);
+
     private string cenaMinigameAtiva = ""; 
 
     // Variáveis de controle de fluxo
@@ -58,6 +67,15 @@ public class GameManagerRework : MonoBehaviour
             return;
         }
         Instance = this;
+        cenaIntervalo = gameObject.scene;
+
+        // Start pode executar enquanto a inicialização dos serviços aguarda.
+        // Por isso, inicialize o estado local antes do primeiro await.
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+        if (txtPontuacao != null)
+            txtPontuacao.text = "Pontuação: " + pontuacaoJogador;
+        vidasAtuais = vidasIniciais;
 
         try
         {
@@ -68,17 +86,15 @@ public class GameManagerRework : MonoBehaviour
         {
             Debug.LogError("Erro UGS: " + e.Message);
         }
-
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
-
-        txtPontuacao.text = "Pontuação: " + pontuacaoJogador;
-
-        vidasAtuais = vidasIniciais;
     }
 
     void Start()
     {
+        if (transicaoIris == null || !transicaoIris.EstaPronta)
+        {
+            Debug.LogError("Configure a TransicaoIris e seu material no Inspector.", this);
+            return;
+        }
         StartCoroutine(CicloDeJogo());
     }
 
@@ -116,7 +132,15 @@ public class GameManagerRework : MonoBehaviour
             System.GC.Collect();
             yield return StartCoroutine(MoverAviao(minigameEscolhido.NomeDaRegiaoFormatado));
             yield return new WaitForSeconds(3f);
-            
+
+            // Com allowSceneActivation=false, o carregamento espera em 0.9.
+            while (asyncLoad.progress < 0.9f)
+                yield return null;
+
+            // Captura o intervalo ANTES de escondê-lo ou ativar o minigame.
+            // A imagem permanece por cima enquanto a nova cena é preparada.
+            yield return transicaoIris.PrepararAbertura();
+
             canvaIntervalo.SetActive(false);
             if (canvasHUD != null) 
                 canvasHUD.SetActive(true);
@@ -129,7 +153,8 @@ public class GameManagerRework : MonoBehaviour
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(cenaMinigameAtiva));
             AjustarCanvasDaFase(cenaMinigameAtiva);
 
-            MinigameBase minigameAtual = FindObjectOfType<MinigameBase>();
+            MinigameBase minigameAtual = EncontrarMinigameNaCena(
+                SceneManager.GetSceneByName(cenaMinigameAtiva));
             
             if (minigameAtual != null)
                 timerInterno = minigameAtual.ConfigurarDificuldade(faseAtual, tempoDoMinigameAtual);
@@ -140,6 +165,11 @@ public class GameManagerRework : MonoBehaviour
             Debug.Log(timerInterno);
 
             timerCongelado = false;
+            if (barraTempo != null)
+                barraTempo.fillAmount = 1f;
+
+            // Só libera o jogo e o cronômetro depois de abrir completamente.
+            yield return transicaoIris.Abrir();
             estaJogando = true;
             bool tempoEsgotadoAcionado = false;
 
@@ -165,12 +195,7 @@ public class GameManagerRework : MonoBehaviour
                 yield return null;
             }
 
-            if (isGameOver)
-            {
-                yield break; 
-            }
-
-            if (vidasAtuais == vidasInicio)
+            if (!isGameOver && vidasAtuais == vidasInicio)
             {
                 int quantosPontos = 0;
                 int tipoJogo = (int)minigameEscolhido.tipoJogo;
@@ -190,25 +215,73 @@ public class GameManagerRework : MonoBehaviour
             estaJogando = false;
             tempoDoMinigameAtual = Mathf.Max(tempoDoMinigameAtual - decrementoDeTempo, tempoMinimo);
 
+            if (txtInstrucao != null)
+                txtInstrucao.gameObject.SetActive(false);
+
+            // Captura o minigame enquanto a cena e o HUD ainda estão visíveis.
+            yield return transicaoIris.PrepararFechamento();
+
+            if (canvasHUD != null)
+                canvasHUD.SetActive(false);
+
+            // Prepara o intervalo atrás da captura, ainda totalmente opaca.
+            SceneManager.SetActiveScene(cenaIntervalo);
+            canvaIntervalo.SetActive(true);
+
             if (!string.IsNullOrEmpty(cenaMinigameAtiva))
-                SceneManager.UnloadSceneAsync(cenaMinigameAtiva);
+            {
+                AsyncOperation unload = SceneManager.UnloadSceneAsync(cenaMinigameAtiva);
+                if (unload != null)
+                    yield return unload;
+                cenaMinigameAtiva = "";
+            }
+
+            aviaoMenu.SetActive(true);
+
+            // A captura encolhe e revela o intervalo que está por baixo.
+            yield return transicaoIris.Fechar();
+
+            if (isGameOver)
+            {
+                SemVidas();
+                yield break;
+            }
         }
+    }
+
+    private MinigameBase EncontrarMinigameNaCena(Scene cena)
+    {
+        foreach (GameObject raiz in cena.GetRootGameObjects())
+        {
+            MinigameBase minigame = raiz.GetComponentInChildren<MinigameBase>();
+            if (minigame != null)
+                return minigame;
+        }
+        return null;
     }
 
     public void VenceuMinigame()
     {
-        estaJogando = false; 
+        if (!estaJogando || isGameOver)
+            return;
+        estaJogando = false;
     }
 
-    public async void GameOver()
+    public void GameOver()
     {
+        // Evita descontar duas vidas por callbacks repetidos da mesma rodada.
+        if (!estaJogando || isGameOver)
+            return;
+
         vidasAtuais--;
-        spritesVidas[vidasAtuais].enabled = false;
+        if (vidasAtuais >= 0 && vidasAtuais < spritesVidas.Length
+            && spritesVidas[vidasAtuais] != null)
+            spritesVidas[vidasAtuais].enabled = false;
 
         estaJogando = false;
 
         if (vidasAtuais <= 0)
-            SemVidas();
+            isGameOver = true; // CicloDeJogo fecha a íris antes de chamar SemVidas.
         else
             Debug.Log("Perdeu uma vida! Restam: " + vidasAtuais);
     }
@@ -216,8 +289,10 @@ public class GameManagerRework : MonoBehaviour
     private async void SemVidas()
     {
         isGameOver = true;
-        StopAllCoroutines(); 
+        // Chamado somente depois que a animação de fechamento terminou.
+        StopAllCoroutines();
         estaJogando = false;
+        Time.timeScale = 1f;
 
         Debug.Log($"Game Over Definitivo! Enviando pontuação: {pontuacaoJogador} para o Leaderboard...");
         try
@@ -261,6 +336,8 @@ public class GameManagerRework : MonoBehaviour
 
     public void PauseGame()
     {
+        if (!PodeJogar)
+            return;
         Time.timeScale = 0f;
         _audio.Pause();
         Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);
@@ -288,6 +365,10 @@ public class GameManagerRework : MonoBehaviour
     }
     public void ResumeGame()
     {
+        if (transicaoIris != null && transicaoIris.EmTransicao)
+            return;
+        if (string.IsNullOrEmpty(cenaMinigameAtiva))
+            return;
         Time.timeScale = 1f;
         _audio.Play();
         Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);
@@ -315,9 +396,13 @@ public class GameManagerRework : MonoBehaviour
 
     public void VoltarMenu()
     {
+        if (!estaJogando || isGameOver || transicaoIris.EmTransicao)
+            return;
         ResumeGame();
         vidasAtuais = 0;
-        SemVidas();
+        estaJogando = false;
+        isGameOver = true;
+        // CicloDeJogo fará o fechamento e então chamará SemVidas.
     }
 
     IEnumerator MoverAviao(string regiao)
