@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4464090
 RectTransform:
   m_ObjectHideFlags: 0
@@ -940,15 +940,7 @@ MonoBehaviour:
   transicaoIris: {fileID: 285201727}
   timerCongelado: 0
   listaDeMinigames:
-  - {fileID: 11400000, guid: bfed651f8d881d12095eb2df4a6c0999, type: 2}
-  - {fileID: 11400000, guid: 989c2e45811fb6a4494abedb73dc151c, type: 2}
-  - {fileID: 11400000, guid: 2993e0456b7c29dd5b077ead5cf16606, type: 2}
-  - {fileID: 11400000, guid: 3345aa62ad95c294dbf920807b88e85a, type: 2}
-  - {fileID: 11400000, guid: 63730078ea233374ba725a01d8a28101, type: 2}
-  - {fileID: 11400000, guid: 7cc2058d4dd1d3b49916a386cc6b01f9, type: 2}
-  - {fileID: 11400000, guid: a411fbcd0b530db4fb299b115c2045ff, type: 2}
-  - {fileID: 11400000, guid: f6d9c93c57b4e9048863748c94f1c644, type: 2}
-  - {fileID: 11400000, guid: 5573ac25237ce9f46b89184cc82c386d, type: 2}
+  - {fileID: 11400000, guid: a17b5d4e300c779468df3ae2c0fb5ba4, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   "txtRegi\xE3o": {fileID: 1169498918}
