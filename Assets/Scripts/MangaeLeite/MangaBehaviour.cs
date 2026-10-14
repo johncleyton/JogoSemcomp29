@@ -25,6 +25,7 @@ public class MangaBehaviour : MonoBehaviour
         {
             if(manager != null)
             {
+                manager.MudarCopoDerrota();
                 manager.Perder();
             }
             Destroy(gameObject);

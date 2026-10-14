@@ -12,6 +12,10 @@ public class MangaManager : MinigameBase
     public GameObject mangaPrefab;
     public Transform areaTop;
 
+    [Header("Configurações do Copo")]
+    public SpriteRenderer copoRenderer;
+    public Sprite spriteDerrota;
+
     private float timer = 0f;
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
@@ -37,6 +41,13 @@ public class MangaManager : MinigameBase
     // Update is called once per frame
     void Update()
     {
+        if (jogoFinalizado) return;
+        {
+            
+        }
+        {
+            
+        }
         timer_total += Time.deltaTime;
 
         timer += Time.deltaTime;
@@ -70,6 +81,20 @@ public class MangaManager : MinigameBase
             Vector3 spawnPoint = new Vector3(randomX, areaTop.position.y, 0f);
 
             Instantiate(mangaPrefab, spawnPoint, Quaternion.identity);
+        }
+    }
+
+    public void MudarCopoDerrota()
+    {
+        if(copoRenderer != null && spriteDerrota != null)
+        {
+            copoRenderer.sprite = spriteDerrota;
+        }
+
+        MangaBehaviour[] mangasVivas = FindObjectsOfType<MangaBehaviour>();
+        foreach(MangaBehaviour manga in mangasVivas)
+        {
+            Destroy(manga.gameObject);
         }
     }
 }
