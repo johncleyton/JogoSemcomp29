@@ -5,8 +5,7 @@ public class PipaMovement : MinigameBase
 
     public float velocity = 300f;
     public Rigidbody2D rb;
-    public SpriteRenderer sprite;
-    public Color corDeColisao = Color.yellow;
+    public Animator animator;
     private bool clicou = false;
 
     // Start is called before the first frame update
@@ -38,7 +37,8 @@ public class PipaMovement : MinigameBase
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        sprite.color = corDeColisao;
+        animator.SetTrigger("Colidiu");
+        Time.timeScale = 0;
         Perder();
     }
 
