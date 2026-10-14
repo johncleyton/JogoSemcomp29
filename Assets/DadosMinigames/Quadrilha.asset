@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quadrilha
   m_EditorClassIdentifier: 
   nomeDoJogo: Quadrilha
-  instrucao: Cumprimente seu par!
+  instrucao: Vire no momento certo!
   nomeDaCena: MinigameQuadrilha
   tipoJogo: 1
   regiao: 3
