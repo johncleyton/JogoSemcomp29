@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManagerCapivara : MinigameBase
@@ -6,14 +8,17 @@ public class GameManagerCapivara : MinigameBase
 
     [Header("Configuração")]
     [Tooltip("Deixe em 0 para contar automaticamente as capivaras presentes na cena no início da fase.")]
-    public int totalCapivaras;
+    public int totalCapivaras = 5;
     private int capivarasEncontradas = 0;
 
     [Header("Telas / Painéis")]
     public GameObject painelVitoria;
     public GameObject painelDerrota;
     public GameObject telaVermelha;
-
+    public GameObject[] spawnpoints;
+    public Sprite[] animais;
+    List<int> numerosAleatorios = new List<int>();
+    public TMP_Text progresso;
     // Mantemos essa propriedade pública para que o CameraPanMobile.cs continue funcionando
     public bool JogoEncerrado => jogoFinalizado;
 
@@ -34,15 +39,23 @@ public class GameManagerCapivara : MinigameBase
 
     void Start()
     {
-        if (totalCapivaras <= 0)
+        progresso.text = $"{capivarasEncontradas} / {totalCapivaras}";
+        for (int i = 0; i < totalCapivaras; i++)
         {
-            ClickableObject[] objetos = FindObjectsOfType<ClickableObject>();
-            int contagem = 0;
-            foreach (var obj in objetos)
-            {
-                if (obj.isCapivara) contagem++;
-            }
-            totalCapivaras = contagem;
+            int random = 0;
+            while (numerosAleatorios.Contains(random))
+                random = Random.Range(0, spawnpoints.Length);
+            numerosAleatorios.Add(random);
+            spawnpoints[random].GetComponent<SpriteRenderer>().sprite = animais[0];
+            spawnpoints[random].GetComponent<ClickableObject>().isCapivara = true;
+        }
+
+        for (int i = 0; i < spawnpoints.Length; i++)
+        {
+            if (numerosAleatorios.Contains(i))
+                continue;
+            spawnpoints[i].GetComponent<SpriteRenderer>().sprite = Random.value > 0.5f ? animais[1] : animais[2];
+            spawnpoints[i].GetComponent<ClickableObject>().isCapivara = false;
         }
     }
 
@@ -51,7 +64,7 @@ public class GameManagerCapivara : MinigameBase
         if (jogoFinalizado) return; 
 
         capivarasEncontradas++;
-        Debug.Log("Capivara encontrada! Total: " + capivarasEncontradas + "/" + totalCapivaras);
+        progresso.text = $"{capivarasEncontradas} / {totalCapivaras}";
 
         if (capivarasEncontradas >= totalCapivaras)
         {

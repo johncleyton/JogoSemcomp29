@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: "Desvie das mangas para n\xE3o morrer"
   nomeDaCena: MangaeLeite
   tipoJogo: 1
+  regiao: 5

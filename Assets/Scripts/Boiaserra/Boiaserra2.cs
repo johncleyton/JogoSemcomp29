@@ -29,59 +29,34 @@ public class Boiaserra2 : MonoBehaviour
         if (MapaBS.anim == true)
         {
             //O que faz o boi empinar (animacao em que vc tem que clicar)
-            if (MapaBS.notes[0][0] <= 3)
+            for (int j = 0; j < 5; j++)
             {
-                if (MapaBS.notes[0][1] == 1)
+                if (MapaBS.notes[j][0] <= 3)
                 {
-                    if (MapaBS.beatCount % 2 == 1)
+                    if (MapaBS.notes[j][1] == 1)
                     {
-                        if (animator[MapaBS.notes[0][0]].GetBool("Empinou") == false)
+                        if (MapaBS.beatCount % 2 == 1)
                         {
-                            animator[MapaBS.notes[0][0]].SetBool("Empinou", true);
+                            if (animator[MapaBS.notes[j][0]].GetBool("Empinou") == false)
+                            {
+                                animator[MapaBS.notes[j][0]].SetBool("Empinou", true);
+                            }
+                            else
+                            {
+                                animator[MapaBS.notes[j][0]].SetBool("Empinou", false);
+                            }
                         }
-                        else
-                        {
-                            animator[MapaBS.notes[0][0]].SetBool("Empinou", false);
-                        }
-                    }
-                }
-                else
-                {
-                    if (animator[MapaBS.notes[0][0]].GetBool("Empinou") == false)
-                    {
-                        animator[MapaBS.notes[0][0]].SetBool("Empinou", true);
                     }
                     else
                     {
-                        animator[MapaBS.notes[0][0]].SetBool("Empinou", false);
-                    }
-                }
-            }
-            if (MapaBS.notes[1][0] <= 3)
-            {
-                if (MapaBS.notes[1][1] == 1)
-                {
-                    if (MapaBS.beatCount % 2 == 1)
-                    {
-                        if (animator[MapaBS.notes[1][0]].GetBool("Empinou") == false)
+                        if (animator[MapaBS.notes[j][0]].GetBool("Empinou") == false)
                         {
-                            animator[MapaBS.notes[1][0]].SetBool("Empinou", true);
+                            animator[MapaBS.notes[j][0]].SetBool("Empinou", true);
                         }
                         else
                         {
-                            animator[MapaBS.notes[1][0]].SetBool("Empinou", false);
+                            animator[MapaBS.notes[j][0]].SetBool("Empinou", false);
                         }
-                    }
-                }
-                else
-                {
-                    if (animator[MapaBS.notes[1][0]].GetBool("Empinou") == false)
-                    {
-                        animator[MapaBS.notes[1][0]].SetBool("Empinou", true);
-                    }
-                    else
-                    {
-                        animator[MapaBS.notes[1][0]].SetBool("Empinou", false);
                     }
                 }
             }

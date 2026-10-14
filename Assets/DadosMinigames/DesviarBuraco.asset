@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: Desvie dos buracos!
   nomeDaCena: DesviarBuraco
   tipoJogo: 1
+  regiao: 5

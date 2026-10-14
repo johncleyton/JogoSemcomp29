@@ -10,6 +10,9 @@ public class PiacavaGridBuilder : MonoBehaviour
     public int colunas = 6;
     public int linhas = 8;
     public float tamanhoCelula = 0.5f;
+    // Contorno (em coordenadas de mundo) da área interna da bolsa onde a trama é tecida.
+    // Só existem fios entre pontos que estão dentro dele. Vazio = grade retangular completa.
+    public Vector2[] areaPermitida;
 
     [Header("Sprites dos fios")]
     public GameObject prefabFioHorizontal;
@@ -35,7 +38,7 @@ public class PiacavaGridBuilder : MonoBehaviour
             {
                 var pontoA = new Vector2Int(coluna, linha);
                 var pontoB = new Vector2Int(coluna + 1, linha);
-                slots.Add(CriarSlot(pontoA, pontoB, OrientacaoFio.Horizontal, prefabFioHorizontal));
+                AdicionarSlot(slots, CriarSlot(pontoA, pontoB, OrientacaoFio.Horizontal, prefabFioHorizontal));
             }
         }
 
@@ -45,15 +48,24 @@ public class PiacavaGridBuilder : MonoBehaviour
             {
                 var pontoA = new Vector2Int(coluna, linha);
                 var pontoB = new Vector2Int(coluna, linha + 1);
-                slots.Add(CriarSlot(pontoA, pontoB, OrientacaoFio.Vertical, prefabFioVertical));
+                AdicionarSlot(slots, CriarSlot(pontoA, pontoB, OrientacaoFio.Vertical, prefabFioVertical));
             }
         }
 
         return slots;
     }
 
+    private static void AdicionarSlot(List<ThreadSlot> slots, ThreadSlot slot)
+    {
+        if (slot != null)
+            slots.Add(slot);
+    }
+
     private ThreadSlot CriarSlot(Vector2Int pontoA, Vector2Int pontoB, OrientacaoFio orientacao, GameObject prefab)
     {
+        if (!PontoPermitido(pontoA) || !PontoPermitido(pontoB))
+            return null;
+
         Vector3 posicaoMedia = (ObterPosicaoDoPonto(pontoA) + ObterPosicaoDoPonto(pontoB)) * 0.5f;
 
         GameObject fio;
@@ -76,11 +88,12 @@ public class PiacavaGridBuilder : MonoBehaviour
             float largura = renderer.sprite.bounds.size.x;
             float altura = renderer.sprite.bounds.size.y;
 
+            // O comprimento inclui a espessura do fio, para os fios vizinhos se encontrarem nos nós sem deixar cantos vazios
             Vector3 escala = fio.transform.localScale;
             if (orientacao == OrientacaoFio.Horizontal && largura > 0f)
-                escala.x = tamanhoCelula / largura;
+                escala.x = (tamanhoCelula + altura * escala.y) / largura;
             else if (orientacao == OrientacaoFio.Vertical && altura > 0f)
-                escala.y = tamanhoCelula / altura;
+                escala.y = (tamanhoCelula + largura * escala.x) / altura;
             fio.transform.localScale = escala;
         }
 
@@ -93,6 +106,33 @@ public class PiacavaGridBuilder : MonoBehaviour
             faltando = false,
             preenchido = true
         };
+    }
+
+    public bool PontoPermitido(Vector2Int ponto)
+    {
+        if (areaPermitida == null || areaPermitida.Length < 3)
+            return true;
+
+        Vector3 p = ObterPosicaoDoPonto(ponto);
+        bool dentro = false;
+        for (int i = 0, j = areaPermitida.Length - 1; i < areaPermitida.Length; j = i++)
+        {
+            Vector2 a = areaPermitida[i];
+            Vector2 b = areaPermitida[j];
+            if ((a.y > p.y) != (b.y > p.y) && p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x)
+                dentro = !dentro;
+        }
+        return dentro;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (areaPermitida == null || areaPermitida.Length < 2)
+            return;
+
+        Gizmos.color = Color.yellow;
+        for (int i = 0; i < areaPermitida.Length; i++)
+            Gizmos.DrawLine(areaPermitida[i], areaPermitida[(i + 1) % areaPermitida.Length]);
     }
 
     public Vector3 ObterPosicaoDoPonto(Vector2Int ponto)

@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: "Ligue os pontos com os fios de pia\xE7ava e termine seu artesanato"
   nomeDaCena: ArtesanatoPiacava
   tipoJogo: 0
+  regiao: 4

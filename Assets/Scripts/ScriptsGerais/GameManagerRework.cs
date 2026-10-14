@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
-using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,6 +25,15 @@ public class GameManagerRework : MonoBehaviour
     public float tempoMinimo = 3.0f;
     public float decrementoDeTempo = 0.1f;
     
+    [Header("Transição em íris")]
+    public TransicaoIris transicaoIris;
+    private Scene cenaIntervalo;
+
+    // Use esta propriedade nos scripts que leem mouse, teclado ou toque.
+    public bool PodeJogar => estaJogando && !isGameOver
+        && Time.timeScale > 0f
+        && (transicaoIris == null || !transicaoIris.EmTransicao);
+
     private string cenaMinigameAtiva = ""; 
 
     // Variáveis de controle de fluxo
@@ -39,11 +48,9 @@ public class GameManagerRework : MonoBehaviour
     [Header("UI")]
     public TMP_Text txtInstrucao;
     public TMP_Text txtPontuacao;
+    public TMP_Text txtRegião;
     public GameObject canvaIntervalo, eventos;
-
     public int pontuacaoJogador = 0;
-
-
     public int vidasIniciais = 3;
     private int vidasAtuais;
     public Image[] spritesVidas;
@@ -51,7 +58,10 @@ public class GameManagerRework : MonoBehaviour
     [Header("Pause")]
     public GameObject pausemenu;
     public AudioSource _audio;
-
+    public GameObject aviaoMenu;
+    private string[] regioes = {"Sul", "Sudeste", "Centro-Oeste", "Nordeste", "Norte", "Brasil"};
+    private Coroutine ciclar;
+    private string regiaoEscolhida;
     async void Awake()
     {
         if (Instance != null && Instance != this)
@@ -60,6 +70,15 @@ public class GameManagerRework : MonoBehaviour
             return;
         }
         Instance = this;
+        cenaIntervalo = gameObject.scene;
+
+        // Start pode executar enquanto a inicialização dos serviços aguarda.
+        // Por isso, inicialize o estado local antes do primeiro await.
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+        if (txtPontuacao != null)
+            txtPontuacao.text = "Pontuação: " + pontuacaoJogador;
+        vidasAtuais = vidasIniciais;
 
         try
         {
@@ -70,17 +89,15 @@ public class GameManagerRework : MonoBehaviour
         {
             Debug.LogError("Erro UGS: " + e.Message);
         }
-
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
-
-        txtPontuacao.text = "Pontuação: " + pontuacaoJogador;
-
-        vidasAtuais = vidasIniciais;
     }
 
     void Start()
     {
+        if (transicaoIris == null || !transicaoIris.EstaPronta)
+        {
+            Debug.LogError("Configure a TransicaoIris e seu material no Inspector.", this);
+            return;
+        }
         StartCoroutine(CicloDeJogo());
     }
 
@@ -102,9 +119,9 @@ public class GameManagerRework : MonoBehaviour
             
             int randomSorteio = UnityEngine.Random.Range(0, listaDeMinigames.Length);
             MinigameData minigameEscolhido = listaDeMinigames[randomSorteio];
-
+            regiaoEscolhida = minigameEscolhido.NomeDaRegiaoFormatado;
             Debug.Log($"Minigame Escolhido: {minigameEscolhido.nomeDoJogo}");
-
+            txtRegião.text = $"Região: {minigameEscolhido.NomeDaRegiaoFormatado}";
 
             // Estampa a instrução na tela
             if (txtInstrucao != null)
@@ -116,8 +133,17 @@ public class GameManagerRework : MonoBehaviour
             asyncLoad.allowSceneActivation = false; 
 
             System.GC.Collect();
+            yield return StartCoroutine(MoverAviao(minigameEscolhido.NomeDaRegiaoFormatado));
             yield return new WaitForSeconds(3f);
-            
+
+            // Com allowSceneActivation=false, o carregamento espera em 0.9.
+            while (asyncLoad.progress < 0.9f)
+                yield return null;
+
+            // Captura o intervalo ANTES de escondê-lo ou ativar o minigame.
+            // A imagem permanece por cima enquanto a nova cena é preparada.
+            yield return transicaoIris.PrepararAbertura();
+
             canvaIntervalo.SetActive(false);
             if (canvasHUD != null) 
                 canvasHUD.SetActive(true);
@@ -130,7 +156,8 @@ public class GameManagerRework : MonoBehaviour
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(cenaMinigameAtiva));
             AjustarCanvasDaFase(cenaMinigameAtiva);
 
-            MinigameBase minigameAtual = FindObjectOfType<MinigameBase>();
+            MinigameBase minigameAtual = EncontrarMinigameNaCena(
+                SceneManager.GetSceneByName(cenaMinigameAtiva));
             
             if (minigameAtual != null)
                 timerInterno = minigameAtual.ConfigurarDificuldade(faseAtual, tempoDoMinigameAtual);
@@ -141,6 +168,11 @@ public class GameManagerRework : MonoBehaviour
             Debug.Log(timerInterno);
 
             timerCongelado = false;
+            if (barraTempo != null)
+                barraTempo.fillAmount = 1f;
+
+            // Só libera o jogo e o cronômetro depois de abrir completamente.
+            yield return transicaoIris.Abrir();
             estaJogando = true;
             bool tempoEsgotadoAcionado = false;
 
@@ -166,17 +198,13 @@ public class GameManagerRework : MonoBehaviour
                 yield return null;
             }
 
-            if (isGameOver)
-            {
-                yield break; 
-            }
-
-            if (vidasAtuais == vidasInicio)
+            if (!isGameOver && vidasAtuais == vidasInicio)
             {
                 int quantosPontos = 0;
-                if (minigameEscolhido.tipoJogo == 0)
+                int tipoJogo = (int)minigameEscolhido.tipoJogo;
+                if (tipoJogo == 0)
                     quantosPontos = Mathf.Max(1000, Mathf.RoundToInt(5000 * (timerInterno / tempoMaximoDaFase)));
-                else if (minigameEscolhido.tipoJogo == 1)
+                else if (tipoJogo == 1)
                     quantosPontos = 2000;
                 
                 pontuacaoJogador += quantosPontos;
@@ -190,25 +218,73 @@ public class GameManagerRework : MonoBehaviour
             estaJogando = false;
             tempoDoMinigameAtual = Mathf.Max(tempoDoMinigameAtual - decrementoDeTempo, tempoMinimo);
 
+            if (txtInstrucao != null)
+                txtInstrucao.gameObject.SetActive(false);
+
+            // Captura o minigame enquanto a cena e o HUD ainda estão visíveis.
+            yield return transicaoIris.PrepararFechamento();
+
+            if (canvasHUD != null)
+                canvasHUD.SetActive(false);
+
+            // Prepara o intervalo atrás da captura, ainda totalmente opaca.
+            SceneManager.SetActiveScene(cenaIntervalo);
+            canvaIntervalo.SetActive(true);
+            IniciarCiclo();
+
             if (!string.IsNullOrEmpty(cenaMinigameAtiva))
-                SceneManager.UnloadSceneAsync(cenaMinigameAtiva);
+            {
+                AsyncOperation unload = SceneManager.UnloadSceneAsync(cenaMinigameAtiva);
+                if (unload != null)
+                    yield return unload;
+                cenaMinigameAtiva = "";
+            }
+
+            aviaoMenu.SetActive(true);
+            // A captura encolhe e revela o intervalo que está por baixo.
+            yield return transicaoIris.Fechar();
+
+            if (isGameOver)
+            {
+                SemVidas();
+                yield break;
+            }
         }
+    }
+
+    private MinigameBase EncontrarMinigameNaCena(Scene cena)
+    {
+        foreach (GameObject raiz in cena.GetRootGameObjects())
+        {
+            MinigameBase minigame = raiz.GetComponentInChildren<MinigameBase>();
+            if (minigame != null)
+                return minigame;
+        }
+        return null;
     }
 
     public void VenceuMinigame()
     {
-        estaJogando = false; 
+        if (!estaJogando || isGameOver)
+            return;
+        estaJogando = false;
     }
 
-    public async void GameOver()
+    public void GameOver()
     {
+        // Evita descontar duas vidas por callbacks repetidos da mesma rodada.
+        if (!estaJogando || isGameOver)
+            return;
+
         vidasAtuais--;
-        spritesVidas[vidasAtuais].enabled = false;
+        if (vidasAtuais >= 0 && vidasAtuais < spritesVidas.Length
+            && spritesVidas[vidasAtuais] != null)
+            spritesVidas[vidasAtuais].enabled = false;
 
         estaJogando = false;
 
         if (vidasAtuais <= 0)
-            SemVidas();
+            isGameOver = true; // CicloDeJogo fecha a íris antes de chamar SemVidas.
         else
             Debug.Log("Perdeu uma vida! Restam: " + vidasAtuais);
     }
@@ -216,8 +292,10 @@ public class GameManagerRework : MonoBehaviour
     private async void SemVidas()
     {
         isGameOver = true;
-        StopAllCoroutines(); 
+        // Chamado somente depois que a animação de fechamento terminou.
+        StopAllCoroutines();
         estaJogando = false;
+        Time.timeScale = 1f;
 
         Debug.Log($"Game Over Definitivo! Enviando pontuação: {pontuacaoJogador} para o Leaderboard...");
         try
@@ -261,6 +339,8 @@ public class GameManagerRework : MonoBehaviour
 
     public void PauseGame()
     {
+        if (!PodeJogar)
+            return;
         Time.timeScale = 0f;
         _audio.Pause();
         Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);
@@ -275,7 +355,10 @@ public class GameManagerRework : MonoBehaviour
                 {
                     if (scripts.GetType() != typeof(TMPro.TextMeshProUGUI) && scripts.GetType() != typeof(CanvasScaler))
                     {
-                        scripts.enabled = false;
+                        if (scripts.GetType() != typeof(Image))
+                        {
+                            scripts.enabled = false;
+                        }
                     }
                 }
             }
@@ -285,6 +368,10 @@ public class GameManagerRework : MonoBehaviour
     }
     public void ResumeGame()
     {
+        if (transicaoIris != null && transicaoIris.EmTransicao)
+            return;
+        if (string.IsNullOrEmpty(cenaMinigameAtiva))
+            return;
         Time.timeScale = 1f;
         _audio.Play();
         Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);
@@ -298,7 +385,10 @@ public class GameManagerRework : MonoBehaviour
                 {
                     if (scripts.GetType() != typeof(TMPro.TextMeshProUGUI) && scripts.GetType() != typeof(CanvasScaler))
                     {
-                        scripts.enabled = true;
+                        if (scripts.GetType() != typeof(Image))
+                        {
+                            scripts.enabled = true;
+                        }
                     }
                 }
             }
@@ -309,8 +399,92 @@ public class GameManagerRework : MonoBehaviour
 
     public void VoltarMenu()
     {
+        if (!estaJogando || isGameOver || transicaoIris.EmTransicao)
+            return;
         ResumeGame();
         vidasAtuais = 0;
-        SemVidas();
+        estaJogando = false;
+        isGameOver = true;
+        // CicloDeJogo fará o fechamento e então chamará SemVidas.
+    }
+
+    IEnumerator MoverAviao(string regiao)
+    {
+        txtInstrucao.gameObject.SetActive(false);
+        aviaoMenu.SetActive(true);
+        IniciarCiclo();
+        Aviaozinho[] regioes = aviaoMenu.GetComponentsInChildren<Aviaozinho>();
+        RectTransform aviao = aviaoMenu.GetComponentInChildren<Image>().gameObject.GetComponent<RectTransform>();
+        for (int i = 0; i < regioes.Length; i++)
+        {
+            if (regioes[i].regiao.ToLower() == regiao.ToLower())
+            {
+                Vector3 posInicial = aviao.position;
+                Vector3 posFinal = regioes[i].gameObject.transform.position;
+
+                Vector3 direcao = regioes[i].transform.position - aviao.position;
+                float angulo = Mathf.Atan2(direcao.y, direcao.x) * Mathf.Rad2Deg;
+                aviao.rotation = Quaternion.Euler(0, 0, angulo - 90f);
+                yield return new WaitForSeconds(0.5f);
+                float tempoDecorrido = 0;
+
+                while (tempoDecorrido < 1f)
+                {
+                    tempoDecorrido += Time.deltaTime;
+                    float progresso = tempoDecorrido / 1f;
+
+                    float curvaSuave = Mathf.SmoothStep(0f, 1f, progresso);
+
+                    aviao.position = Vector3.Lerp(posInicial, posFinal, curvaSuave);
+
+                    yield return null;
+                }
+                aviao.position = posFinal;
+            }
+        }
+        PararCiclo();
+        txtRegião.text = $"Região: {regiaoEscolhida}";
+        yield return new WaitForSeconds(0.5f);
+        aviaoMenu.SetActive(false);
+        txtInstrucao.gameObject.SetActive(true);
+    }
+
+   private void IniciarCiclo()
+    {
+        if (txtRegião == null || regioes == null || regioes.Length == 0)
+            return;
+
+        txtRegião.gameObject.SetActive(true);
+
+        if (ciclar != null)
+            return;
+
+        ciclar = StartCoroutine(CiclarTextos());
+    }
+
+    IEnumerator CiclarTextos()
+    {
+        int indice = UnityEngine.Random.Range(0, regioes.Length);
+
+        while (true)
+        {
+            txtRegião.text = $"Região: {regioes[indice]}";
+
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            // Evita repetir o mesmo nome em trocas consecutivas.
+            if (regioes.Length > 1)
+                indice = (indice + UnityEngine.Random.Range(
+                    1, regioes.Length)) % regioes.Length;
+        }
+    }
+
+    public void PararCiclo()
+    {
+        if (ciclar == null)
+            return;
+
+        StopCoroutine(ciclar);
+        ciclar = null;
     }
 }

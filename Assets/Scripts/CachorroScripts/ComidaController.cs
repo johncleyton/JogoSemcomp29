@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class ComidaController : SpawnableObjects
+// A coxinha. A posição inicial é definida pela mesa (MesaController), onde ela começa apoiada.
+public class ComidaController : MonoBehaviour
 {    
     private Camera _cam;
     private Rigidbody2D _rb;
@@ -18,8 +19,6 @@ public class ComidaController : SpawnableObjects
     {
         _cam = Camera.main;
         _rb = GetComponent<Rigidbody2D>();
-
-        SetSpawnPosition();
     }
 
     void Update()

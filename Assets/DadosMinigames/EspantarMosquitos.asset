@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: Mantenha os mosquitos longe!
   nomeDaCena: EspantarMosquitos
   tipoJogo: 1
+  regiao: 4

@@ -29,8 +29,8 @@ public abstract class MinigameBase : MonoBehaviour
             return; // Impede que ganhe duas vezes
         jogoFinalizado = true;
         
-        Debug.Log("Minigame: Vitória!");
-        GameManagerRework.Instance.VenceuMinigame(); 
+        GameManagerRework.Instance.timerCongelado = true; 
+        StartCoroutine(RotinaFimDeJogo(true, 2f));
     }
 
     // Método padronizado para Derrota
@@ -40,8 +40,8 @@ public abstract class MinigameBase : MonoBehaviour
             return; // Impede que perca duas vezes
         jogoFinalizado = true;
 
-        Debug.Log("Minigame: Derrota!");
-        GameManagerRework.Instance.GameOver(); 
+        GameManagerRework.Instance.timerCongelado = true; 
+        StartCoroutine(RotinaFimDeJogo(false, 2f));
     }
 
     // Se acaba o tempo perde, porém da pra usar override pra mudar isso

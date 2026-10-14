@@ -15,3 +15,5 @@ MonoBehaviour:
   nomeDoJogo: MinigameChinelo
   instrucao: "Vire os chinelos para sua m\xE3e n\xE3o morrer!"
   nomeDaCena: MinigameChinelo
+  tipoJogo: 0
+  regiao: 5

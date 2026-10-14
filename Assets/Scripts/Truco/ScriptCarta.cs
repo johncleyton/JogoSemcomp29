@@ -10,10 +10,11 @@ public class ScriptCarta : MinigameBase
     public string valor = "";
     public int naipe = 0;
     public string nomeNaipe = "";
-    public TextMeshProUGUI textoCarta;
-    public Image imagemCarta;
+    public TextMeshProUGUI[] textoCarta;
+    public Image[] imagemCarta;
     public Sprite[] sprites;
     public bool ehZap;
+    public bool freeze = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +42,7 @@ public class ScriptCarta : MinigameBase
                     break;
             }
             naipe = Random.Range(0, sprites.Length);
-            if (random == 3 && naipe == 0)
+            if (random == 4 && naipe == 0)
                 naipe = 1;
             switch (naipe)
             {
@@ -58,18 +59,70 @@ public class ScriptCarta : MinigameBase
                     nomeNaipe = "copas";
                     break;
             }
-            imagemCarta.sprite = sprites[naipe];
-            textoCarta.text = valor;
-            if ((naipe + 1) % 2 == 0)
-                textoCarta.color = Color.red;
+            for (int i = 0; i < 2; i++)
+            {
+                imagemCarta[i].sprite = sprites[naipe];
+                textoCarta[i].text = valor;
+                if ((naipe + 1) % 2 == 0)
+                    textoCarta[i].color = Color.red;
+            }
+
         }
     }
 
     public void cliqueCarta()
     {
-        if (ehZap)
-            Vencer();
-        else
-            Perder();
+        if (!freeze)
+        {
+            GameObject objeto = GameObject.Find("TextoTruco");
+            ScriptCarta[] objetosCarta = FindObjectsOfType<ScriptCarta>();
+            for (int i = 0; i < objetosCarta.Length; i++)
+                objetosCarta[i].freeze = true;
+            if (ehZap)
+            {
+                GameObject canva = GetComponentInParent<Canvas>().gameObject;
+                RectTransform transformar = gameObject.GetComponent<RectTransform>();
+                GameObject.Find("MaoBase").gameObject.SetActive(false);
+                GameObject.Find("MaoFundo").gameObject.SetActive(false);
+                Vencer();
+                StartCoroutine(AnimarCarta(canva, transformar, objeto));
+            }
+            else
+            {
+                objeto.GetComponent<TMP_Text>().text = "Morreu com o zap na mão!";
+                Perder();
+            }
+        }
+    }
+
+    private IEnumerator AnimarCarta(GameObject canva, RectTransform transformar, GameObject texto)
+    {
+        transformar.Find("Maos").gameObject.SetActive(true);
+        transformar.SetParent(canva.transform, true);
+        
+        Vector3 tamInicial = transformar.localScale;
+        Vector3 novoTamanho = tamInicial * 1.5f;
+
+        Vector3 posInicial = transformar.position;
+        Vector3 posFinal = canva.transform.position;
+
+        float tempoDecorrido = 0f;
+
+        while (tempoDecorrido < 1f)
+        {
+            tempoDecorrido += Time.deltaTime;
+            float progresso = tempoDecorrido / 1f;
+
+            float curvaSuave = Mathf.SmoothStep(0f, 1f, progresso);
+
+            transformar.position = Vector3.Lerp(posInicial, posFinal, curvaSuave);
+            transformar.localScale = Vector3.Lerp(tamInicial, novoTamanho, curvaSuave);
+
+            yield return null;
+        }
+        texto.GetComponent<TMP_Text>().text = "TRUCO!!!";
+        transformar.position = posFinal;
+        transformar.localScale = novoTamanho;
+
     }
 }

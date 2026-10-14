@@ -12,18 +12,20 @@ public class ParintinsManager : MinigameBase
     float timer_total = 0f;
 
 
-    [Header("Configurações de Spawn")]
+    [Header("Configuraï¿½ï¿½es de Spawn")]
     public GameObject prefabCoracao;
     public GameObject prefabEstrela;
     public Transform[] spawnpoints;
 
-    [Header("Referências dos Bois")]
+    [Header("Referï¿½ncias dos Bois")]
     public GameObject boiGarantido;
     public GameObject boiCaprichoso;
 
     private int boiEscolhido;
     public GameObject textoBoiGarantido;
     public GameObject textoBoiCaprichoso;
+    public GameObject boiCaprichosoVitoria;
+    public GameObject boiGarantidoVitoria;
     public TextMeshProUGUI contador;
     private bool start = false;
 
@@ -83,7 +85,7 @@ public class ParintinsManager : MinigameBase
 
         timer += Time.deltaTime;
 
-        if (timer >= (float)cooldown)
+        if ((timer >= (float)cooldown) && (counter != 5))
         {
             SpawnObject();
             timer = 0f;
@@ -92,11 +94,32 @@ public class ParintinsManager : MinigameBase
         if (timer_total >= 10f)
         {
             TempoEsgotado();
+            if (boiEscolhido == 0)
+            {
+                boiGarantido.SetActive(false);
+                boiGarantidoVitoria.SetActive(true);
+            }
+            else
+            {
+                boiCaprichoso.SetActive(false);
+                boiCaprichosoVitoria.SetActive(true);
+            }
+
         }
 
         if (counter == 5)
         {
             Vencer();
+            if(boiEscolhido == 0)
+            {
+                boiCaprichoso.SetActive(false);
+                boiCaprichosoVitoria.SetActive(true);
+            }
+            else
+            {
+                boiGarantido.SetActive(false);
+                boiGarantidoVitoria.SetActive(true);
+            }
         }
     }
 

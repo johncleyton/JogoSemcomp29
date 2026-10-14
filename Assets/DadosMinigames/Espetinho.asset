@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Espetinho
   m_EditorClassIdentifier: 
   nomeDoJogo: Espetinho
-  instrucao: "Fa\xE7a os espetinhos antes que o tempo acabe!"
+  instrucao: "Mova o espetinho e n\xE3o deixe as comidas cairem"
   nomeDaCena: Espetinho
   tipoJogo: 1
