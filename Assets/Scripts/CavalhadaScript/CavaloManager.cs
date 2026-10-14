@@ -16,7 +16,4 @@ public class CavaloManager : MonoBehaviour
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
-
-    
-
 }

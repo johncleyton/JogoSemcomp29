@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -414,9 +415,10 @@ public class GameManagerRework : MonoBehaviour
         aviaoMenu.SetActive(true);
         IniciarCiclo();
         Aviaozinho[] regioes = aviaoMenu.GetComponentsInChildren<Aviaozinho>();
-        RectTransform aviao = aviaoMenu.GetComponentInChildren<Image>().gameObject.GetComponent<RectTransform>();
+        RectTransform aviao = GameObject.Find("Aviao").GetComponent<RectTransform>();
         for (int i = 0; i < regioes.Length; i++)
         {
+            
             if (regioes[i].regiao.ToLower() == regiao.ToLower())
             {
                 Vector3 posInicial = aviao.position;
