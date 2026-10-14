@@ -122,8 +122,7 @@ public class MapaBS : MonoBehaviour
 
     private void Facil()
     {
-        Debug.Log("mapa facil");
-        notes.Add(new Vector2Int(3, 1));
+        //Debug.Log("mapa facil");
         notes.Add(new Vector2Int(6, 1));
         notes.Add(new Vector2Int(9, 1));
         notes.Add(new Vector2Int(12, 1));
@@ -154,7 +153,7 @@ public class MapaBS : MonoBehaviour
     }
     private void Medio()
     {
-        Debug.Log("mapa medio");
+        //Debug.Log("mapa medio");
         notes.Add(new Vector2Int(5, 1));
         notes.Add(new Vector2Int(7, 1));
         notes.Add(new Vector2Int(9, 1));
@@ -200,8 +199,7 @@ public class MapaBS : MonoBehaviour
     }
     private void Guirtusboyuhull()
     {
-        Debug.Log("guirtus diff");
-        notes.Add(new Vector2Int(6, 2));
+        //Debug.Log("guirtus diff");
         notes.Add(new Vector2Int(7, 2));
         notes.Add(new Vector2Int(9, 2));
         notes.Add(new Vector2Int(12, 2));
