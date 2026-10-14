@@ -941,6 +941,8 @@ MonoBehaviour:
   timerCongelado: 0
   listaDeMinigames:
   - {fileID: 11400000, guid: 95c00abdf253fd344a4739c60045d48f, type: 2}
+  - {fileID: 11400000, guid: 415b0ddf4e72fec42ac0913f45f05c4e, type: 2}
+  - {fileID: 11400000, guid: e621d09d602902a4ab74e552cf6518c8, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
   "txtRegi\xE3o": {fileID: 1169498918}
@@ -1296,6 +1298,9 @@ Camera:
     x: 0.00007301569
     y: 0
     width: 0.99985397
+    x: 0
+    y: 0
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -2199,6 +2204,8 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -5.7275, y: -49}
   m_SizeDelta: {x: 714.54, y: 48.81}
+  m_AnchoredPosition: {x: -2.1100277e-10, y: -24.400024}
+  m_SizeDelta: {x: 461.36, y: 48.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1169498918
 MonoBehaviour:
