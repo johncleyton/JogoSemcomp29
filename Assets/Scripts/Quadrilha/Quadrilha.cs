@@ -54,7 +54,7 @@ public class QTECircle : MinigameBase
         float waitTime = Random.Range(1.5f, 3f);
         yield return new WaitForSeconds(waitTime);
 
-        instructionText.text = "CUMPRIMENTEM!!!";
+        instructionText.text = "PARA A DIREITA!!!";
 
         yield return new WaitForSeconds(0.6f);
 
