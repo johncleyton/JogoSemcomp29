@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 52753611}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 1.45, z: 0.03753568}
+  m_LocalPosition: {x: 0.04, y: 2.9, z: 0.03753568}
   m_LocalScale: {x: 1.3013746, y: 1.3013746, z: 1.3013746}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -558,6 +558,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6b3a3ea52328f5e46ae1140be50ec7bc, type: 3}
   - {fileID: 21300000, guid: 6b3a3ea52328f5e46ae1140be50ec7bc, type: 3}
   - {fileID: 21300000, guid: 8268e467509c18848b2e2b29a393e7f3, type: 3}
+  clickedSprites:
+  - {fileID: 21300000, guid: 1cbb98b132efde04a8d6c3840eadcb0d, type: 3}
+  - {fileID: 21300000, guid: aa257f6dd2143ab48bf114fcb647613f, type: 3}
+  - {fileID: 21300000, guid: aa257f6dd2143ab48bf114fcb647613f, type: 3}
+  - {fileID: 21300000, guid: 9a0b6325eb0b4f74f99a2b6312699a8f, type: 3}
+  - {fileID: 21300000, guid: 37acdf8899d847e41a54ac101bbfad79, type: 3}
+  - {fileID: 21300000, guid: bcd8153c8c0f15941add77d357877cb6, type: 3}
+  - {fileID: 21300000, guid: bcd8153c8c0f15941add77d357877cb6, type: 3}
+  - {fileID: 21300000, guid: 4a26f6940e3f41c41b269b0f9470eb12, type: 3}
+  barcoRenderer: {fileID: 1867343081}
+  spriteVitoria: {fileID: 21300000, guid: aa83fecdda57b424f96f3a36509a6c80, type: 3}
+  spriteDerrota: {fileID: 21300000, guid: d3b310b20e211de4e9d07726f328932d, type: 3}
 --- !u!4 &1269603621
 Transform:
   m_ObjectHideFlags: 0
@@ -591,7 +603,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1687122466
 AudioListener:
   m_ObjectHideFlags: 0

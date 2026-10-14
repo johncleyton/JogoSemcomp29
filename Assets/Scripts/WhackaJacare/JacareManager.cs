@@ -8,11 +8,13 @@ public class JacareManager : MinigameBase
 {
     double cooldown = 1.5;
     float timer_total = 0f;
+    private float velocidadeAtual = 2f;
 
     [Header("Configurações de Spawn")]
     public GameObject jacarePrefab;
     public Transform[] spawnPoints;
     public Sprite[] spawnSprites;
+    public Sprite[] clickedSprites;
 
     [Header("Configurações do Barco")]
     public SpriteRenderer barcoRenderer;
@@ -25,7 +27,10 @@ public class JacareManager : MinigameBase
     {
         float tempoFixo = 10f;
 
-        cooldown -= faseAtual / 50;
+        cooldown = 1.5 - (faseAtual / 50);
+        if (cooldown < 0.3f) cooldown = 0.3f;
+
+        velocidadeAtual = 2f + (faseAtual * 0.2f);
         return tempoFixo;
     }
 
@@ -49,6 +54,7 @@ public class JacareManager : MinigameBase
     // Update is called once per frame
     void Update()
     {
+        if (jogoFinalizado) return;
         timer_total += Time.deltaTime;
  
         timer += Time.deltaTime;
@@ -86,6 +92,27 @@ public class JacareManager : MinigameBase
             {
                 renderer.sprite = spawnSprites[randomIndex];
             }
+            JacareBehaviour behaviour = newJacare.GetComponent<JacareBehaviour>();
+            if (behaviour != null && clickedSprites != null && randomIndex < clickedSprites.Length)
+            {
+                behaviour.velocidade = velocidadeAtual;
+                behaviour.spriteOnClick = clickedSprites[randomIndex];
+            }
+        }
+    }
+
+    public void MudarBarcoDerrota()
+    {
+        if(barcoRenderer != null && spriteDerrota != null)
+        {
+            barcoRenderer.sprite = spriteDerrota;
+        }
+
+        JacareBehaviour[] jacaresVivos = FindObjectsOfType<JacareBehaviour>();
+
+        foreach(JacareBehaviour jacare in jacaresVivos)
+        {
+            Destroy(jacare.gameObject);
         }
     }
 }
