@@ -6,7 +6,12 @@ public class JacareBehaviour : MonoBehaviour
 {
     public float velocidade = 3f;
     private Transform barco;
-    private MinigameBase manager;
+    private JacareManager manager;
+
+    [HideInInspector]
+    public Sprite spriteOnClick;
+    private SpriteRenderer spriteRenderer;
+    private bool wasClicked = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +23,8 @@ public class JacareBehaviour : MonoBehaviour
         }
 
         manager = FindObjectOfType<JacareManager>();
-        
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -37,6 +43,7 @@ public class JacareBehaviour : MonoBehaviour
         {
             if(manager != null)
             {
+                manager.MudarBarcoDerrota();
                 manager.Perder();
             }
 
@@ -46,6 +53,17 @@ public class JacareBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Destroy(gameObject);
+        if (!wasClicked)
+        {
+            wasClicked = true;
+
+            if(spriteOnClick != null && spriteRenderer != null)
+            {
+                spriteRenderer.sprite = spriteOnClick;
+            }
+
+            Destroy(gameObject, 0.2f);
+        }
+        
     }
 }

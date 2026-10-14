@@ -12,6 +12,12 @@ public class JacareManager : MinigameBase
     [Header("Configurações de Spawn")]
     public GameObject jacarePrefab;
     public Transform[] spawnPoints;
+    public Sprite[] spawnSprites;
+
+    [Header("Configurações do Barco")]
+    public SpriteRenderer barcoRenderer;
+    public Sprite spriteVitoria;
+    public Sprite spriteDerrota;
 
     private float timer = 0f;
 
@@ -27,6 +33,10 @@ public class JacareManager : MinigameBase
     {
         if (jogoFinalizado)
             return;
+        if(barcoRenderer != null && spriteVitoria != null)
+        {
+            barcoRenderer.sprite = spriteVitoria;
+        }
         Vencer();
     }
     // Start is called before the first frame update
@@ -66,6 +76,16 @@ public class JacareManager : MinigameBase
 
         int randomIndex = Random.Range(0, spawnPoints.Length);
         Transform chosenSpawn = spawnPoints[randomIndex];
-        Instantiate(jacarePrefab, chosenSpawn.position, chosenSpawn.rotation);
+
+        GameObject newJacare = Instantiate(jacarePrefab, chosenSpawn.position, chosenSpawn.rotation);
+        if(spawnSprites != null && randomIndex < spawnSprites.Length && spawnSprites[randomIndex] != null)
+        {
+            SpriteRenderer renderer = newJacare.GetComponent<SpriteRenderer>();
+
+            if (renderer != null)
+            {
+                renderer.sprite = spawnSprites[randomIndex];
+            }
+        }
     }
 }
