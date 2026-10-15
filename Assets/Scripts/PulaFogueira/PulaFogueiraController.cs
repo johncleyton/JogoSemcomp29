@@ -27,7 +27,7 @@ public class PulaFogueiraController : MinigameBase
     public void playerHit()
     {
         Debug.Log("Perdeu: bateu na fogueira");
-        PerderComAtraso(0);
+        Perder();
     }
 
     public float getMinigameDuration()

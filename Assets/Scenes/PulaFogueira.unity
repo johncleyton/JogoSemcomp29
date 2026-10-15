@@ -591,8 +591,8 @@ MonoBehaviour:
   runSpeed: 6
   gravity: 1
   jumpSpeed: 1
-  jumpHeight: 3.3
-  jumpDistance: 6
+  jumpHeight: 3.6
+  jumpDistance: 7
   gameController: {fileID: 1765560806}
   animator: {fileID: 2023772323}
 --- !u!70 &2023772321
