@@ -956,7 +956,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 59b19b95c785bd2479e4fdf34c703182, type: 2}
   - {fileID: 11400000, guid: 67f08f1a33377bf4bb3423fa02fd5c01, type: 2}
   - {fileID: 11400000, guid: d21eecf9669cbce4fa510a80cbd3c375, type: 2}
-  - {fileID: 11400000, guid: ebcd021db88181f4e8854706809d9b19, type: 2}
   - {fileID: 11400000, guid: 46ec1ddd678001944913fd5880288c57, type: 2}
   - {fileID: 11400000, guid: 249adc660242c33408f411a4e7f57e49, type: 2}
   - {fileID: 11400000, guid: 9cd909c0e3c78fe4ca24ddf19f6804fe, type: 2}
@@ -1322,9 +1321,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00052908063
+    x: 0.00029188395
     y: 0
-    width: 0.99894184
+    width: 0.99941623
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
