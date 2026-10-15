@@ -30,7 +30,7 @@ public class JacareBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(barco != null)
+        if(barco != null && !wasClicked)
         {
             transform.position = Vector3.MoveTowards(transform.position, barco.position, velocidade * Time.deltaTime);
         }

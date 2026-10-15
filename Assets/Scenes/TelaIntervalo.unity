@@ -940,6 +940,7 @@ MonoBehaviour:
   transicaoIris: {fileID: 285201727}
   timerCongelado: 0
   listaDeMinigames:
+  - {fileID: 11400000, guid: a64ef03dd10cce4408ba441193de9e8b, type: 2}
   - {fileID: 11400000, guid: 5530f2fed868a474289437ac64f3dac7, type: 2}
   txtInstrucao: {fileID: 4464091}
   txtPontuacao: {fileID: 778473131}
@@ -1293,10 +1294,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.00015470386
-    width: 1
-    height: 0.9996906
+    x: 0.00008159876
+    y: 0
+    width: 0.9998368
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
