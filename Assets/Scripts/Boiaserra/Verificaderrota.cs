@@ -16,7 +16,7 @@ public class Verificaderrota : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        float tempoFixo = 60f;
+        float tempoFixo = 10f;
 
         return tempoFixo;
     }
