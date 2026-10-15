@@ -5,9 +5,9 @@ public class PipaMovement : MinigameBase
 
     public float velocity = 300f;
     public Rigidbody2D rb;
-    public SpriteRenderer sprite;
-    public Color corDeColisao = Color.yellow;
+    public Animator animator;
     private bool clicou = false;
+    private bool fim = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,9 +20,12 @@ public class PipaMovement : MinigameBase
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
+        if (!fim)
         {
-            clicou = true;
+            if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
+            {
+                clicou = true;
+            }
         }
     }
 
@@ -38,7 +41,11 @@ public class PipaMovement : MinigameBase
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        sprite.color = corDeColisao;
+        animator.SetTrigger("Colidiu");
+        fim = true;
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         Perder();
     }
 

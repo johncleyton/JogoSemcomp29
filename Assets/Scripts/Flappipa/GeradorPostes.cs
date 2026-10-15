@@ -17,11 +17,11 @@ public class GeradorPostes : MonoBehaviour
     {
         cronometro += Time.deltaTime;
 
-        if (cronometro > tempoMaximo)
+        if (cronometro > tempoMaximo - 1)
         {
             // Instancia o poste em uma altura aleatória
             GameObject novoPoste = Instantiate(PostePrefab, gameObject.transform);
-            novoPoste.transform.position = transform.position + new Vector3(0, Random.Range(-alturaVariavel, alturaVariavel), 0);
+            novoPoste.transform.position = transform.position + new Vector3(-0.5f, Random.Range(-alturaVariavel, alturaVariavel), 0);
             
             cronometro = 0;
             tempoMaximo -=0.05f;

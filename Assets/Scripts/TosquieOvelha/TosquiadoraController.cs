@@ -109,7 +109,7 @@ public class TosquiadoraController : MonoBehaviour
 
         transform.position = p;
 
-        if (Input.GetMouseButtonDown(0)) estado = Estado.Caindo;
+        if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver) estado = Estado.Caindo;
     }
 
     void Cair(TosquieManager gm)

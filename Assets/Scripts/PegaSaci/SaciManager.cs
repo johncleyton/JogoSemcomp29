@@ -24,6 +24,7 @@ public class SaciBoss : MinigameBase
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
         if (animator == null) animator = GetComponent<Animator>();
         saciRoutine = StartCoroutine(SaciCoroutine());
+
     }
 
     void Update()
@@ -31,9 +32,13 @@ public class SaciBoss : MinigameBase
         // A peneira voa mesmo depois do fim do minigame
         if (jogandoPeneira)
         {
+            Vector3 posSaci = spriteRenderer.transform.position;
+            Vector3 posPeneira = peneira.transform.position;
+            Vector3 alvo = new Vector3(posSaci.x, posSaci.y, posPeneira.z);
+
             peneira.transform.position = Vector3.MoveTowards(
-                peneira.transform.position,
-                spriteRenderer.transform.position,
+                posPeneira,
+                alvo,
                 velocidadePeneira * Time.deltaTime);
         }
 
