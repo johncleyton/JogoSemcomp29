@@ -22,7 +22,7 @@ public class PipaMovement : MinigameBase
     {
         if (!fim)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
             {
                 clicou = true;
             }

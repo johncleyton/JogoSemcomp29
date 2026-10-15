@@ -59,7 +59,7 @@ public class CrochetController : MinigameBase
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             if (lacoTutorial.activeInHierarchy)
                 lacoTutorial.SetActive(false);

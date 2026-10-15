@@ -99,13 +99,13 @@ public class PlayerFollowCursorPhysics : MinigameBase
         Vector3 inputPosition = Vector3.zero;
         hasInput = false;
 
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && !PauseBase.mouseOver)
         {
             Touch touch = Input.GetTouch(0);
             inputPosition = touch.position;
             hasInput = true;
         }
-        else if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(0) && !PauseBase.mouseOver)
         {
             inputPosition = Input.mousePosition;
             hasInput = true;

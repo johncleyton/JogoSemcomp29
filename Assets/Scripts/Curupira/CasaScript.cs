@@ -53,17 +53,20 @@ public class CasaScript : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (!enabled) return;
         if (CurupiraManager.Instance != null)
             CurupiraManager.Instance.VerificarCasa(this);
     }
 
     void OnMouseEnter()
     {
+        if (!enabled) return;
         if (rotinaAtual == null) transform.localScale = escalaOriginal * escalaHover;
     }
 
     void OnMouseExit()
     {
+        if (!enabled) return;
         if (rotinaAtual == null) transform.localScale = escalaOriginal;
     }
 

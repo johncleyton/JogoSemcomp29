@@ -342,6 +342,8 @@ public class GameManagerRework : MonoBehaviour
     {
         if (!PodeJogar)
             return;
+        if (Time.timeScale != 1f)
+            return;
         Time.timeScale = 0f;
         _audio.Pause();
         Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);

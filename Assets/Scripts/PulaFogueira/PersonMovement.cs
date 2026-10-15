@@ -82,7 +82,7 @@ public class PersonMovement : MonoBehaviour
         transform.position += new Vector3(runSpeed, verticalSpeed, 0f) * Time.deltaTime;
 
         // Checa o input
-        if (Input.GetMouseButtonDown(0) && isGrounded)
+        if (Input.GetMouseButtonDown(0) && isGrounded && !PauseBase.mouseOver)
         {
             animator.SetBool("pulo", true);
             isGrounded = false;

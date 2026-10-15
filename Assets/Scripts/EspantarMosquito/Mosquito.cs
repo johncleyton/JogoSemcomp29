@@ -44,6 +44,8 @@ public class Mosquito : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!enabled) return;
+
         if (centerTarget == null) return;
 
         Vector2 awayFromPlayer = ((Vector2)transform.position - (Vector2)centerTarget.position).normalized;
