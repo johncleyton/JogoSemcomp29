@@ -14,7 +14,7 @@ public class EspantarMosquitos : MinigameBase
 
     public int baseMosquitoCount = 4;
 
-    void Start()
+    void Awake()
     {
         int level = GameManagerRework.Instance != null ? GameManagerRework.Instance.faseAtual : 1;
         int difficulty = level / 5;

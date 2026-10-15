@@ -19,6 +19,7 @@ public class ClickableObject : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (!enabled) return;
         if (AlreadyClicked) return;
         AlreadyClicked = true;
 

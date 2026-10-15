@@ -37,7 +37,7 @@ public class VirarCarne : MinigameBase
 
         MoveIndicator();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             CheckTiming();
         }

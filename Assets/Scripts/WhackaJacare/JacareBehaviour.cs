@@ -46,6 +46,7 @@ public class JacareBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!enabled) return;
         Destroy(gameObject);
     }
 }

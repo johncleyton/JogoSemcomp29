@@ -20,7 +20,7 @@ public class PipaMovement : MinigameBase
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             clicou = true;
         }

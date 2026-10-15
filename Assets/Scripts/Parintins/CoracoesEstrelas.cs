@@ -11,6 +11,7 @@ public class CoracoesEstrelas : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!enabled) return;
         ParintinsManager manager = FindObjectOfType<ParintinsManager>();
 
         if(manager != null)

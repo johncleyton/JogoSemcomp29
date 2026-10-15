@@ -16,7 +16,7 @@ public class CarroControle : MinigameBase
    {
         if (jogoFinalizado) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             float mouseX = Input.mousePosition.x;
 

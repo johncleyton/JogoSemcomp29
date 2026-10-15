@@ -24,7 +24,7 @@ public class GeradorNotas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && notasAtivas.Count > 0)
+        if (Input.GetMouseButtonDown(0) && notasAtivas.Count > 0 && !PauseBase.mouseOver)
         {
             NotaManager frente = notasAtivas.Peek();
             if (frente.estaNaZonaDeAcerto)

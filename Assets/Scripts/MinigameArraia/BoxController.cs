@@ -20,12 +20,14 @@ public class BoxController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!enabled) return;
         dragStart = cam.ScreenToWorldPoint(Input.mousePosition);
         isDragging = true;
     }
 
     private void OnMouseUp()
     {
+        if (!enabled) return;
         if (!isDragging) return;
         isDragging = false;
 

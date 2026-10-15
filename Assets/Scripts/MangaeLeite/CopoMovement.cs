@@ -6,6 +6,7 @@ public class CopoMovement : MonoBehaviour
 {
     private void OnMouseDrag()
     {
+        if (!enabled) return;
         Vector3 posicaoMouse = Input.mousePosition;
 
         Vector3 WposicaoMouse = Camera.main.ScreenToWorldPoint(posicaoMouse);
