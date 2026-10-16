@@ -295,10 +295,12 @@ MonoBehaviour:
   barraTempo: {fileID: 0}
   tempoMinimo: 3
   decrementoDeTempo: 0.1
+  transicaoIris: {fileID: 0}
   timerCongelado: 0
   listaDeMinigames: []
   txtInstrucao: {fileID: 0}
   txtPontuacao: {fileID: 0}
+  "txtRegi\xE3o": {fileID: 0}
   canvaIntervalo: {fileID: 0}
   eventos: {fileID: 0}
   pontuacaoJogador: 0
@@ -306,6 +308,12 @@ MonoBehaviour:
   spritesVidas: []
   pausemenu: {fileID: 0}
   _audio: {fileID: 0}
+  aviaoMenu: {fileID: 0}
+  canvaFimDeJogo: {fileID: 0}
+  canvaDurante: {fileID: 0}
+  txtScore: {fileID: 0}
+  txtFases: {fileID: 0}
+  txtFeedback: {fileID: 0}
 --- !u!1 &319346776
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &588155150
 MonoBehaviour:
   m_ObjectHideFlags: 0

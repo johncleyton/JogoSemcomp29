@@ -541,7 +541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1036687135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,7 +704,9 @@ MonoBehaviour:
   maxX: 8
   deathThresholdX: -5.5
   tempoAnimacaoMorte: 2.5
+  paramMorte: Cair
   tempoAnimacaoVitoria: 1
+  paramVitoria: Vencer
   paramCima: Cima
   paramBaixo: Baixo
   verticalStateCooldown: 0.12

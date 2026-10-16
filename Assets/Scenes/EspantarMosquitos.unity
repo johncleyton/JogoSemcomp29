@@ -333,6 +333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdd3a6449ce2b2498482d6c27330316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  texturaCursor: {fileID: 0}
+  cursor: {fileID: 0}
+  objetoCursor: {fileID: 0}
 --- !u!114 &1024829452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,10 +354,12 @@ MonoBehaviour:
   barraTempo: {fileID: 0}
   tempoMinimo: 3
   decrementoDeTempo: 0.1
+  transicaoIris: {fileID: 0}
   timerCongelado: 0
   listaDeMinigames: []
   txtInstrucao: {fileID: 0}
   txtPontuacao: {fileID: 0}
+  "txtRegi\xE3o": {fileID: 0}
   canvaIntervalo: {fileID: 0}
   eventos: {fileID: 0}
   pontuacaoJogador: 0
@@ -362,6 +367,12 @@ MonoBehaviour:
   spritesVidas: []
   pausemenu: {fileID: 0}
   _audio: {fileID: 0}
+  aviaoMenu: {fileID: 0}
+  canvaFimDeJogo: {fileID: 0}
+  canvaDurante: {fileID: 0}
+  txtScore: {fileID: 0}
+  txtFases: {fileID: 0}
+  txtFeedback: {fileID: 0}
 --- !u!4 &1024829453
 Transform:
   m_ObjectHideFlags: 0
@@ -531,7 +542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1427200965
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Security;
 using TMPro;
+using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using Unity.VisualScripting;
@@ -44,7 +46,9 @@ public class GameManagerRework : MonoBehaviour
     public bool timerCongelado = false;
 
     [Header("Minigames")]
-    public MinigameData[] listaDeMinigames; 
+    public MinigameData[] listaDeMinigames;
+    private List<int> minigamesDisponiveis = new List<int>();
+    private int ultimoMinigameSorteado = -1;
     
     [Header("UI")]
     public TMP_Text txtInstrucao;
@@ -63,6 +67,10 @@ public class GameManagerRework : MonoBehaviour
     private string[] regioes = {"Sul", "Sudeste", "Centro-Oeste", "Nordeste", "Norte", "Brasil"};
     private Coroutine ciclar;
     private string regiaoEscolhida;
+    [Header("Fim de Jogo")]
+    public GameObject canvaFimDeJogo, canvaDurante;
+    public TMP_Text txtScore, txtFases, txtFeedback, txtNome;
+    public Animator animator;
     async void Awake()
     {
         if (Instance != null && Instance != this)
@@ -118,8 +126,7 @@ public class GameManagerRework : MonoBehaviour
 
             Debug.Log($"Iniciando Fase {faseAtual}. Prepare-se!");
             
-            int randomSorteio = UnityEngine.Random.Range(0, listaDeMinigames.Length);
-            MinigameData minigameEscolhido = listaDeMinigames[randomSorteio];
+            MinigameData minigameEscolhido = SortearMinigame();
             regiaoEscolhida = minigameEscolhido.NomeDaRegiaoFormatado;
             Debug.Log($"Minigame Escolhido: {minigameEscolhido.nomeDoJogo}");
             txtRegião.text = $"Região: {minigameEscolhido.NomeDaRegiaoFormatado}";
@@ -240,8 +247,14 @@ public class GameManagerRework : MonoBehaviour
                     yield return unload;
                 cenaMinigameAtiva = "";
             }
-
-            aviaoMenu.SetActive(true);
+            
+            if (isGameOver)
+            {
+                canvaDurante.SetActive(false);
+                canvaFimDeJogo.SetActive(true);
+            }
+            else
+                aviaoMenu.SetActive(true);
             // A captura encolhe e revela o intervalo que está por baixo.
             yield return transicaoIris.Fechar();
 
@@ -251,6 +264,37 @@ public class GameManagerRework : MonoBehaviour
                 yield break;
             }
         }
+    }
+
+    private MinigameData SortearMinigame()
+    {
+        if (listaDeMinigames == null || listaDeMinigames.Length == 0)
+        {
+            Debug.LogError("Nenhum minigame configurado no Inspector.", this);
+            return null;
+        }
+
+        if (minigamesDisponiveis.Count == 0)
+        {
+            for (int i = 0; i < listaDeMinigames.Length; i++)
+                minigamesDisponiveis.Add(i);
+        }
+
+        int posicao = UnityEngine.Random.Range(0, minigamesDisponiveis.Count);
+
+        if (minigamesDisponiveis.Count > 1 && minigamesDisponiveis[posicao] == ultimoMinigameSorteado)
+        {
+            int deslocamento = UnityEngine.Random.Range(1, minigamesDisponiveis.Count);
+
+            posicao = (posicao + deslocamento) % minigamesDisponiveis.Count;
+        }
+
+        int indiceEscolhido = minigamesDisponiveis[posicao];
+
+        minigamesDisponiveis.RemoveAt(posicao);
+        ultimoMinigameSorteado = indiceEscolhido;
+
+        return listaDeMinigames[indiceEscolhido];
     }
 
     private MinigameBase EncontrarMinigameNaCena(Scene cena)
@@ -297,6 +341,9 @@ public class GameManagerRework : MonoBehaviour
         StopAllCoroutines();
         estaJogando = false;
         Time.timeScale = 1f;
+        //canvaDurante.SetActive(false);
+        //canvaFimDeJogo.SetActive(true);
+        StartCoroutine(MostrarDadosJogo());
 
         Debug.Log($"Game Over Definitivo! Enviando pontuação: {pontuacaoJogador} para o Leaderboard...");
         try
@@ -310,7 +357,7 @@ public class GameManagerRework : MonoBehaviour
             Debug.LogError("Falha ao enviar pontuação: " + ex.Message);
         }
         
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
     }
 
     private void AjustarCanvasDaFase(string nomeDaCena)
@@ -411,6 +458,26 @@ public class GameManagerRework : MonoBehaviour
         // CicloDeJogo fará o fechamento e então chamará SemVidas.
     }
 
+    public void VoltarMenu2()
+    {
+        Debug.Log("Clicou");
+        StartCoroutine(AnimarTrocar(0));
+    }
+
+    public void Restart()
+    {
+        Debug.Log("Clicou");
+        StartCoroutine(AnimarTrocar(1));
+    }
+
+    IEnumerator AnimarTrocar(int cena)
+    {
+        Debug.Log("Entrou corrotina");
+        animator.SetTrigger("TrocarTela");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(cena);
+    }
+
     IEnumerator MoverAviao(string regiao)
     {
         txtInstrucao.gameObject.SetActive(false);
@@ -490,5 +557,72 @@ public class GameManagerRework : MonoBehaviour
 
         StopCoroutine(ciclar);
         ciclar = null;
+    }
+
+    IEnumerator MostrarDadosJogo()
+    {
+        yield return new WaitForSeconds(1f);
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            txtNome.text = "Jogador: não está logado";
+        }
+        else
+            txtNome.text = $"Jogador: {AuthenticationService.Instance.PlayerName}";
+        yield return new WaitForSeconds(1f);
+        txtFases.text = $"Fases jogadas: {faseAtual.ToString()}";
+        yield return new WaitForSeconds(1f);
+        yield return ContarPontuacao(pontuacaoJogador);
+        yield return new WaitForSeconds(1f);
+        if (pontuacaoJogador < 10000)
+            txtFeedback.text = "Jogou de olho fechado?";
+        else if (pontuacaoJogador < 25000)
+            txtFeedback.text = "Sambou, sambou e dançou";
+        else if (pontuacaoJogador < 50000)
+            txtFeedback.text = "Tá pegando o ritmo";
+        else if (pontuacaoJogador < 100000)
+            txtFeedback.text = "Você tem o molho brasileiro";
+        else if (pontuacaoJogador < 200000)
+            txtFeedback.text = "O jeitinho brasileiro vive em você";
+        else if (pontuacaoJogador < 250000)
+            txtFeedback.text = "Como? Por que?";
+        else
+            txtFeedback.text = "Oh Lee, você já provou que tem o molho";
+
+        yield return null;
+    }
+
+    private IEnumerator ContarPontuacao(int pontuacaoFinal)
+    {
+        if (txtScore == null)
+            yield break;
+
+        if (pontuacaoFinal == 0)
+        {
+            txtScore.text = $"Pontuação final: {pontuacaoFinal}";
+            yield break;
+        }
+
+        float tempo = 0f;
+        float duracao = 2f;
+
+        txtScore.text = "Pontuação final: 0";
+        yield return null;
+
+        while (tempo < duracao)
+        {
+            tempo += Time.deltaTime;
+            float progresso = Mathf.Clamp01(tempo / duracao);
+            float progressoSuave = 1f - Mathf.Pow(1f - progresso, 3f);
+
+            int pontuacaoExibida = Mathf.RoundToInt(
+                Mathf.Lerp(0f, pontuacaoFinal, progressoSuave)
+            );
+
+            txtScore.text = $"Pontuação final: {pontuacaoExibida}";
+
+            yield return null;
+        }
+
+        txtScore.text = $"Pontuação final: {pontuacaoFinal}";
     }
 }
