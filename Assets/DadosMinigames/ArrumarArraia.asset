@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ArrumarArraia
   m_EditorClassIdentifier: 
   nomeDoJogo: Arrumar Arraia
-  instrucao: "Leve o bal\xE3o at\xE9 a posi\xE7\xE3o correta"
+  instrucao: "Arraste ou clique para empurrar cada bal\xE3o at\xE9 ao seu lugar!"
   nomeDaCena: MinigameArraia
   tipoJogo: 0
   regiao: 3
