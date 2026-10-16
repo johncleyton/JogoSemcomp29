@@ -44,7 +44,9 @@ public class SaciBoss : MinigameBase
 
         if (acabou) return;
 
-        if (Input.GetMouseButtonDown(0))
+        //Adicao de "!PauseBase.mouseOver" para resolver bug de pause
+        //Quando o jogador clicar no pause, nada acontecera
+        if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             acabou = true;
             StopCoroutine(saciRoutine);

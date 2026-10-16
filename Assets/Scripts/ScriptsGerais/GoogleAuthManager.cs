@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TMPro;
+using System.Collections;
+
 
 #if UNITY_STANDALONE || UNITY_EDITOR
 using System.Net;
@@ -96,6 +98,13 @@ public class GoogleAuthManager : MonoBehaviour
     private void Awake()
     {
         Application.deepLinkActivated += OnDeepLinkActivated;
+        StartCoroutine(inicioAnim());
+    }
+
+    IEnumerator inicioAnim()
+    {
+        yield return new WaitForSeconds(3f);
+        painelMenuPrincipal.SetActive(true);
     }
 
     async void Start()

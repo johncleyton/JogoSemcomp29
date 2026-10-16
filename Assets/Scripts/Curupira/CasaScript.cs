@@ -53,20 +53,29 @@ public class CasaScript : MonoBehaviour
 
     void OnMouseDown()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
         if (!enabled) return;
+
         if (CurupiraManager.Instance != null)
             CurupiraManager.Instance.VerificarCasa(this);
     }
 
     void OnMouseEnter()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
         if (!enabled) return;
+
         if (rotinaAtual == null) transform.localScale = escalaOriginal * escalaHover;
     }
 
     void OnMouseExit()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
         if (!enabled) return;
+
         if (rotinaAtual == null) transform.localScale = escalaOriginal;
     }
 

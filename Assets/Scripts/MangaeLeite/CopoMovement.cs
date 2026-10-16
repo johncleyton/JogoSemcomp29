@@ -6,7 +6,10 @@ public class CopoMovement : MonoBehaviour
 {
     private void OnMouseDrag()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
         if (!enabled) return;
+
         Vector3 posicaoMouse = Input.mousePosition;
 
         Vector3 WposicaoMouse = Camera.main.ScreenToWorldPoint(posicaoMouse);

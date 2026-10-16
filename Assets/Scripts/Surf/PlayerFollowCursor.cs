@@ -99,6 +99,8 @@ public class PlayerFollowCursorPhysics : MinigameBase
         Vector3 inputPosition = Vector3.zero;
         hasInput = false;
 
+        //Adicao de "!PauseBase.mouseOver" para resolver bug de pause
+        //Se o jogador clicar no botao de pause, nenhuma acao eh feita
         if (Input.touchCount > 0 && !PauseBase.mouseOver)
         {
             Touch touch = Input.GetTouch(0);

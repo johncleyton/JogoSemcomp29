@@ -14,6 +14,8 @@ public class EspantarMosquitos : MinigameBase
 
     public int baseMosquitoCount = 4;
 
+    //Mudanca para Awake para os mosquitos nao spawnarem 
+    //no TelaIntervalo
     void Awake()
     {
         int level = GameManagerRework.Instance != null ? GameManagerRework.Instance.faseAtual : 1;

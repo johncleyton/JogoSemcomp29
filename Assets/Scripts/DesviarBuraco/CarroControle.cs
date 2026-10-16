@@ -16,6 +16,8 @@ public class CarroControle : MinigameBase
    {
         if (jogoFinalizado) return;
 
+        //Adicao de "!PauseBase.mouseOver" para resolver bug de pause
+        //Se o jogador clicar no botao de pause, nenhuma acao eh feita
         if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             float mouseX = Input.mousePosition.x;

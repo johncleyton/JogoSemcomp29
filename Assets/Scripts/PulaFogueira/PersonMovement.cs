@@ -81,6 +81,8 @@ public class PersonMovement : MonoBehaviour
 
         transform.position += new Vector3(runSpeed, verticalSpeed, 0f) * Time.deltaTime;
 
+        //Adicao de "!PauseBase.mouseOver" para resolver bug de pause
+        //Se o jogador clicar no botao de pause, nenhuma acao eh feita
         // Checa o input
         if (Input.GetMouseButtonDown(0) && isGrounded && !PauseBase.mouseOver)
         {

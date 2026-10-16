@@ -62,6 +62,7 @@ public class GameManagerRework : MonoBehaviour
 
     [Header("Pause")]
     public GameObject pausemenu;
+    public GameObject pauseHUD;
     public AudioSource _audio;
     public GameObject aviaoMenu;
     private string[] regioes = {"Sul", "Sudeste", "Centro-Oeste", "Nordeste", "Norte", "Brasil"};
@@ -114,6 +115,8 @@ public class GameManagerRework : MonoBehaviour
     {
         if (canvasHUD != null) 
             canvasHUD.SetActive(false);
+        if (pauseHUD != null)
+            pauseHUD.SetActive(false);
 
         while (true) 
         {            
@@ -123,6 +126,8 @@ public class GameManagerRework : MonoBehaviour
             canvaIntervalo.SetActive(true);
             if (canvasHUD != null) 
                 canvasHUD.SetActive(false);
+            if (pauseHUD != null)
+                pauseHUD.SetActive(false);
 
             Debug.Log($"Iniciando Fase {faseAtual}. Prepare-se!");
             
@@ -155,6 +160,8 @@ public class GameManagerRework : MonoBehaviour
             canvaIntervalo.SetActive(false);
             if (canvasHUD != null) 
                 canvasHUD.SetActive(true);
+            if (pauseHUD != null)
+                pauseHUD.SetActive(true);
 
             asyncLoad.allowSceneActivation = true; 
             
@@ -234,6 +241,8 @@ public class GameManagerRework : MonoBehaviour
 
             if (canvasHUD != null)
                 canvasHUD.SetActive(false);
+            if (pauseHUD != null)
+                pauseHUD.SetActive(false);
 
             // Prepara o intervalo atrás da captura, ainda totalmente opaca.
             SceneManager.SetActiveScene(cenaIntervalo);
@@ -579,6 +588,8 @@ public class GameManagerRework : MonoBehaviour
             txtFeedback.text = "Sambou, sambou e dançou";
         else if (pontuacaoJogador < 50000)
             txtFeedback.text = "Tá pegando o ritmo";
+        else if (pontuacaoJogador > 72700 && pontuacaoJogador < 72799)
+            txtFeedback.text = "WYSI!!!!";
         else if (pontuacaoJogador < 100000)
             txtFeedback.text = "Você tem o molho brasileiro";
         else if (pontuacaoJogador < 200000)
