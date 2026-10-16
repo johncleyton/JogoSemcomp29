@@ -93,7 +93,7 @@ public class CollectIngredients : MinigameBase
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
         // Aumenta a quantidade de pães de queijo necessários conforme a fase avança
-        metaPaesDeQueijo = 2 + (faseAtual / 4);
+        metaPaesDeQueijo = Mathf.Min(2 + (faseAtual / 4), 5);
         return tempoGlobalSugerido;
     }
 
@@ -209,6 +209,7 @@ public class CollectIngredients : MinigameBase
 
     private IEnumerator RotinaVitoria()
     {
+        Vencer();
         if (painelVitoriaFinal != null) painelVitoriaFinal.SetActive(true);
         if (confetesParticulas != null) confetesParticulas.Play();
 
@@ -216,8 +217,6 @@ public class CollectIngredients : MinigameBase
 
         // Segurança extra: se por algum motivo o jogo já terminou, não chama Vencer()
         if (jogoFinalizado) yield break;
-
-        Vencer();
     }
 
     public override void TempoEsgotado()
