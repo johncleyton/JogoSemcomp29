@@ -6,7 +6,7 @@ public class NotaManager : MonoBehaviour
 {
     public float velocidade = 12f;
     public bool estaNaZonaDeAcerto = false;
-
+    
     void Update()
     {
         transform.position += Vector3.left * velocidade * Time.deltaTime;
