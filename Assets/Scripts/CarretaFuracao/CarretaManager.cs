@@ -23,7 +23,7 @@ public class CarretaManager : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        float tempoFixo = 5f;
+        float tempoFixo = 7f;
         return tempoFixo;
     }
 
