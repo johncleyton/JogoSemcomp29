@@ -71,6 +71,7 @@ public class GameManagerRework : MonoBehaviour
     public GameObject canvaFimDeJogo, canvaDurante;
     public TMP_Text txtScore, txtFases, txtFeedback, txtNome;
     public Animator animator;
+    public AudioClip musicaFim;
     async void Awake()
     {
         if (Instance != null && Instance != this)
@@ -343,7 +344,6 @@ public class GameManagerRework : MonoBehaviour
         Time.timeScale = 1f;
         //canvaDurante.SetActive(false);
         //canvaFimDeJogo.SetActive(true);
-        StartCoroutine(MostrarDadosJogo());
 
         Debug.Log($"Game Over Definitivo! Enviando pontuação: {pontuacaoJogador} para o Leaderboard...");
         try
@@ -356,6 +356,10 @@ public class GameManagerRework : MonoBehaviour
         {
             Debug.LogError("Falha ao enviar pontuação: " + ex.Message);
         }
+        _audio.clip = musicaFim;
+        _audio.Play();
+        _audio.loop = true;
+        StartCoroutine(MostrarDadosJogo());
         
         //SceneManager.LoadScene(0);
     }
@@ -392,7 +396,8 @@ public class GameManagerRework : MonoBehaviour
         if (Time.timeScale != 1f)
             return;
         Time.timeScale = 0f;
-        _audio.Pause();
+        //_audio.Pause();
+        _audio.volume = 0.2f;
         Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);
         GameObject[] objetosRaiz = cenaCarregada.GetRootGameObjects();
         foreach (GameObject obj in objetosRaiz)
@@ -423,7 +428,8 @@ public class GameManagerRework : MonoBehaviour
         if (string.IsNullOrEmpty(cenaMinigameAtiva))
             return;
         Time.timeScale = 1f;
-        _audio.Play();
+        //_audio.Play();
+        _audio.volume = 1f;
         Scene cenaCarregada = SceneManager.GetSceneByName(cenaMinigameAtiva);
         GameObject[] objetosRaiz = cenaCarregada.GetRootGameObjects();
         foreach (GameObject obj in objetosRaiz)

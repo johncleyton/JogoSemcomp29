@@ -886,6 +886,7 @@ GameObject:
   - component: {fileID: 194822052}
   - component: {fileID: 194822051}
   - component: {fileID: 194822053}
+  - component: {fileID: 194822054}
   m_Layer: 0
   m_Name: Musica
   m_TagString: Untagged
@@ -902,12 +903,12 @@ AudioSource:
   m_GameObject: {fileID: 194822050}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 56c4d0a07a126fe4495dabd4f7a86e09, type: 3}
+  OutputAudioMixerGroup: {fileID: -1271144012533889627, guid: ec92d7d8ff43a0942b6fff932dd0dbb5, type: 2}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1016,6 +1017,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5835aca96dafffb46a6cb61c1fb616fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &194822054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194822050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d996b90d1217a2488cc481406ad20bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 194822051}
+  clips:
+  - {fileID: 8300000, guid: 0802bc3e522a68b47bfadfa8fb800395, type: 3}
+  - {fileID: 8300000, guid: 3a1d2c6ad6a5a9c4b9b38f7645a2aa64, type: 3}
+  - {fileID: 8300000, guid: 7cd570941af806c4abd252c05b9ac8c9, type: 3}
+  - {fileID: 8300000, guid: 15cdfb9b000ecdb40b2996fb665d65c0, type: 3}
+  - {fileID: 8300000, guid: b79835b7d6ec5a147aa3a58ce8c5d05d, type: 3}
+  - {fileID: 8300000, guid: 3b9bf0eda107dd24b95c19320f218264, type: 3}
 --- !u!1 &213323329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,6 +1628,7 @@ MonoBehaviour:
   txtFeedback: {fileID: 307747488}
   txtNome: {fileID: 2453773}
   animator: {fileID: 1874943040}
+  musicaFim: {fileID: 8300000, guid: 9bcc1fca293eeae4aad2f0817a2d390c, type: 3}
 --- !u!1 &490437858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1657,7 +1679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.116532326, b: 1, a: 1}
+  m_Color: {r: 0.2520915, g: 0.3367512, b: 0.9716981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1945,9 +1967,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00007790327
+    x: 0.00052908063
     y: 0
-    width: 0.9998442
+    width: 0.99894184
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -2556,7 +2578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &917669371
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3176,7 +3198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.070666075, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.26786897, g: 1, b: 0.21226418, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3546,7 +3568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.789978, y: 2.2299805}
+  m_AnchoredPosition: {x: 2.790039, y: 2.2299805}
   m_SizeDelta: {x: 25.63, y: 20.06}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1480168817
