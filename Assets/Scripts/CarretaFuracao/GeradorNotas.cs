@@ -13,6 +13,12 @@ public class GeradorNotas : MonoBehaviour
 
     public int notasGeradas = 0;
 
+    public Sprite spriteNota1;
+
+    public Sprite spriteNota2;
+
+    private bool flagSpriteNota = true;
+
     Queue<NotaManager> notasAtivas = new Queue<NotaManager>();
 
     // Start is called before the first frame update
@@ -46,6 +52,8 @@ public class GeradorNotas : MonoBehaviour
             float tempoAtual = intervaloSpawn - notasGeradas*0.2f;
             yield return new WaitForSeconds(tempoAtual < 0.5f ? 0.5f : tempoAtual);
             GameObject novaNota = Instantiate(notaPrefab, pontoSpawn.position, Quaternion.identity);
+            novaNota.GetComponent<SpriteRenderer>().sprite = flagSpriteNota ? spriteNota1 : spriteNota2;
+            flagSpriteNota = !flagSpriteNota;
             notasGeradas += 1;
             notasAtivas.Enqueue(novaNota.GetComponent<NotaManager>());
         }

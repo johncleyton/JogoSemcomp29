@@ -5,6 +5,7 @@ using UnityEngine;
 public class CarretaManager : MinigameBase
 {
 
+    public SpriteRenderer miranha;
     public Transform pontoDeParada;
 
     public float velocidade = 1f;
@@ -13,6 +14,11 @@ public class CarretaManager : MinigameBase
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, pontoDeParada.position, velocidade*Time.deltaTime);
+        Debug.Log("Cheguei, apareça miranha");
+        if (transform.position == pontoDeParada.position)
+        {
+            miranha.gameObject.SetActive(true);
+        }
     }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
