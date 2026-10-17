@@ -27,14 +27,12 @@ public class BerranteMinigame : MinigameBase
     public bool forcarFallback = false;
     public KeyCode fallbackKey = KeyCode.Space;
     public float fallbackFillPerPress = 0.08f;
+    [Tooltip("Segundos sem nenhum sopro acima do threshold até liberar o espaço (decisão única)")]
+    public float tempoParaLiberarEspaco = 1f;
+    [Tooltip("Quantas rodadas seguidas sem sopro são necessárias para lembrar que não há microfone. 1 = lembra já na primeira")]
+    public int rodadasSemSoproParaConfirmar = 1;
 
-    [Header("Detecção de microfone por sinal (funciona em qualquer build)")]
-    [Tooltip("Segundos sem NENHUM sinal de áudio para considerar que não há microfone")]
-    public float tempoVerificacaoMic = 1f;
-    [Tooltip("Loudness acima disso conta como 'microfone vivo'")]
-    public float limiteSinalMinimo = 0.00001f;
-
-    [Header("Dica (só sem microfone)")]
+    [Header("Dica (só quando o espaço está liberado)")]
     public GameObject dicaEspaco;
     public float intervaloPiscar = 0.4f;
 
@@ -46,11 +44,14 @@ public class BerranteMinigame : MinigameBase
     public float delayAnimacaoLose = 1f;
     public float delayAnimacaoWin = 1f;
 
+    private static bool semMicConfirmado = false;
+    private static int rodadasSemSopro = 0;
+
     private float currentFill = 0f;
-    private bool usandoFallback = false;
     private float margemIndicador;
 
-    private bool micTemSinal = false;
+    private bool modoDecidido = false;
+    private bool usandoFallback = false;
     private float tempoObservando = 0f;
 
     void Start()
@@ -68,10 +69,14 @@ public class BerranteMinigame : MinigameBase
         temMic = Microphone.devices.Length > 0;
 #endif
 
-        usandoFallback = forcarFallback || detector == null || !temMic;
+        if (forcarFallback || detector == null || !temMic || semMicConfirmado)
+        {
+            usandoFallback = true;
+            modoDecidido = true;
+        }
 
         if (dicaEspaco != null)
-            dicaEspaco.SetActive(usandoFallback);
+            dicaEspaco.SetActive(false);
     }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
@@ -88,11 +93,39 @@ public class BerranteMinigame : MinigameBase
             return;
         }
 
-        VerificarMicrofonePorSinal();
+        bool micSoprando = false;
+        if (!usandoFallback && detector != null)
+        {
+            float loudness = detector.getLoudnessMic() * audioSens;
+            micSoprando = loudness >= threshold;
+        }
+
+        if (!modoDecidido)
+        {
+            if (micSoprando)
+            {
+                modoDecidido = true;
+                rodadasSemSopro = 0;
+            }
+            else
+            {
+                tempoObservando += Time.deltaTime;
+                if (tempoObservando >= tempoParaLiberarEspaco)
+                {
+                    usandoFallback = true;
+                    modoDecidido = true;
+
+                    rodadasSemSopro++;
+                    if (rodadasSemSopro >= rodadasSemSoproParaConfirmar)
+                        semMicConfirmado = true;
+                }
+            }
+        }
 
         AtualizarDica();
 
-        bool soprando;
+        bool soprando = false;
+
         if (usandoFallback)
         {
             if (Input.GetKeyDown(fallbackKey))
@@ -102,18 +135,20 @@ public class BerranteMinigame : MinigameBase
             }
             else
             {
-                soprando = false;
                 currentFill -= drainSpeed * Time.deltaTime;
             }
         }
         else
         {
-            float loudness = detector.getLoudnessMic() * audioSens;
-            soprando = loudness >= threshold;
-            if (soprando)
+            if (micSoprando)
+            {
                 currentFill += fillSpeed * Time.deltaTime;
+                soprando = true;
+            }
             else
+            {
                 currentFill -= drainSpeed * Time.deltaTime;
+            }
         }
 
         if (soprando)
@@ -131,25 +166,15 @@ public class BerranteMinigame : MinigameBase
         }
     }
 
-    private void VerificarMicrofonePorSinal()
-    {
-        if (usandoFallback || micTemSinal) return;
-
-        float bruto = detector.getLoudnessMic();
-        if (bruto > limiteSinalMinimo)
-        {
-            micTemSinal = true;
-            return;
-        }
-
-        tempoObservando += Time.deltaTime;
-        if (tempoObservando >= tempoVerificacaoMic)
-            usandoFallback = true;
-    }
-
     private void AtualizarDica()
     {
-        if (!usandoFallback || dicaEspaco == null) return;
+        if (dicaEspaco == null) return;
+
+        if (!usandoFallback)
+        {
+            dicaEspaco.SetActive(false);
+            return;
+        }
 
         bool visivel = Mathf.FloorToInt(Time.time / intervaloPiscar) % 2 == 0;
         dicaEspaco.SetActive(visivel);
