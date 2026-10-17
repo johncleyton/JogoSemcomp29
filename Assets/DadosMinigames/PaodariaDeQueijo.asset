@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: "Pegue o p\xE3o, depois o queijo!"
   nomeDaCena: PaodariaDeQueijo
   tipoJogo: 0
+  regiao: 0
