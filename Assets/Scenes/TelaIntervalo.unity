@@ -2012,6 +2012,10 @@ Camera:
     y: 0
     width: 1
     height: 1
+    x: 0
+    y: 0.00016191602
+    width: 1
+    height: 0.99967617
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

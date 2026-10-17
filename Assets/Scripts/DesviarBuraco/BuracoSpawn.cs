@@ -28,7 +28,7 @@ public class BuracoSpawn : MinigameBase
         int dificulty = level / 5 ;
 
         currentSpawnTime = Mathf.Max(0.4f, spawnTime - (dificulty * 0.3f));
-        currentBuracoSpeed = buracoSpeed + (dificulty * 2.5f);
+        currentBuracoSpeed = Mathf.Min(buracoSpeed + (dificulty * 2.5f), 12f);
     }
 
     void Update()
