@@ -76,7 +76,8 @@ public class MapaBS : MonoBehaviour
             }
 
             for (int i = notes.Count-1; i >-1; i--)
-            {   
+            {
+                Debug.Log(notes[i]);
                 if (notes[i][1] == 1 && beatCount % 2 == 1)
                 {
                     notes[i] = notes[i] - new Vector2Int(1, 0);
@@ -155,6 +156,7 @@ public class MapaBS : MonoBehaviour
         notes.Add(new Vector2Int(6, 1));
         notes.Add(new Vector2Int(9, 1));
         notes.Add(new Vector2Int(12, 1));
+        notes.Add(new Vector2Int(16, 1));
         notes.Add(new Vector2Int(40, 2));
         notes.Add(new Vector2Int(45, 2));
         notes.Add(new Vector2Int(50, 2));
@@ -170,6 +172,8 @@ public class MapaBS : MonoBehaviour
         notes.Add(new Vector2Int(59, 1));
         notes.Add(new Vector2Int(62, 1));
         notes.Add(new Vector2Int(65, 1));
+        notes.Add(new Vector2Int(67, 1));
+        notes.Add(new Vector2Int(69, 1));
 
         //garante que nao vai dar problema de index 
         notes.Add(new Vector2Int(273, 1));
