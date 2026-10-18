@@ -25,6 +25,11 @@ public class SaciBoss : MinigameBase
         saciRoutine = StartCoroutine(SaciCoroutine());
     }
 
+    public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
+    {
+        return 10f;
+    }
+
     void Update()
     {
         if (acabou) return;
