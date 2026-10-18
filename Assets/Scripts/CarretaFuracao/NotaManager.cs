@@ -18,7 +18,7 @@ public class NotaManager : MonoBehaviour
         if (other.CompareTag("sumidouro")) 
         {
             Debug.Log("Perdeu");
-            FindObjectOfType<MinigameBase>().Perder();
+            FindObjectOfType<MinigameBase>().PerderComAtraso(0f);
         }
     }
 

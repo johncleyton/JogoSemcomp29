@@ -61,6 +61,6 @@ public class PipaMovement : MinigameBase
     {
         if (jogoFinalizado)
             return;
-        Vencer();
+        VencerComAtraso(0f);
     } 
 }

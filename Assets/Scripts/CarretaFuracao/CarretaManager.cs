@@ -31,6 +31,6 @@ public class CarretaManager : MinigameBase
     {
         if (jogoFinalizado)
             return;
-        Vencer();
+        VencerComAtraso(0f);
     }
 }
