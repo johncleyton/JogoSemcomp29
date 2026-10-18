@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WhackaCroc
   m_EditorClassIdentifier: 
   nomeDoJogo: WhackaCroc
-  instrucao: Clique nos crocodilos!
+  instrucao: "Clique nos crocodilos e n\xE3o deixe que cheguem no seu barco!"
   nomeDaCena: WhackaCroc
   tipoJogo: 1
   regiao: 2

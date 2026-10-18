@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cachorro
   m_EditorClassIdentifier: 
   nomeDoJogo: Cachorro Caramelo Safado
-  instrucao: "N\xE3o deixe os cachorro roubar sua comida"
+  instrucao: Tire os salgados da frente dos caramelos!
   nomeDaCena: CachorroGame
   tipoJogo: 1
   regiao: 1

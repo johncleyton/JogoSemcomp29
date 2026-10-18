@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PulaFogueira
   m_EditorClassIdentifier: 
   nomeDoJogo: Pula Fogueira
-  instrucao: Pule a Fogueira
+  instrucao: "Pule a fogueira, cuidado para n\xE3o se queimar!"
   nomeDaCena: PulaFogueira
   tipoJogo: 1
   regiao: 3

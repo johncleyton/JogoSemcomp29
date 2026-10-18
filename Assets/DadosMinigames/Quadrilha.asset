@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quadrilha
   m_EditorClassIdentifier: 
   nomeDoJogo: Quadrilha
-  instrucao: Vire no momento certo!
+  instrucao: Clique no momento certo para virar junto com os outros!
   nomeDaCena: MinigameQuadrilha
   tipoJogo: 1
   regiao: 3

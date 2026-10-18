@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boiaserra
   m_EditorClassIdentifier: 
   nomeDoJogo: Boiaserra
-  instrucao: "Acerte o ritmo e n\xE3o erre a coreografia!"
+  instrucao: "Clique no ritmo e n\xE3o erre a coreografia!"
   nomeDaCena: Boiaserra
   tipoJogo: 1
   regiao: 2

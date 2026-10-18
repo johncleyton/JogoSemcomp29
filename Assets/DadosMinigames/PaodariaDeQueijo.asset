@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PaodariaDeQueijo
   m_EditorClassIdentifier: 
   nomeDoJogo: PaodariaDeQueijo
-  instrucao: "Pegue o p\xE3o, depois o queijo!"
+  instrucao: "Pegue o p\xE3o, depois o queijo intercaladamente!"
   nomeDaCena: PaodariaDeQueijo
   tipoJogo: 0
-  regiao: 0
+  regiao: 1

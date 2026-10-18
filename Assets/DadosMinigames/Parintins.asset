@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Parintins
   m_EditorClassIdentifier: 
   nomeDoJogo: Parintins
-  instrucao: Faca seu boi ganhar!
+  instrucao: "Pegue estrelas ou cora\xE7\xF5es e fa\xE7a seu boi ganhar!"
   nomeDaCena: Parintins
   tipoJogo: 0
   regiao: 4

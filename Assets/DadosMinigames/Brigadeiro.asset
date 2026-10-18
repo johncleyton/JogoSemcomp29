@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Brigadeiro
   m_EditorClassIdentifier: 
   nomeDoJogo: Brigadeiro
-  instrucao: Coma todos os brigadeiros!
+  instrucao: "Coma todos os brigadeiros trazendo eles para voc\xEA!"
   nomeDaCena: Brigadeiro
   tipoJogo: 0
   regiao: 1

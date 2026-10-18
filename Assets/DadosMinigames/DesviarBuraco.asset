@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DesviarBuraco
   m_EditorClassIdentifier: 
   nomeDoJogo: DesviarBuraco
-  instrucao: Desvie dos buracos!
+  instrucao: Clique para esquerda ou para direita para desviar dos buracos!
   nomeDaCena: DesviarBuraco
   tipoJogo: 1
   regiao: 5

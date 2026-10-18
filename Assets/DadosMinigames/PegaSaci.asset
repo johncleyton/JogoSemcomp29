@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PegaSaci
   m_EditorClassIdentifier: 
   nomeDoJogo: PegaSaci
-  instrucao: Pegue o Saci quando ele ficar vermelho!
+  instrucao: Capture o saci quando ele parar de girar!
   nomeDaCena: PegaSaci
   tipoJogo: 1
   regiao: 5
