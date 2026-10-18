@@ -136,14 +136,19 @@ public class ParintinsManager : MinigameBase
             }
         }
 
-        if (emptySpawns.Count == 0) return;
+        if (emptySpawns.Count < 2) return;
 
-        int indexSpawn = UnityEngine.Random.Range(0, emptySpawns.Count);
-        Transform chosenSpawn = spawnpoints[indexSpawn];
+        int indexSpawn1 = UnityEngine.Random.Range(0, emptySpawns.Count);
+        Transform chosenSpawn1 = spawnpoints[indexSpawn1];
 
-        GameObject spawningPrefab = UnityEngine.Random.value > 0.5f ? prefabCoracao : prefabEstrela;
+        emptySpawns.RemoveAt(indexSpawn1);
 
-        Instantiate(spawningPrefab, chosenSpawn.position, Quaternion.identity, chosenSpawn);
+        int indexSpawn2 = UnityEngine.Random.Range(0, emptySpawns.Count);
+        Transform chosenSpawn2 = spawnpoints[indexSpawn2];
+
+        Instantiate(prefabCoracao, chosenSpawn1.position, Quaternion.identity, chosenSpawn1);
+        Instantiate(prefabEstrela, chosenSpawn2.position, Quaternion.identity, chosenSpawn2);
+
     }
 
     public void Clicked(int typeOfItem)
