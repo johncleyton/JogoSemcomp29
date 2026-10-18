@@ -68,6 +68,7 @@ public class CarroControle : MinigameBase
     {
         if (other.CompareTag("Buraco") || other.GetComponent<Buraco>() != null)
         {
+            BuracoSpawn.pararMovimento = true;
             animator.SetTrigger("explodir");
             PerderComAtraso(0.8f);
         }
@@ -75,8 +76,9 @@ public class CarroControle : MinigameBase
 
     public override void TempoEsgotado()
     {
-        if (jogoFinalizado) 
-            return;
+        if (jogoFinalizado) return;
+            
+        BuracoSpawn.pararMovimento = true;
         VencerComAtraso(1f);
     }
 }
