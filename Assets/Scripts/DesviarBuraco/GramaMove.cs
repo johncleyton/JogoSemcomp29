@@ -10,6 +10,7 @@ public class GramaMove : MonoBehaviour
 
     void Update()
     {
+        if (BuracoSpawn.pararMovimento) return;
         transform.Translate(Vector3.down * velocidade * Time.deltaTime);
 
         if (transform.position.y <= limiteInferior)

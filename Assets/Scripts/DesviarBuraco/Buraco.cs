@@ -31,6 +31,7 @@ public class Buraco : MonoBehaviour
 
     void Update()
     {
+        if (BuracoSpawn.pararMovimento) return;
         transform.Translate(Vector3.down * speed * Time.deltaTime);
 
         //destruir buraco quando sai da tela
