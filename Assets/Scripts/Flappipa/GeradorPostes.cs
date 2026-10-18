@@ -24,7 +24,13 @@ public class GeradorPostes : MonoBehaviour
             novoPoste.transform.position = transform.position + new Vector3(-0.5f, Random.Range(-alturaVariavel, alturaVariavel), 0);
             
             cronometro = 0;
-            tempoMaximo -=0.05f;
+            if (tempoMaximo > 1f)
+            {
+                tempoMaximo -=0.05f;
+            } else
+            {
+                tempoMaximo = 1f;
+            }
         }
 
         
