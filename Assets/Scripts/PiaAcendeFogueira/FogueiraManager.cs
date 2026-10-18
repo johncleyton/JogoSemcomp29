@@ -36,7 +36,7 @@ public class FogueiraManager : MinigameBase
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
         // Aumenta a velocidade com que o fogo apaga nas fases mais difíceis
-        decaimentoRate = 1f + (faseAtual * 0.5f);
+        decaimentoRate = Mathf.Min(1f + (faseAtual * 0.5f), 10);
         return tempoGlobalSugerido;
     }
 

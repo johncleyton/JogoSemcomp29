@@ -184,11 +184,11 @@ MonoBehaviour:
   barra: {fileID: 1022435467}
   indicador: {fileID: 622444686}
   audioSens: 50
-  threshold: 0.3
-  requiredFill: 1
-  fillSpeed: 0.3
+  threshold: 0.5
+  requiredFill: 0.8
+  fillSpeed: 0.4
   drainSpeed: 0.1
-  timeLimit: 4
+  timeLimit: 5
   paddingEsquerda: -30
   paddingDireita: 10
   forcarFallback: 0
