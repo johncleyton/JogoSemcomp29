@@ -582,7 +582,27 @@ public class GameManagerRework : MonoBehaviour
             txtNome.text = "Jogador: não está logado";
         }
         else
-            txtNome.text = $"Jogador: {AuthenticationService.Instance.PlayerName}";
+        {
+            var tarefaNome = AuthenticationService.Instance.GetPlayerNameAsync();
+            yield return new WaitUntil(() => tarefaNome.IsCompleted);
+            if (tarefaNome.IsFaulted || tarefaNome.IsCanceled)
+            {
+                txtNome.text = "Jogador: nome indisponível";
+                if (tarefaNome.Exception != null)
+                    Debug.LogException(tarefaNome.Exception);
+            }
+            else
+            {
+                string nome = tarefaNome.Result;
+
+                nome = System.Text.RegularExpressions.Regex.Replace(
+                    nome ?? "", @"#\d{5}$", "");
+
+                txtNome.text = string.IsNullOrWhiteSpace(nome)
+                    ? "Jogador: nome indisponível"
+                    : $"Jogador: {nome}";
+            }
+        }
         yield return new WaitForSeconds(1f);
         txtFases.text = $"Fases jogadas: {faseAtual.ToString()}";
         yield return new WaitForSeconds(1f);

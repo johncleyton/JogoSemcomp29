@@ -1694,6 +1694,7 @@ MonoBehaviour:
   - {fileID: 490437860}
   - {fileID: 1613544356}
   pausemenu: {fileID: 1401204399}
+  pauseHUD: {fileID: 0}
   _audio: {fileID: 194822051}
   aviaoMenu: {fileID: 917669370}
   canvaFimDeJogo: {fileID: 1189402861}
@@ -2042,9 +2043,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00025230646
+    x: 0
     y: 0
-    width: 0.9994954
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -4306,7 +4307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1520183586
 MonoBehaviour:
   m_ObjectHideFlags: 0
