@@ -34,8 +34,8 @@ public class ParintinsManager : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        float tempoFixo = 10f;
-
+        float tempoFixo = 12f;
+        
         cooldown -= faseAtual / 50;
         return tempoFixo;
     }
