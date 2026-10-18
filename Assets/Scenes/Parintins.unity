@@ -494,7 +494,7 @@ RectTransform:
   m_GameObject: {fileID: 583445156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.9215, y: 5.9215, z: 5.9215}
+  m_LocalScale: {x: 4.194791, y: 5.9215, z: 5.9215}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1197313640}
@@ -1096,7 +1096,7 @@ RectTransform:
   m_GameObject: {fileID: 1443588830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12.347631, y: 12.347631, z: 12.347631}
+  m_LocalScale: {x: 9.020783, y: 12.347631, z: 12.347631}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1197313640}
@@ -1530,6 +1530,8 @@ MonoBehaviour:
   boiCaprichoso: {fileID: 387746727}
   textoBoiGarantido: {fileID: 583445156}
   textoBoiCaprichoso: {fileID: 1443588830}
+  boiCaprichosoVitoria: {fileID: 0}
+  boiGarantidoVitoria: {fileID: 0}
   contador: {fileID: 903353541}
 --- !u!1 &1927358017
 GameObject:
