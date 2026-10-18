@@ -473,7 +473,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 489814459}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManagerRework, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
@@ -1518,117 +1518,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471745637}
   m_CullTransparentMesh: 1
---- !u!1 &489814457
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 489814458}
-  - component: {fileID: 489814459}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &489814458
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489814457}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &489814459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489814457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ba47e441159b314a9204a4b50f23f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tempoDoMinigameAtual: 7
-  faseAtual: 0
-  canvasHUD: {fileID: 213323329}
-  barraTempo: {fileID: 2075195515}
-  tempoMinimo: 3
-  decrementoDeTempo: 0.1
-  transicaoIris: {fileID: 285201727}
-  timerCongelado: 0
-  listaDeMinigames:
-  - {fileID: 11400000, guid: 415b0ddf4e72fec42ac0913f45f05c4e, type: 2}
-  - {fileID: 11400000, guid: 66669bb7b322ce94daac8c744af50172, type: 2}
-  - {fileID: 11400000, guid: e621d09d602902a4ab74e552cf6518c8, type: 2}
-  - {fileID: 11400000, guid: 5285a3c9330871ad29f25d83ff6188bf, type: 2}
-  - {fileID: 11400000, guid: 31f14368be4cb724aacd75615c6703bc, type: 2}
-  - {fileID: 11400000, guid: bfed651f8d881d12095eb2df4a6c0999, type: 2}
-  - {fileID: 11400000, guid: fa76a64ffa029e646ae517c3906939f1, type: 2}
-  - {fileID: 11400000, guid: 42eec463792a2044a8a59c5f6be01307, type: 2}
-  - {fileID: 11400000, guid: c57069bea9b60b7d6adbba24fd33d4c2, type: 2}
-  - {fileID: 11400000, guid: 5654fff8aa1b4cd47a7d4be763302dbe, type: 2}
-  - {fileID: 11400000, guid: f8e9753eaba064947a4c18f13501a30c, type: 2}
-  - {fileID: 11400000, guid: f6d9c93c57b4e9048863748c94f1c644, type: 2}
-  - {fileID: 11400000, guid: 5573ac25237ce9f46b89184cc82c386d, type: 2}
-  - {fileID: 11400000, guid: 3345aa62ad95c294dbf920807b88e85a, type: 2}
-  - {fileID: 11400000, guid: 2993e0456b7c29dd5b077ead5cf16606, type: 2}
-  - {fileID: 11400000, guid: 626a8bf85d6c62b419facacd3116e198, type: 2}
-  - {fileID: 11400000, guid: 989c2e45811fb6a4494abedb73dc151c, type: 2}
-  - {fileID: 11400000, guid: 9c59b9aa2fcc85641b53f19298d534f9, type: 2}
-  - {fileID: 11400000, guid: a17b5d4e300c779468df3ae2c0fb5ba4, type: 2}
-  - {fileID: 11400000, guid: 63730078ea233374ba725a01d8a28101, type: 2}
-  - {fileID: 11400000, guid: 5530f2fed868a474289437ac64f3dac7, type: 2}
-  - {fileID: 11400000, guid: 4e9246b096a1ce04382e54bce76123c9, type: 2}
-  - {fileID: 11400000, guid: 59b19b95c785bd2479e4fdf34c703182, type: 2}
-  - {fileID: 11400000, guid: 67f08f1a33377bf4bb3423fa02fd5c01, type: 2}
-  - {fileID: 11400000, guid: d21eecf9669cbce4fa510a80cbd3c375, type: 2}
-  - {fileID: 11400000, guid: ebcd021db88181f4e8854706809d9b19, type: 2}
-  - {fileID: 11400000, guid: 46ec1ddd678001944913fd5880288c57, type: 2}
-  - {fileID: 11400000, guid: 249adc660242c33408f411a4e7f57e49, type: 2}
-  - {fileID: 11400000, guid: 95c00abdf253fd344a4739c60045d48f, type: 2}
-  - {fileID: 11400000, guid: 9cd909c0e3c78fe4ca24ddf19f6804fe, type: 2}
-  - {fileID: 11400000, guid: a411fbcd0b530db4fb299b115c2045ff, type: 2}
-  - {fileID: 11400000, guid: 60923338cf582761598c3308fa5a341c, type: 2}
-  - {fileID: 11400000, guid: 35849d175c19c524b92743b6e4dbaafc, type: 2}
-  - {fileID: 11400000, guid: dc2d692838e23e84ca1531a8f695eeef, type: 2}
-  - {fileID: 11400000, guid: 7cc2058d4dd1d3b49916a386cc6b01f9, type: 2}
-  - {fileID: 11400000, guid: a64ef03dd10cce4408ba441193de9e8b, type: 2}
-  txtInstrucao: {fileID: 4464091}
-  txtPontuacao: {fileID: 778473131}
-  "txtRegi\xE3o": {fileID: 1169498918}
-  canvaIntervalo: {fileID: 1155312265}
-  eventos: {fileID: 191912570}
-  pontuacaoJogador: 0
-  vidasIniciais: 3
-  spritesVidas:
-  - {fileID: 1191969667}
-  - {fileID: 490437860}
-  - {fileID: 1613544356}
-  pausemenu: {fileID: 1401204399}
-  _audio: {fileID: 194822051}
-  aviaoMenu: {fileID: 917669370}
-  canvaFimDeJogo: {fileID: 1189402861}
-  canvaDurante: {fileID: 1815934356}
-  txtScore: {fileID: 95989506}
-  txtFases: {fileID: 1683610034}
-  txtFeedback: {fileID: 307747488}
-  txtNome: {fileID: 2453773}
-  animator: {fileID: 1874943040}
-  musicaFim: {fileID: 8300000, guid: 9bcc1fca293eeae4aad2f0817a2d390c, type: 3}
 --- !u!1 &490437858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,7 +1676,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 489814459}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManagerRework, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -1837,6 +1726,117 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498751791}
   m_CullTransparentMesh: 1
+--- !u!1 &545944823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 545944825}
+  - component: {fileID: 545944824}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &545944824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545944823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba47e441159b314a9204a4b50f23f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tempoDoMinigameAtual: 7
+  faseAtual: 0
+  canvasHUD: {fileID: 213323329}
+  barraTempo: {fileID: 2075195515}
+  tempoMinimo: 3
+  decrementoDeTempo: 0.1
+  transicaoIris: {fileID: 285201727}
+  timerCongelado: 0
+  listaDeMinigames:
+  - {fileID: 11400000, guid: 415b0ddf4e72fec42ac0913f45f05c4e, type: 2}
+  - {fileID: 11400000, guid: 66669bb7b322ce94daac8c744af50172, type: 2}
+  - {fileID: 11400000, guid: e621d09d602902a4ab74e552cf6518c8, type: 2}
+  - {fileID: 11400000, guid: 5285a3c9330871ad29f25d83ff6188bf, type: 2}
+  - {fileID: 11400000, guid: 31f14368be4cb724aacd75615c6703bc, type: 2}
+  - {fileID: 11400000, guid: bfed651f8d881d12095eb2df4a6c0999, type: 2}
+  - {fileID: 11400000, guid: fa76a64ffa029e646ae517c3906939f1, type: 2}
+  - {fileID: 11400000, guid: 42eec463792a2044a8a59c5f6be01307, type: 2}
+  - {fileID: 11400000, guid: c57069bea9b60b7d6adbba24fd33d4c2, type: 2}
+  - {fileID: 11400000, guid: 5654fff8aa1b4cd47a7d4be763302dbe, type: 2}
+  - {fileID: 11400000, guid: f8e9753eaba064947a4c18f13501a30c, type: 2}
+  - {fileID: 11400000, guid: f6d9c93c57b4e9048863748c94f1c644, type: 2}
+  - {fileID: 11400000, guid: 5573ac25237ce9f46b89184cc82c386d, type: 2}
+  - {fileID: 11400000, guid: 3345aa62ad95c294dbf920807b88e85a, type: 2}
+  - {fileID: 11400000, guid: 2993e0456b7c29dd5b077ead5cf16606, type: 2}
+  - {fileID: 11400000, guid: 626a8bf85d6c62b419facacd3116e198, type: 2}
+  - {fileID: 11400000, guid: 989c2e45811fb6a4494abedb73dc151c, type: 2}
+  - {fileID: 11400000, guid: 9c59b9aa2fcc85641b53f19298d534f9, type: 2}
+  - {fileID: 11400000, guid: a17b5d4e300c779468df3ae2c0fb5ba4, type: 2}
+  - {fileID: 11400000, guid: 63730078ea233374ba725a01d8a28101, type: 2}
+  - {fileID: 11400000, guid: 5530f2fed868a474289437ac64f3dac7, type: 2}
+  - {fileID: 11400000, guid: 4e9246b096a1ce04382e54bce76123c9, type: 2}
+  - {fileID: 11400000, guid: 59b19b95c785bd2479e4fdf34c703182, type: 2}
+  - {fileID: 11400000, guid: 67f08f1a33377bf4bb3423fa02fd5c01, type: 2}
+  - {fileID: 11400000, guid: d21eecf9669cbce4fa510a80cbd3c375, type: 2}
+  - {fileID: 11400000, guid: ebcd021db88181f4e8854706809d9b19, type: 2}
+  - {fileID: 11400000, guid: 46ec1ddd678001944913fd5880288c57, type: 2}
+  - {fileID: 11400000, guid: 249adc660242c33408f411a4e7f57e49, type: 2}
+  - {fileID: 11400000, guid: 95c00abdf253fd344a4739c60045d48f, type: 2}
+  - {fileID: 11400000, guid: 9cd909c0e3c78fe4ca24ddf19f6804fe, type: 2}
+  - {fileID: 11400000, guid: a411fbcd0b530db4fb299b115c2045ff, type: 2}
+  - {fileID: 11400000, guid: 60923338cf582761598c3308fa5a341c, type: 2}
+  - {fileID: 11400000, guid: 35849d175c19c524b92743b6e4dbaafc, type: 2}
+  - {fileID: 11400000, guid: dc2d692838e23e84ca1531a8f695eeef, type: 2}
+  - {fileID: 11400000, guid: 7cc2058d4dd1d3b49916a386cc6b01f9, type: 2}
+  - {fileID: 11400000, guid: a64ef03dd10cce4408ba441193de9e8b, type: 2}
+  txtInstrucao: {fileID: 4464091}
+  txtPontuacao: {fileID: 778473131}
+  "txtRegi\xE3o": {fileID: 1169498918}
+  canvaIntervalo: {fileID: 1155312265}
+  eventos: {fileID: 191912570}
+  pontuacaoJogador: 0
+  vidasIniciais: 3
+  spritesVidas:
+  - {fileID: 1191969667}
+  - {fileID: 490437860}
+  - {fileID: 1613544356}
+  pausemenu: {fileID: 1401204399}
+  _audio: {fileID: 194822051}
+  aviaoMenu: {fileID: 917669370}
+  canvaFimDeJogo: {fileID: 1189402861}
+  canvaDurante: {fileID: 1815934356}
+  txtScore: {fileID: 95989506}
+  txtFases: {fileID: 1683610034}
+  txtFeedback: {fileID: 307747488}
+  txtNome: {fileID: 2453773}
+  animator: {fileID: 1874943040}
+  musicaFim: {fileID: 8300000, guid: 9bcc1fca293eeae4aad2f0817a2d390c, type: 3}
+--- !u!4 &545944825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545944823}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &552984210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1967,14 +1967,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00052908063
+    x: 0.00016099215
     y: 0
-    width: 0.99894184
+    width: 0.999678
     height: 1
-    x: 0
-    y: 0.00016191602
-    width: 1
-    height: 0.99967617
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -2517,7 +2513,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 489814459}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManagerRework, Assembly-CSharp
         m_MethodName: VoltarMenu
         m_Mode: 1
@@ -3658,7 +3654,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 489814459}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManagerRework, Assembly-CSharp
         m_MethodName: VoltarMenu2
         m_Mode: 1
@@ -4634,7 +4630,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 489814459}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManagerRework, Assembly-CSharp
         m_MethodName: PauseGame
         m_Mode: 1
@@ -5088,6 +5084,6 @@ SceneRoots:
   - {fileID: 1520183589}
   - {fileID: 1155312269}
   - {fileID: 191912573}
-  - {fileID: 489814458}
+  - {fileID: 545944825}
   - {fileID: 194822052}
   - {fileID: 285201726}
