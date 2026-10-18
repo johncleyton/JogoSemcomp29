@@ -13,6 +13,7 @@ public class TocarMusicas : MonoBehaviour
     {
         source = gameObject.GetComponent<AudioSource>();
         source.clip = SortearMusga();
+        MapaBS.CalcularBPM();
         StartCoroutine(AudioHelper.FadeIn(source, 2f));
     }
 
@@ -22,6 +23,7 @@ public class TocarMusicas : MonoBehaviour
         if (!source.isPlaying)
         {
             source.clip = SortearMusga();
+            MapaBS.CalcularBPM();
             StartCoroutine(AudioHelper.FadeIn(source, 2f));
         }
     }

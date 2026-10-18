@@ -20,14 +20,20 @@ public class BoxController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
         if (!enabled) return;
+
         dragStart = cam.ScreenToWorldPoint(Input.mousePosition);
         isDragging = true;
     }
 
     private void OnMouseUp()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
         if (!enabled) return;
+
         if (!isDragging) return;
         isDragging = false;
 

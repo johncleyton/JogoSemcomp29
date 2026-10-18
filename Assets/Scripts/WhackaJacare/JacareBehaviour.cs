@@ -53,6 +53,10 @@ public class JacareBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
+        if (!enabled) return;
+
         if (!wasClicked)
         {
             wasClicked = true;

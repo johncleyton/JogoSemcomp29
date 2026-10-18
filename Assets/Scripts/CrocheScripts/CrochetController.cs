@@ -59,6 +59,8 @@ public class CrochetController : MinigameBase
 
     void Update()
     {
+        //Adicao de "!PauseBase.mouseOver" para resolver bug de pause
+        //Se o jogador clicar no botao de pause, nenhuma acao eh feita
         if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             if (lacoTutorial.activeInHierarchy)

@@ -17,9 +17,7 @@ public class MapaBS : MonoBehaviour
     public static bool missNaoClicou = false;
     public static bool anim = false;
 
-    public static int looping = 0;
-    private float lastAudioTime;
-    private bool naoDu = true;
+    private bool boiafix = true;
 
     // Start is called before the first frame update
     void Start()
@@ -30,34 +28,30 @@ public class MapaBS : MonoBehaviour
         beatinterval = 60f / bpm;
         notes = new List<Vector2Int>();
         Mapeamento();
-        
     }
-    
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_audio.time < lastAudioTime)
+
+        if (notes[0][0] > 170)
         {
-            //loop = 71 beatintervals  (sertanejo)
-            looping++;
-            lastAudioTime = _audio.time;
             notes.Clear();
             Mapeamento();
         }
 
-        if ((_audio.time + (looping * _audio.clip.length)) - lastbeat * beatinterval > 0.13f && notes[0][0] == 0 && naoDu)
+        if (_audio.time - lastbeat * beatinterval > 0.13f && notes[0][0] == 0 && boiafix)
         {
             missNaoClicou = true;
-            naoDu = false;
+            boiafix = false;
         }
 
-        if (Mathf.FloorToInt((_audio.time + (looping * _audio.clip.length)) / beatinterval) != lastbeat)
+        if (Mathf.FloorToInt((_audio.time) / beatinterval) != lastbeat)
         {
-            naoDu = true;
-            lastAudioTime = _audio.time;
+            boiafix = true;
             anim = true;
 
-            lastbeat = Mathf.FloorToInt((_audio.time + (looping * _audio.clip.length)) / beatinterval);
+            lastbeat = Mathf.FloorToInt((_audio.time) / beatinterval);
 
             if (beatCount == 4)
             {
@@ -78,14 +72,15 @@ public class MapaBS : MonoBehaviour
                 }
                 //remove a ultima nota para diminuir o count e o for de cima continuar dando certo
                 notes.RemoveAt(notes.Count - 1);
+                Boiaserra2.umUpdate = true;
             }
 
             for (int i = notes.Count-1; i >-1; i--)
             {
+                Debug.Log(notes[i]);
                 if (notes[i][1] == 1 && beatCount % 2 == 1)
                 {
                     notes[i] = notes[i] - new Vector2Int(1, 0);
-                    //Debug.Log(notes[i]);
                 }
                 else if (notes[i][1] == 2)
                 {
@@ -96,6 +91,41 @@ public class MapaBS : MonoBehaviour
             //Debug.Log("===============================");
             //Debug.Log(notes[0]);
         }
+    }
+
+    public static void CalcularBPM()
+    {
+        //funk 78s 250bpm
+        //piseiro 33.5s 172bpm
+        //brega 44.7s 172bpm
+        //vanera 42.7s 180bpm
+        //samba 52.4s 220bpm
+        //sertanejo 40.8s 210bpm
+        if (_audio.clip.name == "Semba")
+        {
+            beatinterval = 60f / 220f;
+        }
+        else if (_audio.clip.name == "SemBrega")
+        {
+            beatinterval = 60f / 172f;
+        }
+        else if (_audio.clip.name == "SemFunk v2")
+        {
+            beatinterval = 60f / 250f;
+        }
+        else if (_audio.clip.name == "Sempiseiro")
+        {
+            beatinterval = 60f / 172f;
+        }
+        else if (_audio.clip.name == "Semtanejo")
+        {
+            beatinterval = 60f / 210f;
+        }
+        else if (_audio.clip.name == "SemVanera")
+        {
+            beatinterval = 60f / 180f;
+        }
+        Debug.Log("BPM: " + 60f / beatinterval);
     }
 
     private void Mapeamento()
@@ -126,6 +156,7 @@ public class MapaBS : MonoBehaviour
         notes.Add(new Vector2Int(6, 1));
         notes.Add(new Vector2Int(9, 1));
         notes.Add(new Vector2Int(12, 1));
+        notes.Add(new Vector2Int(16, 1));
         notes.Add(new Vector2Int(40, 2));
         notes.Add(new Vector2Int(45, 2));
         notes.Add(new Vector2Int(50, 2));
@@ -141,7 +172,8 @@ public class MapaBS : MonoBehaviour
         notes.Add(new Vector2Int(59, 1));
         notes.Add(new Vector2Int(62, 1));
         notes.Add(new Vector2Int(65, 1));
-
+        notes.Add(new Vector2Int(67, 1));
+        notes.Add(new Vector2Int(69, 1));
 
         //garante que nao vai dar problema de index 
         notes.Add(new Vector2Int(273, 1));
@@ -150,6 +182,7 @@ public class MapaBS : MonoBehaviour
         notes.Add(new Vector2Int(276, 1));
         notes.Add(new Vector2Int(277, 1));
         notes.Add(new Vector2Int(278, 1));
+
     }
     private void Medio()
     {
