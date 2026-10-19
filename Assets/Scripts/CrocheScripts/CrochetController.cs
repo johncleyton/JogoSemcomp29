@@ -39,7 +39,7 @@ public class CrochetController : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        nosMax = Mathf.Min(4 + faseAtual/5, 8);
+        nosMax = Mathf.Min(4 + faseAtual/5, 9);
         textoProgresso.text = $"{nosAtuais} / {nosMax}";
         return 10f;
     }

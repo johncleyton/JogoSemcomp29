@@ -1,7 +1,6 @@
 using UnityEngine;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Models;
-using System.Threading.Tasks;
 using TMPro;
 using System.Text.RegularExpressions;
 using Unity.Services.Authentication;
@@ -17,7 +16,6 @@ public class LeaderboardManager : MonoBehaviour
     public async void MostrarTop3()
     {
         Debug.Log("A transferir o Top 3...");
-        bool isAnonymousFallback = false;
 
         try
         {
@@ -34,11 +32,22 @@ public class LeaderboardManager : MonoBehaviour
             }*/
 
             // Se o Google falhar, regista como anónimo e marca a variável
+            // O ranking só consulta os dados depois que o usuário fizer login.
             if (!AuthenticationService.Instance.IsSignedIn)
             {
-                Debug.LogWarning("Google não autenticou a tempo. A forçar sessão anónima...");
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                isAnonymousFallback = true;
+                for (int j = 0; j < NomeUsuarios.Length; j++)
+                {
+                    if (NomeUsuarios[j] != null)
+                        NomeUsuarios[j].text = j == 0 ? "Faça login para ver o ranking" : "";
+                }
+
+                foreach (var texto in pontuacaoUsuarios)
+                {
+                    if (texto != null)
+                        texto.text = "";
+                }
+
+                return;
             }
 
             var opcoesDeBusca = new GetScoresOptions { Limit = 3 };
@@ -66,31 +75,33 @@ public class LeaderboardManager : MonoBehaviour
             // TRATAMENTO DA 4ª LINHA (Pontuação Pessoal)
             if (NomeUsuarios.Length > 3 && pontuacaoUsuarios.Length > 3)
             {
-                if (isAnonymousFallback)
+                try
                 {
-                    // Se não fez o login real, a última linha fica completamente limpa
-                    NomeUsuarios[3].text = "";
-                    pontuacaoUsuarios[3].text = "";
+                    var registroPessoal =
+                        await LeaderboardsService.Instance.GetPlayerScoreAsync(leaderboardId);
+
+                    string nomePessoal = string.IsNullOrEmpty(registroPessoal.PlayerName)
+                        ? "Você"
+                        : registroPessoal.PlayerName;
+
+                    string nomePessoalSeguro =
+                        Regex.Replace(nomePessoal, @"#\d+$", "");
+
+                    NomeUsuarios[3].text =
+                        $"#{registroPessoal.Rank + 1}. {nomePessoalSeguro}";
+
+                    pontuacaoUsuarios[3].text = registroPessoal.Score.ToString();
                 }
-                else
+                catch (LeaderboardsException ex)
                 {
-                    try
+                    if (ex.Reason == LeaderboardsExceptionReason.NotFound)
                     {
-                        var registroPessoal = await LeaderboardsService.Instance.GetPlayerScoreAsync(leaderboardId);
-                        
-                        string nomePessoal = string.IsNullOrEmpty(registroPessoal.PlayerName) ? "Você" : registroPessoal.PlayerName;
-                        string nomePessoalSeguro = Regex.Replace(nomePessoal, @"#\d+$", "");
-                        
-                        NomeUsuarios[3].text = $"#{registroPessoal.Rank + 1}. {nomePessoalSeguro}";
-                        pontuacaoUsuarios[3].text = registroPessoal.Score.ToString();
+                        NomeUsuarios[3].text = "Você";
+                        pontuacaoUsuarios[3].text = "0";
                     }
-                    catch (LeaderboardsException ex)
+                    else
                     {
-                        if (ex.Reason == LeaderboardsExceptionReason.NotFound) 
-                        {
-                            NomeUsuarios[3].text = "Você";
-                            pontuacaoUsuarios[3].text = "0";
-                        }
+                        throw;
                     }
                 }
             }
@@ -108,15 +119,14 @@ public class LeaderboardManager : MonoBehaviour
     {
         for (int i = 0; i < NomeUsuarios.Length; i++)
         {
-            if (NomeUsuarios[i] != null) 
-            {
-                // Os 3 primeiros mostram "A carregar...", mas a 4ª linha começa vazia
-                NomeUsuarios[i].text = (i < 3) ? "A carregar..." : "";
-            }
-            if (pontuacaoUsuarios[i] != null) 
-            {
-                pontuacaoUsuarios[i].text = (i < 3) ? "-" : "";
-            }
+            if (NomeUsuarios[i] != null)
+                NomeUsuarios[i].text = i < 3 ? "A carregar..." : "";
+        }
+
+        for (int i = 0; i < pontuacaoUsuarios.Length; i++)
+        {
+            if (pontuacaoUsuarios[i] != null)
+                pontuacaoUsuarios[i].text = i < 3 ? "-" : "";
         }
 
         MostrarTop3();

@@ -39,6 +39,7 @@ public class GoogleAuthManager : MonoBehaviour
     public GameObject painelOpcoes;
     public TMP_InputField campoInputNick;
     public TMP_Text txtStatusLogin;
+    public TMP_Text txtBotaoLogin;
     [Header("A Chave Mestra (Google Cloud Web Client)")]
     public string clientID_Web = "";
     private string clientSecret_Web = "";
@@ -179,34 +180,22 @@ public class GoogleAuthManager : MonoBehaviour
             MudarParaTela(painelMenuPrincipal);
     }
 
-    public async void AbrirTelaDeLogin()
+    public void AbrirTelaDeLogin()
     {
         if (UnityServices.State != ServicesInitializationState.Initialized)
-        {
-            if (txtStatusLogin != null)
-                txtStatusLogin.text = "Usuário: aguarde a inicialização";
+            return;
 
+        if (AuthenticationService.Instance.IsSignedIn)
+        {
+            DeslogarUsuario();
             return;
         }
 
-        try
-        {
-            if (AuthenticationService.Instance.IsSignedIn)
-            {
-                await ContinuarComContaAtual();
-                return;
-            }
+        MudarParaTela(painelLogin);
 
-            MudarParaTela(painelLogin);
-
-            #if UNITY_WEBGL && !UNITY_EDITOR
-                ShowGoogleLoginButton();
-            #endif
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
-        }
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            ShowGoogleLoginButton();
+        #endif
     }
     
     public void FecharTelaDeLogin()
@@ -271,10 +260,13 @@ public class GoogleAuthManager : MonoBehaviour
 
     private async Task AtualizarStatusLogin()
     {
+        var autenticacao = AuthenticationService.Instance;
+
+        if (txtBotaoLogin != null)
+            txtBotaoLogin.text = autenticacao.IsSignedIn ? "Deslogar" : "Login";
+
         if (txtStatusLogin == null)
             return;
-
-        var autenticacao = AuthenticationService.Instance;
 
         if (!autenticacao.IsSignedIn)
         {
@@ -301,8 +293,7 @@ public class GoogleAuthManager : MonoBehaviour
                 return;
             }
 
-            // Remove o sufixo do UGS, como #1234.
-            nome = Regex.Replace(nome ?? "", @"#\d{4}$", "");
+            nome = Regex.Replace(nome ?? "", @"#\d+$", "");
 
             txtStatusLogin.text = string.IsNullOrWhiteSpace(nome)
                 ? "Usuário: conectado"
@@ -459,9 +450,7 @@ public class GoogleAuthManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogException(ex);
-
-            // Mostra o estado real mesmo se uma etapa posterior ao login falhar.
+            Debug.LogError("Erro ao processar login: " + ex.Message);
             await AtualizarStatusLogin();
         }
     }
@@ -518,7 +507,8 @@ public class GoogleAuthManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            return false;
+            Debug.LogWarning("Não foi possível verificar o cadastro: " + e.Message);
+            throw;
         }
     }
 

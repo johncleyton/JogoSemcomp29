@@ -16,7 +16,7 @@ public class PulaFogueiraController : MinigameBase
         {
             return;
         }
-        Vencer();
+        VencerComAtraso(0f);
     }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
@@ -27,7 +27,7 @@ public class PulaFogueiraController : MinigameBase
     public void playerHit()
     {
         Debug.Log("Perdeu: bateu na fogueira");
-        Perder();
+        PerderComAtraso(0f);
     }
 
     public float getMinigameDuration()
