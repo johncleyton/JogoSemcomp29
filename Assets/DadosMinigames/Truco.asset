@@ -16,3 +16,4 @@ MonoBehaviour:
   instrucao: Encontre o zap no truco mineiro!
   nomeDaCena: MinigameTruco
   tipoJogo: 0
+  regiao: 1

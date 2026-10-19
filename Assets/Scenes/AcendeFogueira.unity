@@ -754,7 +754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044eaa11d75c4110daf533265bbeb3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 50
+  sensitivity: 25
   sampleWindow: 64
   loudness: 0
 --- !u!114 &2069424298
@@ -774,8 +774,8 @@ MonoBehaviour:
   maoVitoria: {fileID: 1243024749}
   maoDerrota: {fileID: 2113287663}
   maxFireScale: 1
-  blowThreshold: 0.5
-  crescimentoRate: 2
+  blowThreshold: 16
+  crescimentoRate: 0.15
   decaimentoRate: 1
 --- !u!1 &2113287663
 GameObject:

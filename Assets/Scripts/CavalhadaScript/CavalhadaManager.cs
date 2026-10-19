@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CavalhadaManager : MinigameBase
 {
     public GameObject[] lanes;
     public GameObject cavalo;
-    public float cooldown = 0.5f;
+    public float cooldown = 0.4f;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,14 +16,14 @@ public class CavalhadaManager : MinigameBase
 
     void summonCavalo()
     {
-        int random = Random.Range(0, lanes.Length);
+        int random = UnityEngine.Random.Range(0, lanes.Length);
         Instantiate(cavalo, lanes[random].transform.position, Quaternion.identity, lanes[random].transform);
     }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
         // O tempo que voces vao usar
-        float tempoFixo = 10f; 
+        float tempoFixo = 10f;
         return tempoFixo;
     }
 
@@ -30,6 +31,6 @@ public class CavalhadaManager : MinigameBase
     {
         if (jogoFinalizado) 
             return;
-        Vencer();
+        VencerComAtraso(0f);
     }
 }

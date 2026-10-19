@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pixe
   m_EditorClassIdentifier: 
   nomeDoJogo: Pixe
-  instrucao: Complete o pixe
+  instrucao: Complete o pixe!
   nomeDaCena: Pixe
   tipoJogo: 0
   regiao: 1

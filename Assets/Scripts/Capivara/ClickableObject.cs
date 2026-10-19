@@ -19,7 +19,10 @@ public class ClickableObject : MonoBehaviour
 
     void OnMouseDown()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
         if (!enabled) return;
+
         if (AlreadyClicked) return;
         AlreadyClicked = true;
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Croche
   m_EditorClassIdentifier: 
   nomeDoJogo: Croche
-  instrucao: "Fa\xE7a la\xE7os e complete a pe\xE7a de croch\xEA"
+  instrucao: "Fa\xE7a la\xE7os e complete a pe\xE7a de croch\xEA!"
   nomeDaCena: Croche
   tipoJogo: 0
   regiao: 3

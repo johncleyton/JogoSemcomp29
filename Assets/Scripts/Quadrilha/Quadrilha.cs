@@ -35,7 +35,7 @@ public class QTECircle : MinigameBase
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
         duration = Mathf.Max(0.6f, 1.5f - (faseAtual * 0.05f));
-        return tempoGlobalSugerido;
+        return 7f;
     }
 
     public void StartQTE()

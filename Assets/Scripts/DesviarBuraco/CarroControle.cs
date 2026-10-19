@@ -16,6 +16,8 @@ public class CarroControle : MinigameBase
    {
         if (jogoFinalizado) return;
 
+        //Adicao de "!PauseBase.mouseOver" para resolver bug de pause
+        //Se o jogador clicar no botao de pause, nenhuma acao eh feita
         if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             float mouseX = Input.mousePosition.x;
@@ -68,6 +70,7 @@ public class CarroControle : MinigameBase
     {
         if (other.CompareTag("Buraco") || other.GetComponent<Buraco>() != null)
         {
+            BuracoSpawn.pararMovimento = true;
             animator.SetTrigger("explodir");
             PerderComAtraso(0.8f);
         }
@@ -75,8 +78,9 @@ public class CarroControle : MinigameBase
 
     public override void TempoEsgotado()
     {
-        if (jogoFinalizado) 
-            return;
+        if (jogoFinalizado) return;
+            
+        BuracoSpawn.pararMovimento = true;
         VencerComAtraso(1f);
     }
 }

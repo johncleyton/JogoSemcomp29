@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Surf
   m_EditorClassIdentifier: 
   nomeDoJogo: MinigameSurf
-  instrucao: "Surfe a pororoca e n\xE3o seja atingido!"
+  instrucao: "Surfe a pororoca e n\xE3o seja atingido! (cima + baixo para aumentar
+    a velocidade)"
   nomeDaCena: MinigameSurf
   tipoJogo: 1
   regiao: 4

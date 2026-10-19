@@ -25,6 +25,6 @@ public class CachorroGameManager : MinigameBase
     {
         if (jogoFinalizado)
             return;
-        Vencer();
+        VencerComAtraso(0f);
     }
 }

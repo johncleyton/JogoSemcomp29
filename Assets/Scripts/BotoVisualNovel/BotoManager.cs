@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -15,6 +16,13 @@ public class BotoManager : MinigameBase
 
     [Tooltip("Opcional. Mostra 'Corações: X/5'. Pode deixar vazio no Inspector se não for usar.")]
     public TMP_Text progressoText;
+
+    [Header("Contador de Corações - Posição")]
+    [Tooltip("Ligado: ao iniciar, o script ancora o contador no canto inferior esquerdo (o botão de pausa cobre o canto superior direito). Desligue se preferir posicionar à mão no Editor.")]
+    public bool ancorarProgressoNoCantoInferiorEsquerdo = true;
+    [Tooltip("Distância da borda esquerda (x) e da borda inferior (y). ATENÇÃO: em jogo o GameManagerRework força o CanvasScaler para 800x600 (Match Width), ou seja, uma tela 16:9 tem 800x450 unidades de Canvas.")]
+    public Vector2 margemProgresso = new Vector2(16f, 12f);
+    public Vector2 tamanhoProgresso = new Vector2(220f, 40f);
 
     [Header("UI - Botões de Resposta (3: Boa / Neutra / Ruim)")]
     public Button[] botoesResposta;    // Arraste os 3 botões para cá no Inspector
@@ -39,7 +47,7 @@ public class BotoManager : MinigameBase
     [Header("Configuração de Tempo (usado em ConfigurarDificuldade)")]
     [Tooltip("Tempo mínimo de leitura + decisão por rodada, em segundos.")]
     public float tempoMinimoPorRodada = 5f;
-    [Tooltip("Tempo aproximado das animações de reação da Potira por rodada, em segundos.")]
+    [Tooltip("Folga por rodada, em segundos. O relógio do GameManagerRework agora fica CONGELADO durante as reações da Potira; este valor só entra no total como margem extra.")]
     public float tempoReacaoPorRodada = 1.2f;
     [Tooltip("Tempo aproximado do texto sendo digitado por rodada, em segundos.")]
     public float tempoDigitacaoPorRodada = 2f;
@@ -97,6 +105,10 @@ public class BotoManager : MinigameBase
     private bool reacaoEmAndamento = false;
     private bool finalEmAndamento = false; // depois da última escolha válida, o timer não pode mais derrotar o jogador
 
+    // Diagnóstico
+    private bool dificuldadeConfigurada = false; // o GameManagerRework chamou ConfigurarDificuldade neste objeto?
+    private bool aplicacaoEncerrando = false;
+
     // Para as animações da Potira voltarem ao normal
     private Vector3 escalaOriginalPotira = Vector3.one;
     private Vector3 posOriginalPotira = Vector3.zero;
@@ -106,9 +118,23 @@ public class BotoManager : MinigameBase
         if (Instance == null) Instance = this;
     }
 
+    void OnApplicationQuit()
+    {
+        aplicacaoEncerrando = true;
+    }
+
     void OnDestroy()
     {
         if (Instance == this) Instance = null;
+
+        // Se a cena some SEM o minigame ter chamado Vencer()/Perder(), quem trocou a cena foi o
+        // GameManagerRework (timer curto, GameOver direto...), e não a lógica do BotoManager.
+        if (!aplicacaoEncerrando && !jogoFinalizado && GameManagerDisponivel())
+        {
+            Debug.LogWarning($"[BotoManager] Cena descarregada SEM resultado do minigame " +
+                $"(rodada {rodadaAtualIndex + 1}/{NUMERO_RODADAS}, reacao={reacaoEmAndamento}, digitando={digitando}). " +
+                "Quem trocou a cena foi o GameManagerRework (timer/GameOver), nao o BotoManager.");
+        }
     }
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
@@ -118,12 +144,18 @@ public class BotoManager : MinigameBase
         // GameManagerRework sugira um tempo curto para a fase atual.
         float digitacao = caracteresPorSegundo > 0f ? tempoDigitacaoPorRodada : 0f;
         float tempoMinimoTotal = NUMERO_RODADAS * (tempoMinimoPorRodada + tempoReacaoPorRodada + digitacao);
-        return Mathf.Max(tempoGlobalSugerido, tempoMinimoTotal);
+        float tempoFinal = Mathf.Max(tempoGlobalSugerido, tempoMinimoTotal);
+
+        dificuldadeConfigurada = true;
+        Debug.Log($"[BotoManager] ConfigurarDificuldade: fase={faseAtual}, sugerido={tempoGlobalSugerido:F1}s, retornado={tempoFinal:F1}s");
+        return tempoFinal;
     }
 
     void Start()
     {
         if (!ValidarReferencias()) return;
+
+        PosicionarProgresso();
 
         if (potiraSpriteRenderer != null)
         {
@@ -137,6 +169,8 @@ public class BotoManager : MinigameBase
         rodadaAtualIndex = 0;
         coracoesConquistados = 0;
 
+        Log("Start: minigame iniciado");
+        StartCoroutine(VerificarConfiguracaoDeTempo());
         ExibirRodada(rodadaAtualIndex);
     }
 
@@ -237,6 +271,7 @@ public class BotoManager : MinigameBase
 
     private IEnumerator RotinaExibirRodada(int index)
     {
+        CongelarTimer(false); // leitura e decisão contam no timer; reação não
         digitando = true;
         RodadaDialogo rodada = rotaAtual[index];
 
@@ -248,6 +283,9 @@ public class BotoManager : MinigameBase
 
         // Narração e fala "digitam" ao mesmo tempo; os botões só aparecem depois.
         yield return StartCoroutine(DigitarTextos(contextoText, falaPotiraText));
+
+        // Se o timer já derrotou o jogador durante a digitação, não reabilita nada.
+        if (jogoFinalizado) yield break;
 
         List<OpcaoResposta> banco = new List<OpcaoResposta>
         {
@@ -331,6 +369,10 @@ public class BotoManager : MinigameBase
             if (btn != null) btn.interactable = false;
         }
 
+        // Escolha feita a tempo: congela o relógio do GameManagerRework durante a reação/final.
+        // Sem isso o tempo podia acabar no meio da animação e transformar vitória em derrota.
+        CongelarTimer(true);
+
         StartCoroutine(RotinaDeReacao(tipo));
     }
 
@@ -340,6 +382,7 @@ public class BotoManager : MinigameBase
         OcultarBotoes();
 
         bool ultimaRodada = (rodadaAtualIndex == NUMERO_RODADAS - 1);
+        Log($"Escolha: {tipo}");
 
         // RUIM: Game Over imediato, em qualquer rodada.
         if (tipo == TipoResposta.Ruim)
@@ -349,7 +392,7 @@ public class BotoManager : MinigameBase
             StartCoroutine(TremerPotira(0.5f));
             yield return new WaitForSeconds(DURACAO_REACAO_RUIM);
 
-            Perder(); // a Potira continua brava durante o delay padrão do Perder()
+            FinalizarComDerrota("resposta Ruim na rodada " + (rodadaAtualIndex + 1));
             yield break;
         }
 
@@ -377,12 +420,17 @@ public class BotoManager : MinigameBase
             yield return new WaitForSeconds(DURACAO_REACAO_NEUTRA);
         }
 
+        // O timer pode ter derrotado o jogador durante a reação (rodadas 1-4): não segue em frente.
+        if (jogoFinalizado) yield break;
+
         if (ultimaRodada)
         {
             // Só a Escolha 5 "Boa" leva à "transformação final completa". Chegar ao fim com
             // "Neutra" ainda conta como vitória (nunca dá Game Over).
             yield return StartCoroutine(ExibirFinal(acertou));
-            Vencer();
+            if (jogoFinalizado) yield break;
+
+            FinalizarComVitoria(acertou ? "final completo (5a resposta Boa)" : "final tranquilo (5a resposta Neutra)");
             yield break;
         }
 
@@ -479,9 +527,105 @@ public class BotoManager : MinigameBase
         if (jogoFinalizado) return;
 
         // Se o jogador já fez a escolha final (Boa ou Neutra), o final está rodando: não pune.
-        if (finalEmAndamento) return;
+        if (finalEmAndamento)
+        {
+            Log("TempoEsgotado IGNORADO: jogador ja escolheu na ultima rodada, o final esta rodando.");
+            return;
+        }
 
         // Não escolheu a tempo: Game Over automático (comportamento padrão do MinigameBase).
+        Log("TempoEsgotado: jogador nao terminou a tempo -> derrota.");
         base.TempoEsgotado();
+    }
+
+    // ---------------------------------------------------------------------
+    // Resultado (com proteção) + diagnóstico
+    // ---------------------------------------------------------------------
+
+    private bool GameManagerDisponivel()
+    {
+        return GameManagerRework.Instance != null;
+    }
+
+    // timerCongelado é público no GameManagerRework (o MinigameBase usa o mesmo campo em VencerComAtraso).
+    // O manager já o zera sozinho no início de cada minigame, então não precisa "descongelar" ao sair.
+    private void CongelarTimer(bool congelar)
+    {
+        if (GameManagerDisponivel())
+            GameManagerRework.Instance.timerCongelado = congelar;
+    }
+
+    private void FinalizarComVitoria(string motivo)
+    {
+        Log("VITORIA: " + motivo);
+        if (!GameManagerDisponivel())
+        {
+            AvisoTesteIsolado("vitoria");
+            return;
+        }
+        Vencer();
+    }
+
+    private void FinalizarComDerrota(string motivo)
+    {
+        Log("DERROTA: " + motivo);
+        if (!GameManagerDisponivel())
+        {
+            AvisoTesteIsolado("derrota");
+            return;
+        }
+        Perder();
+    }
+
+    // Cena rodando fora do Menu (sem GameManagerRework): em vez de estourar NullReferenceException
+    // dentro da corrotina (que deixava o minigame "travado"), avisa e reinicia a cena para novo teste.
+    private void AvisoTesteIsolado(string resultado)
+    {
+        Debug.LogWarning($"[BotoManager] {resultado} ignorada: GameManagerRework.Instance e nulo " +
+            "(cena rodando fora do Menu). Reiniciando a cena em 2s. Para o fluxo real, comece pela cena Menu.");
+        StartCoroutine(ReiniciarCenaDeTeste());
+    }
+
+    private IEnumerator ReiniciarCenaDeTeste()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+
+        int indice = gameObject.scene.buildIndex;
+        if (indice >= 0) SceneManager.LoadScene(indice);
+        else Debug.LogWarning("[BotoManager] Cena fora das Build Settings: nao foi possivel reiniciar.");
+    }
+
+    // Se o GameManagerRework não chamar ConfigurarDificuldade neste objeto, o timer usado é o
+    // tempo padrão curto (3-7s) e o jogador leva GameOver "do nada" poucos segundos depois.
+    private IEnumerator VerificarConfiguracaoDeTempo()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+
+        if (GameManagerDisponivel() && !dificuldadeConfigurada)
+        {
+            Debug.LogError("[BotoManager] ConfigurarDificuldade NAO foi chamado ate 2s apos o Start. " +
+                "O GameManagerRework nao achou este minigame (FindObjectOfType nulo ou apontando para outro objeto): " +
+                "o timer esta usando o tempo padrao curto e vai dar GameOver 'do nada'.");
+        }
+    }
+
+    private void Log(string mensagem)
+    {
+        Debug.Log($"[BotoManager] {mensagem} | rodada={rodadaAtualIndex + 1}/{NUMERO_RODADAS}, " +
+            $"finalizado={jogoFinalizado}, timeScale={Time.timeScale}");
+    }
+
+    // Move o contador de corações para o canto inferior esquerdo (o botão de pausa cobre o superior direito).
+    private void PosicionarProgresso()
+    {
+        if (!ancorarProgressoNoCantoInferiorEsquerdo || progressoText == null) return;
+
+        RectTransform rt = progressoText.rectTransform;
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.zero;
+        rt.pivot = Vector2.zero;
+        rt.sizeDelta = tamanhoProgresso;
+        rt.anchoredPosition = margemProgresso;
+        progressoText.alignment = TextAlignmentOptions.MidlineLeft;
     }
 }

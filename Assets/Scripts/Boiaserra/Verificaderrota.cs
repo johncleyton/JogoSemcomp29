@@ -68,13 +68,13 @@ public class Verificaderrota : MinigameBase
                     if (MapaBS.notes[0][0] <= 1)
                     {
                         //verifica para o erro de -150ms ate 0ms
-                        if (MapaBS.beatinterval - ((MapaBS._audio.time + (MapaBS.looping * MapaBS._audio.clip.length)) - MapaBS.lastbeat * MapaBS.beatinterval) < 0.13f)
+                        if (MapaBS.beatinterval - ((MapaBS._audio.time) - MapaBS.lastbeat * MapaBS.beatinterval) < 0.13f)
                         {
                             print("deu certo1");
                             miss = false;
                         }
                         //verifica para o erro de 0ms ate 150ms
-                        else if ((MapaBS._audio.time + (MapaBS.looping * MapaBS._audio.clip.length)) - MapaBS.lastbeat * MapaBS.beatinterval < 0.13f && MapaBS.notes[0][0] == 0)
+                        else if ((MapaBS._audio.time) - MapaBS.lastbeat * MapaBS.beatinterval < 0.13f && MapaBS.notes[0][0] == 0)
                         {
                             print("deu certo2");
                             miss = false;

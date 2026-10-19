@@ -503,10 +503,10 @@ MonoBehaviour:
   - {fileID: 389164715}
   - {fileID: 145253806}
   animator:
-  - {fileID: 2076151527}
   - {fileID: 1710148142}
   - {fileID: 389164718}
   - {fileID: 145253809}
+  - {fileID: 2076151527}
 --- !u!114 &499422410
 MonoBehaviour:
   m_ObjectHideFlags: 0

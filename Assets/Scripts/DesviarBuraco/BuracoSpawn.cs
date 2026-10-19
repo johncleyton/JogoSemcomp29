@@ -10,6 +10,9 @@ public class BuracoSpawn : MinigameBase
     
     public float spawnY = 12f; 
 
+    public static bool pararMovimento = false;
+    public static float velocidadeAtual;
+
     [Header("Dificuldade")]
     public float spawnTime = .8f; 
     public float buracoSpeed = 10f;  
@@ -23,16 +26,19 @@ public class BuracoSpawn : MinigameBase
 
     void Start()
     {
+        pararMovimento = false;
+
         int level = GameManagerRework.Instance != null ? GameManagerRework.Instance.faseAtual : 1;
         int dificulty = level / 5 ;
 
         currentSpawnTime = Mathf.Max(0.4f, spawnTime - (dificulty * 0.3f));
         currentBuracoSpeed = Mathf.Min(buracoSpeed + (dificulty * 2.5f), 12f);
+        velocidadeAtual = currentBuracoSpeed;
     }
 
     void Update()
     {
-        if (jogoFinalizado) return;
+        if (pararMovimento) return;
 
         timer += Time.deltaTime;
 

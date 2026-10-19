@@ -19,7 +19,7 @@ public class DerrotaManager : MonoBehaviour
         if (collision.gameObject.layer == 7)
         {
             if (chefeDaFase != null)
-                chefeDaFase.Perder(); 
+                chefeDaFase.PerderComAtraso(0f); 
         }
     }
 }

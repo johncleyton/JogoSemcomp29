@@ -39,7 +39,7 @@ public class CrochetController : MinigameBase
 
     public override float ConfigurarDificuldade(int faseAtual, float tempoGlobalSugerido)
     {
-        nosMax = Mathf.Min(4 + faseAtual/5, 8);
+        nosMax = Mathf.Min(4 + faseAtual/5, 9);
         textoProgresso.text = $"{nosAtuais} / {nosMax}";
         return 10f;
     }
@@ -59,6 +59,8 @@ public class CrochetController : MinigameBase
 
     void Update()
     {
+        //Adicao de "!PauseBase.mouseOver" para resolver bug de pause
+        //Se o jogador clicar no botao de pause, nenhuma acao eh feita
         if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             if (lacoTutorial.activeInHierarchy)

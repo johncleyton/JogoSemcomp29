@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Cavalhada
   m_EditorClassIdentifier: 
   nomeDoJogo: Cavalhada
-  instrucao: Arraste para cima e para baixo e derrote os outros cavalos (sem sprite
-    ainda calma)
+  instrucao: Arraste para cima e para baixo e derrote os outros cavalos!
   nomeDaCena: Cavalhada
   tipoJogo: 1
   regiao: 2

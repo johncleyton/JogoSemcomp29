@@ -232,6 +232,9 @@ MonoBehaviour:
   contextoText: {fileID: 1936603289}
   falaPotiraText: {fileID: 684980386}
   progressoText: {fileID: 1043846838}
+  ancorarProgressoNoCantoInferiorEsquerdo: 1
+  margemProgresso: {x: 16, y: 12}
+  tamanhoProgresso: {x: 220, y: 40}
   botoesResposta:
   - {fileID: 894535707}
   - {fileID: 1311961238}

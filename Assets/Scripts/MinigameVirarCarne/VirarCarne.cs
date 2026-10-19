@@ -37,6 +37,7 @@ public class VirarCarne : MinigameBase
 
         MoveIndicator();
 
+        //Adicao de "!PauseBase.mouseOver" para resolver bug com pause
         if (Input.GetMouseButtonDown(0) && !PauseBase.mouseOver)
         {
             CheckTiming();

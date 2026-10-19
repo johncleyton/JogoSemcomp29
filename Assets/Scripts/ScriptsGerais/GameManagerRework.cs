@@ -61,6 +61,7 @@ public class GameManagerRework : MonoBehaviour
 
     [Header("Pause")]
     public GameObject pausemenu;
+    public GameObject pauseHUD;
     public AudioSource _audio;
     public GameObject aviaoMenu;
     private string[] regioes = {"Sul", "Sudeste", "Centro-Oeste", "Nordeste", "Norte", "Brasil"};
@@ -114,6 +115,8 @@ public class GameManagerRework : MonoBehaviour
     {
         if (canvasHUD != null) 
             canvasHUD.SetActive(false);
+        if (pauseHUD != null)
+            pauseHUD.SetActive(false);
 
         while (true) 
         {            
@@ -123,6 +126,8 @@ public class GameManagerRework : MonoBehaviour
             canvaIntervalo.SetActive(true);
             if (canvasHUD != null) 
                 canvasHUD.SetActive(false);
+            if (pauseHUD != null)
+                pauseHUD.SetActive(false);
 
             Debug.Log($"Iniciando Fase {faseAtual}. Prepare-se!");
             
@@ -155,6 +160,8 @@ public class GameManagerRework : MonoBehaviour
             canvaIntervalo.SetActive(false);
             if (canvasHUD != null) 
                 canvasHUD.SetActive(true);
+            if (pauseHUD != null)
+                pauseHUD.SetActive(true);
 
             asyncLoad.allowSceneActivation = true; 
             
@@ -234,6 +241,8 @@ public class GameManagerRework : MonoBehaviour
 
             if (canvasHUD != null)
                 canvasHUD.SetActive(false);
+            if (pauseHUD != null)
+                pauseHUD.SetActive(false);
 
             // Prepara o intervalo atrás da captura, ainda totalmente opaca.
             SceneManager.SetActiveScene(cenaIntervalo);
@@ -392,7 +401,7 @@ public class GameManagerRework : MonoBehaviour
     {
         if (!PodeJogar)
             return;
-        if (Time.timeScale != 1f)
+        if (Time.timeScale != 1f || cenaMinigameAtiva == "AcendeFogueira"|| cenaMinigameAtiva == "MinigameBerrante")
             return;
         Time.timeScale = 0f;
         //_audio.Pause();
@@ -572,7 +581,27 @@ public class GameManagerRework : MonoBehaviour
             txtNome.text = "Jogador: não está logado";
         }
         else
-            txtNome.text = $"Jogador: {AuthenticationService.Instance.PlayerName}";
+        {
+            var tarefaNome = AuthenticationService.Instance.GetPlayerNameAsync();
+            yield return new WaitUntil(() => tarefaNome.IsCompleted);
+            if (tarefaNome.IsFaulted || tarefaNome.IsCanceled)
+            {
+                txtNome.text = "Jogador: nome indisponível";
+                if (tarefaNome.Exception != null)
+                    Debug.LogException(tarefaNome.Exception);
+            }
+            else
+            {
+                string nome = tarefaNome.Result;
+
+                nome = System.Text.RegularExpressions.Regex.Replace(
+                    nome ?? "", @"#\d{5}$", "");
+
+                txtNome.text = string.IsNullOrWhiteSpace(nome)
+                    ? "Jogador: nome indisponível"
+                    : $"Jogador: {nome}";
+            }
+        }
         yield return new WaitForSeconds(1f);
         txtFases.text = $"Fases jogadas: {faseAtual.ToString()}";
         yield return new WaitForSeconds(1f);
@@ -584,6 +613,8 @@ public class GameManagerRework : MonoBehaviour
             txtFeedback.text = "Sambou, sambou e dançou";
         else if (pontuacaoJogador < 50000)
             txtFeedback.text = "Tá pegando o ritmo";
+        else if (pontuacaoJogador > 72700 && pontuacaoJogador < 72799)
+            txtFeedback.text = "WYSI!!!!";
         else if (pontuacaoJogador < 100000)
             txtFeedback.text = "Você tem o molho brasileiro";
         else if (pontuacaoJogador < 200000)

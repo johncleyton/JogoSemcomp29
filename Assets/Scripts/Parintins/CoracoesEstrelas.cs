@@ -11,7 +11,10 @@ public class CoracoesEstrelas : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Mudanca para resolver bug com pause
+        //Enquanto o jogo estiver pausado, essa funcao nao funciona
         if (!enabled) return;
+
         ParintinsManager manager = FindObjectOfType<ParintinsManager>();
 
         if(manager != null)

@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TMPro;
+using System.Collections;
+
 
 #if UNITY_STANDALONE || UNITY_EDITOR
 using System.Net;
@@ -36,6 +38,8 @@ public class GoogleAuthManager : MonoBehaviour
     public GameObject painelLeaderBoard;
     public GameObject painelOpcoes;
     public TMP_InputField campoInputNick;
+    public TMP_Text txtStatusLogin;
+    public TMP_Text txtBotaoLogin;
     [Header("A Chave Mestra (Google Cloud Web Client)")]
     public string clientID_Web = "";
     private string clientSecret_Web = "";
@@ -96,49 +100,99 @@ public class GoogleAuthManager : MonoBehaviour
     private void Awake()
     {
         Application.deepLinkActivated += OnDeepLinkActivated;
+        StartCoroutine(inicioAnim());
+    }
+
+    IEnumerator inicioAnim()
+    {
+        yield return new WaitForSeconds(3f);
+        painelMenuPrincipal.SetActive(true);
     }
 
     async void Start()
     {
+        if (txtStatusLogin != null)
+            txtStatusLogin.text = "Usuário: verificando...";
+
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            HideGoogleLoginButton();
+
+            if (botaoGeral != null)
+                botaoGeral.SetActive(false);
+        #endif
+
         try
         {
             await UnityServices.InitializeAsync();
             Debug.Log("UGS Inicializado com sucesso.");
-            
-            // Verifica se o jogador já estava logado na sessão anterior
-            if (AuthenticationService.Instance.IsSignedIn)
-            {
-                Debug.Log("Sessão recuperada. Entrando direto no jogo.");
-                //MudarParaTela(painelMenuPrincipal);
-            }
-            else
-            {
-                // Inicia o jogo no Menu Principal padrão
-                //MudarParaTela(painelMenuPrincipal);
-            }
+
+            AuthenticationService.Instance.SignedIn += AoAlterarAutenticacao;
+            AuthenticationService.Instance.SignedOut += AoAlterarAutenticacao;
+
+            await AtualizarStatusLogin();
         }
         catch (Exception e)
         {
             Debug.LogError("Erro UGS: " + e.Message);
-        }
 
-        #if UNITY_WEBGL && !UNITY_EDITOR
-            // Esconde o botão HTML logo de cara, pois o jogo começa no Menu Principal
-            HideGoogleLoginButton();
-            if(botaoGeral != null) botaoGeral.SetActive(false);
-        #endif
+            if (txtStatusLogin != null)
+                txtStatusLogin.text = "Usuário: conexão indisponível";
+
+            return;
+        }
 
         if (!string.IsNullOrEmpty(Application.absoluteURL))
         {
-            Debug.Log("App aberto com URL absoluta: " + Application.absoluteURL);
             OnDeepLinkActivated(Application.absoluteURL);
         }
     }
 
+    private void AoAlterarAutenticacao()
+    {
+        _ = AtualizarStatusLogin();
+    }
+
+    private void OnDestroy()
+    {
+        Application.deepLinkActivated -= OnDeepLinkActivated;
+
+        if (UnityServices.State == ServicesInitializationState.Initialized)
+        {
+            AuthenticationService.Instance.SignedIn -= AoAlterarAutenticacao;
+            AuthenticationService.Instance.SignedOut -= AoAlterarAutenticacao;
+        }
+    }
+
+    private async Task ContinuarComContaAtual()
+    {
+        #if UNITY_WEBGL && !UNITY_EDITOR
+            HideGoogleLoginButton();
+        #endif
+
+        // Atualiza imediatamente a informação da moldura.
+        await AtualizarStatusLogin();
+
+        bool ehPrimeiroLogin = await VerificarSeEhPrimeiroLogin();
+
+        if (ehPrimeiroLogin)
+            MudarParaTela(painelCriarNick);
+        else
+            MudarParaTela(painelMenuPrincipal);
+    }
+
     public void AbrirTelaDeLogin()
     {
+        if (UnityServices.State != ServicesInitializationState.Initialized)
+            return;
+
+        if (AuthenticationService.Instance.IsSignedIn)
+        {
+            DeslogarUsuario();
+            return;
+        }
+
         MudarParaTela(painelLogin);
-        
+
         #if UNITY_WEBGL && !UNITY_EDITOR
             ShowGoogleLoginButton();
         #endif
@@ -202,6 +256,54 @@ public class GoogleAuthManager : MonoBehaviour
     public void OnGoogleLoginSuccess(string token)
     {
         _ = ProcessarLoginUnity(token);
+    }
+
+    private async Task AtualizarStatusLogin()
+    {
+        var autenticacao = AuthenticationService.Instance;
+
+        if (txtBotaoLogin != null)
+            txtBotaoLogin.text = autenticacao.IsSignedIn ? "Deslogar" : "Login";
+
+        if (txtStatusLogin == null)
+            return;
+
+        if (!autenticacao.IsSignedIn)
+        {
+            txtStatusLogin.text = "Usuário: não conectado";
+            return;
+        }
+
+        txtStatusLogin.text = "Usuário: conectado";
+
+        string idJogador = autenticacao.PlayerId;
+
+        try
+        {
+            string nome = autenticacao.PlayerName;
+
+            if (string.IsNullOrWhiteSpace(nome))
+                nome = await autenticacao.GetPlayerNameAsync();
+
+            // Evita atualizar uma tela destruída ou uma conta diferente.
+            if (this == null || txtStatusLogin == null ||
+                !autenticacao.IsSignedIn ||
+                autenticacao.PlayerId != idJogador)
+            {
+                return;
+            }
+
+            nome = Regex.Replace(nome ?? "", @"#\d+$", "");
+
+            txtStatusLogin.text = string.IsNullOrWhiteSpace(nome)
+                ? "Usuário: conectado"
+                : $"Usuário: {nome}";
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning(
+                "Não foi possível buscar o nome: " + e.Message);
+        }
     }
 
     private void FazerLoginMobileDeepLink()
@@ -314,10 +416,17 @@ public class GoogleAuthManager : MonoBehaviour
     private async Task ProcessarLoginUnity(string tokenGoogle)
     {
         Debug.Log("6. Autenticando no UGS...");
+
         try
         {
+            // Pode já existir uma sessão quando o navegador responder.
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                await ContinuarComContaAtual();
+                return;
+            }
+
             await AuthenticationService.Instance.SignInWithGoogleAsync(tokenGoogle);
-            Debug.Log("7. SUCESSO UGS! PlayerID: " + AuthenticationService.Instance.PlayerId);
 
             #if UNITY_WEBGL && !UNITY_EDITOR
                 HideGoogleLoginButton();
@@ -337,22 +446,12 @@ public class GoogleAuthManager : MonoBehaviour
                 }
             }
 
-            bool ehPrimeiroLogin = await VerificarSeEhPrimeiroLogin();
-
-            if (ehPrimeiroLogin)
-            {
-                Debug.Log("Usuário novato! Indo para tela de Nick.");
-                MudarParaTela(painelCriarNick);
-            }
-            else
-            {
-                Debug.Log("Usuário veterano. Entrando no jogo.");
-                MudarParaTela(painelMenuPrincipal);
-            }
+            await ContinuarComContaAtual();
         }
-        catch (AuthenticationException ex)
+        catch (Exception ex)
         {
-            Debug.LogError("ERRO UGS: " + ex.Message);
+            Debug.LogError("Erro ao processar login: " + ex.Message);
+            await AtualizarStatusLogin();
         }
     }
 
@@ -377,9 +476,11 @@ public class GoogleAuthManager : MonoBehaviour
             };
 
             await CloudSaveService.Instance.Data.Player.SaveAsync(dados);
-            
+
             Debug.Log("Cadastro finalizado. Retornando ao menu principal.");
+
             MudarParaTela(painelMenuPrincipal);
+            await AtualizarStatusLogin();
         }
         catch (Exception e)
         {
@@ -406,18 +507,20 @@ public class GoogleAuthManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            return false;
+            Debug.LogWarning("Não foi possível verificar o cadastro: " + e.Message);
+            throw;
         }
     }
 
-    public void DeslogarUsuario()
+    public async void DeslogarUsuario()
     {
-        if(AuthenticationService.Instance.IsSignedIn)
+        if (AuthenticationService.Instance.IsSignedIn)
         {
             AuthenticationService.Instance.SignOut(true);
             Debug.Log("Usuário deslogado com sucesso.");
-            
-            MudarParaTela(painelMenuPrincipal);
         }
+
+        MudarParaTela(painelMenuPrincipal);
+        await AtualizarStatusLogin();
     }
 }
