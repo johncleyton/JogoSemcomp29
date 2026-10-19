@@ -37,6 +37,7 @@ public class GoogleAuthManager : MonoBehaviour
     public GameObject painelMenuPrincipal;
     public GameObject painelLeaderBoard;
     public GameObject painelOpcoes;
+    public GameObject painelCreditos;
     public TMP_InputField campoInputNick;
     public TMP_Text txtStatusLogin;
     public TMP_Text txtBotaoLogin;
@@ -227,6 +228,16 @@ public class GoogleAuthManager : MonoBehaviour
         MudarParaTela(painelMenuPrincipal);
     }
 
+    public void AbrirTelaCreditos()
+    {
+        MudarParaTela(painelCreditos);
+    }
+
+    public void FecharTelaCreditos()
+    {
+        MudarParaTela(painelMenuPrincipal);
+    }
+
     // Função auxiliar para garantir que apenas uma tela fique ativa por vez
     private void MudarParaTela(GameObject telaAtiva)
     {
@@ -240,6 +251,8 @@ public class GoogleAuthManager : MonoBehaviour
             painelLeaderBoard.SetActive(painelLeaderBoard == telaAtiva);
         if (painelOpcoes != null)
             painelOpcoes.SetActive(painelOpcoes == telaAtiva);
+        if (painelCreditos != null)
+            painelCreditos.SetActive(painelCreditos == telaAtiva);
     }
 
     public void FazerLoginNativo()

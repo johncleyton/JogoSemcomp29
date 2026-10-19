@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MangaeLeite
   m_EditorClassIdentifier: 
   nomeDoJogo: MangaeLeite
-  instrucao: "Voc\xEA \xE9 um copo de leite, esvie das mangas para n\xE3o morrer!"
+  instrucao: "Voc\xEA \xE9 um copo de leite, desvie das mangas para n\xE3o morrer!"
   nomeDaCena: MangaeLeite
   tipoJogo: 1
   regiao: 5
