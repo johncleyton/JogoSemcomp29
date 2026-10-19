@@ -55,21 +55,31 @@ public class LeaderboardManager : MonoBehaviour
             
             Debug.Log("--- INÍCIO DO TOP 3 ---");
             
-            int i = 0;
-            foreach (var registro in leaderboardPage.Results)
+            for (int i = 0; i < 3; i++)
             {
-                if (i >= 3) break; // Garante que não ultrapassa as 3 primeiras posições
+                string nome = "---";
+                string pontos = "";
 
-                string nomeOriginal = string.IsNullOrEmpty(registro.PlayerName) ? "Jogador Anónimo" : registro.PlayerName;
-                
-                // MUDANÇA: O \d+ agora remove o # e QUALQUER quantidade de números no final do nome
-                string nomeSeguro = Regex.Replace(nomeOriginal, @"#\d+$", "");
-                
-                if (i < NomeUsuarios.Length) NomeUsuarios[i].text = $"#{registro.Rank+1}. {nomeSeguro}";
-                if (i < pontuacaoUsuarios.Length) pontuacaoUsuarios[i].text = registro.Score.ToString();
-                
-                Debug.Log($"Rank #{registro.Rank + 1} | Jogador: {nomeSeguro} | Pontos: {registro.Score}");
-                i++;
+                // Só acessa o registro se essa posição existir no resultado.
+                if (i < leaderboardPage.Results.Count)
+                {
+                    var registro = leaderboardPage.Results[i];
+
+                    string nomeOriginal = string.IsNullOrEmpty(registro.PlayerName)
+                        ? "Jogador"
+                        : registro.PlayerName;
+
+                    string nomeSeguro = Regex.Replace(nomeOriginal, @"#\d+$", "");
+
+                    nome = $"#{registro.Rank + 1}. {nomeSeguro}";
+                    pontos = registro.Score.ToString();
+                }
+
+                if (i < NomeUsuarios.Length && NomeUsuarios[i] != null)
+                    NomeUsuarios[i].text = nome;
+
+                if (i < pontuacaoUsuarios.Length && pontuacaoUsuarios[i] != null)
+                    pontuacaoUsuarios[i].text = pontos;
             }
 
             // TRATAMENTO DA 4ª LINHA (Pontuação Pessoal)
@@ -92,23 +102,29 @@ public class LeaderboardManager : MonoBehaviour
 
                     pontuacaoUsuarios[3].text = registroPessoal.Score.ToString();
                 }
-                catch (LeaderboardsException ex)
+                catch (System.Exception ex)
                 {
-                    if (ex.Reason == LeaderboardsExceptionReason.NotFound)
+                    NomeUsuarios[3].text = "Você";
+
+                    if (ex is LeaderboardsException erro &&
+                        erro.Reason == LeaderboardsExceptionReason.NotFound)
                     {
-                        NomeUsuarios[3].text = "Você";
                         pontuacaoUsuarios[3].text = "0";
                     }
                     else
                     {
-                        throw;
+                        pontuacaoUsuarios[3].text = "--";
+
+                        Debug.LogWarning(
+                            "O Top 3 carregou, mas houve uma falha ao consultar " +
+                            "a pontuação pessoal:\n" + ex);
                     }
                 }
             }
         }
         catch (System.Exception ex)
         {
-            Debug.LogError("Falha ao transferir a Tabela Geral: " + ex.Message);
+            Debug.LogError("Falha ao carregar o leaderboard:\n" + ex);
             
             if (NomeUsuarios.Length > 0) NomeUsuarios[0].text = "Erro de Ligação";
             if (pontuacaoUsuarios.Length > 0) pontuacaoUsuarios[0].text = "X";

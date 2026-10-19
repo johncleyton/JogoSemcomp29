@@ -61,14 +61,14 @@ não reduziria esse APK.
    respeita overrides já definidos e pode ser executado novamente.
 3. Configure a assinatura habitual em Player Settings e use
    **Semcomp > Build > APK release otimizado**.
-4. O APK será salvo em `Builds/Android/SemcompJogo.apk`, acompanhado de
-   `SemcompJogo.apk.report.json`. O campo `apkBytes` é o tamanho final;
+4. O APK será salvo em `Builds/Android/Jeitinho Brasileiro.apk`, acompanhado de
+   `Jeitinho Brasileiro.apk.report.json`. O campo `apkBytes` é o tamanho final;
    `assets[].packedBytes` representa os dados dos assets antes da compressão
    final do pacote e não deve ser somado para estimar o tamanho do APK.
 
 Para uma validação local sem a senha da chave de publicação, execute a Unity
 em batch com `-buildTarget Android -executeMethod AndroidBuildOptimization.ValidateBuild`.
-Essa rotina aplica os overrides e gera `Builds/Android/SemcompJogo-validacao.apk`
+Essa rotina aplica os overrides e gera `Builds/Android/Jeitinho Brasileiro-validacao.apk`
 com assinatura de debug, restaurando a opção de assinatura original ao terminar.
 Esse arquivo não é uma atualização assinada para distribuição.
 

@@ -70,7 +70,7 @@ public static class AndroidBuildOptimization
     [MenuItem("Semcomp/Build/APK release otimizado")]
     public static void BuildRelease()
     {
-        Build("SemcompJogo.apk");
+        Build("Jeitinho Brasileiro.apk");
     }
 
     // Para validacao local/CI sem expor a senha da chave de publicacao.
@@ -82,7 +82,7 @@ public static class AndroidBuildOptimization
         {
             PlayerSettings.Android.useCustomKeystore = false;
             OptimizeTextures();
-            Build("SemcompJogo-validacao.apk");
+            Build("Jeitinho Brasileiro-validacao.apk");
         }
         finally
         {
