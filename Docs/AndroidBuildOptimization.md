@@ -93,5 +93,23 @@ Também há avisos de variáveis não usadas no `GoogleAuthManager` e de probes 
 iluminação durante a execução sem interface gráfica. A validação em aparelho
 continua necessária para confirmar aparência, controles e serviços online.
 
+## Faixas pretas no celular
+
+O `CameraAspectFixo` recorta a câmera para manter a proporção 16:9. Os pixels
+fora desse recorte não eram preenchidos explicitamente; no aparelho foi
+observado azul piscando nas laterais. Alterar apenas a cor de fundo da câmera
+recortada não preenche essas áreas.
+
+O componente agora cria, durante o jogo, uma câmera de fundo preto que ocupa
+a tela inteira e renderiza antes das câmeras do jogo. Ela não desenha objetos,
+sombras ou pós-processamento e fica desativada quando não há faixas. O recorte
+16:9 é mantido, e os minigames que ocupam a tela inteira continuam podendo
+desenhar por cima do fundo. A câmera auxiliar é removida junto com o componente.
+
+Os scripts foram compilados com as referências e definições da build Android.
+A confirmação visual depende de uma nova build no aparelho: conferir menu,
+primeiro intervalo, abertura/fechamento da íris e retorno ao menu em uma tela
+mais larga que 16:9. Esta alteração não modifica APKs já gerados.
+
 Referências: [formatos de textura na Unity 2022.3](https://docs.unity3d.com/2022.3/Documentation/Manual/class-TextureImporterOverride.html)
 e [configurações de build Android](https://docs.unity3d.com/2022.3/Documentation/Manual/android-build-settings.html).

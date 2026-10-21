@@ -1200,7 +1200,7 @@ MonoBehaviour:
   duracaoAbertura: 0.45
   duracaoFechamento: 0.4
   suavidade: 0.003
-  inverterCapturaVerticalmente: 1
+  inverterCapturaVerticalmente: 0
 --- !u!1 &291010258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,7 +1648,6 @@ MonoBehaviour:
   listaDeMinigames:
   - {fileID: 11400000, guid: 415b0ddf4e72fec42ac0913f45f05c4e, type: 2}
   - {fileID: 11400000, guid: 66669bb7b322ce94daac8c744af50172, type: 2}
-  - {fileID: 11400000, guid: e621d09d602902a4ab74e552cf6518c8, type: 2}
   - {fileID: 11400000, guid: 5285a3c9330871ad29f25d83ff6188bf, type: 2}
   - {fileID: 11400000, guid: 31f14368be4cb724aacd75615c6703bc, type: 2}
   - {fileID: 11400000, guid: bfed651f8d881d12095eb2df4a6c0999, type: 2}
@@ -1665,7 +1664,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 989c2e45811fb6a4494abedb73dc151c, type: 2}
   - {fileID: 11400000, guid: 9c59b9aa2fcc85641b53f19298d534f9, type: 2}
   - {fileID: 11400000, guid: a17b5d4e300c779468df3ae2c0fb5ba4, type: 2}
-  - {fileID: 11400000, guid: 63730078ea233374ba725a01d8a28101, type: 2}
   - {fileID: 11400000, guid: 5530f2fed868a474289437ac64f3dac7, type: 2}
   - {fileID: 11400000, guid: 4e9246b096a1ce04382e54bce76123c9, type: 2}
   - {fileID: 11400000, guid: 59b19b95c785bd2479e4fdf34c703182, type: 2}
@@ -1679,7 +1677,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a411fbcd0b530db4fb299b115c2045ff, type: 2}
   - {fileID: 11400000, guid: 60923338cf582761598c3308fa5a341c, type: 2}
   - {fileID: 11400000, guid: 35849d175c19c524b92743b6e4dbaafc, type: 2}
-  - {fileID: 11400000, guid: dc2d692838e23e84ca1531a8f695eeef, type: 2}
   - {fileID: 11400000, guid: 7cc2058d4dd1d3b49916a386cc6b01f9, type: 2}
   - {fileID: 11400000, guid: a64ef03dd10cce4408ba441193de9e8b, type: 2}
   txtInstrucao: {fileID: 4464091}
@@ -2044,9 +2041,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.00014203787
+    y: 0.0006097555
     width: 1
-    height: 0.9997159
+    height: 0.9987805
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

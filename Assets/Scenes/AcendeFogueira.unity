@@ -774,8 +774,8 @@ MonoBehaviour:
   maoVitoria: {fileID: 1243024749}
   maoDerrota: {fileID: 2113287663}
   maxFireScale: 1
-  blowThreshold: 16
-  crescimentoRate: 0.15
+  blowThreshold: 0.05
+  crescimentoRate: 5
   decaimentoRate: 1
 --- !u!1 &2113287663
 GameObject:
